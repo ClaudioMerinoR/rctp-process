@@ -130,12 +130,15 @@
         /* ── Connection alert banner ── */
         .conn-alert {
             display: none;
-            width: 100%;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
             height: 60px;
             align-items: center;
             padding: 0 29px;
             gap: 8px;
-            overflow: hidden;
+            z-index: 500;
         }
         .conn-alert.visible { display: flex; }
         .conn-alert.success { background: #5fe9a9; }
