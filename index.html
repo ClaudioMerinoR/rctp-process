@@ -1697,10 +1697,11 @@ function connectRows(sourceTbody, checkClass) {
 
     document.getElementById('ctx-disconnect').addEventListener('click', () => {
         if (!activeRow) return;
-        activeRow.style.transition = 'opacity 0.25s ease';
-        activeRow.style.opacity = '0';
-        setTimeout(() => activeRow.remove(), 250);
+        const row = activeRow;
         closeMenu();
+        row.style.transition = 'opacity 0.25s ease';
+        row.style.opacity = '0';
+        setTimeout(() => row.remove(), 250);
     });
 
     document.getElementById('ctx-edit').addEventListener('click', () => {
