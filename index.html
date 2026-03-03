@@ -558,8 +558,7 @@
             letter-spacing: 0.5px;
             line-height: 16px;
         }
-        .sidesheet-field input,
-        .sidesheet-field select {
+        .sidesheet-field input {
             height: 32px;
             border: 1px solid var(--neutral-200);
             border-radius: 2px;
@@ -571,7 +570,56 @@
             width: 100%;
         }
         .sidesheet-field input::placeholder { color: var(--text-light-alt); }
-        .sidesheet-field select { appearance: auto; color: var(--text-light-alt); cursor: pointer; }
+
+        /* Custom relation dropdown — Figma density=-2 */
+        .ss-relation-wrap { position: relative; width: 100%; }
+        .ss-relation-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 32px;
+            width: 100%;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 0 6px 0 8px;
+            font-size: 14px;
+            color: var(--text-light-alt);
+            background: #fff;
+            font-family: inherit;
+            cursor: pointer;
+            text-align: left;
+        }
+        .ss-relation-btn.has-value { color: var(--text-normal); }
+        .ss-relation-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px rgba(0,0,0,0.15);
+            z-index: 700;
+            padding: 8px 0;
+            min-width: 112px;
+        }
+        .ss-relation-menu.open { display: block; }
+        .ss-relation-item {
+            padding: 12px 12px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            color: var(--text-normal);
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            background: #fff;
+            transition: background 0.15s ease;
+        }
+        .ss-relation-item:hover { background: var(--neutral-25); }
+        .ss-relation-item.selected { background: var(--neutral-25); color: var(--text-light); }
         .sidesheet-search-btn {
             height: 32px;
             padding: 0 12px;
@@ -1514,13 +1562,19 @@
             <input type="text" id="ss-entity-name" placeholder="Search for entity">
         </div>
         <div class="sidesheet-field">
-            <label for="ss-relation">Relation</label>
-            <select id="ss-relation">
-                <option value="">Any</option>
-                <option>Subsidiary</option>
-                <option>Parent</option>
-                <option>Affiliate</option>
-            </select>
+            <label>Relation</label>
+            <div class="ss-relation-wrap">
+                <button class="ss-relation-btn" id="ss-relation-btn" type="button">
+                    <span id="ss-relation-label">Any</span>
+                    <span class="material-icons-outlined" style="font-size:20px;color:var(--text-light)">arrow_drop_down</span>
+                </button>
+                <div class="ss-relation-menu" id="ss-relation-menu">
+                    <div class="ss-relation-item" data-value="">Any</div>
+                    <div class="ss-relation-item" data-value="Subsidiary">Subsidiary</div>
+                    <div class="ss-relation-item" data-value="Parent">Parent</div>
+                    <div class="ss-relation-item" data-value="Affiliate">Affiliate</div>
+                </div>
+            </div>
         </div>
         <button class="sidesheet-search-btn" id="ss-search-btn">Search</button>
     </div>
@@ -1704,7 +1758,7 @@ function connectRows(sourceTbody, checkClass) {
     });
 
     btnDiscard.addEventListener('click', () => {
-        tbody.querySelectorAll('.suggested-check').forEach(cb => cb.checked = false);
+        [...tbody.querySelectorAll('tr')].filter(tr => tr.querySelector('.suggested-check:checked')).forEach(tr => tr.remove());
         selectAll.checked = false;
         selectAll.indeterminate = false;
         updateButtons();
@@ -1728,6 +1782,10 @@ function connectRows(sourceTbody, checkClass) {
         overlay.classList.add('open');
         sheet.classList.add('open');
         document.body.style.overflow = 'hidden';
+        // Clear inputs
+        document.getElementById('ss-entity-name').value = '';
+        ssRelationReset();
+        // Hide results
         results.style.display = 'none';
         tbody.querySelectorAll('.ss-check').forEach(cb => cb.checked = false);
         selectAll.checked = false;
@@ -1785,6 +1843,42 @@ function connectRows(sourceTbody, checkClass) {
         selectAll.indeterminate = false;
         updateSsButtons();
         closeSheet();
+    });
+
+    // ── Custom relation dropdown ──
+    let ssRelationValue = '';
+    const relBtn  = document.getElementById('ss-relation-btn');
+    const relMenu = document.getElementById('ss-relation-menu');
+    const relLabel = document.getElementById('ss-relation-label');
+
+    function ssRelationReset() {
+        ssRelationValue = '';
+        relLabel.textContent = 'Any';
+        relBtn.classList.remove('has-value');
+        relMenu.querySelectorAll('.ss-relation-item').forEach(i => i.classList.remove('selected'));
+        relMenu.classList.remove('open');
+    }
+
+    relBtn.addEventListener('click', e => {
+        relMenu.classList.toggle('open');
+        e.stopPropagation();
+    });
+
+    relMenu.addEventListener('click', e => {
+        const item = e.target.closest('.ss-relation-item');
+        if (!item) return;
+        ssRelationValue = item.dataset.value;
+        relLabel.textContent = item.textContent;
+        relBtn.classList.toggle('has-value', ssRelationValue !== '');
+        relMenu.querySelectorAll('.ss-relation-item').forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+        relMenu.classList.remove('open');
+    });
+
+    document.addEventListener('click', e => {
+        if (!relBtn.contains(e.target) && !relMenu.contains(e.target)) {
+            relMenu.classList.remove('open');
+        }
     });
 })();
 
