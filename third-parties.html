@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Third Parties - RiskCenter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary-500: #02A3D5;
+            --primary-600: #0289B3;
+            --primary-700: #016F91;
+            --primary-08: #E8F9FE;
+            --primary-200: #7BCFE9;
+            --text-normal: #0C2A31;
+            --text-light: #516267;
+            --text-light-alt: #5A6E73;
+            --text-dark: #061619;
+            --neutral-00: #FFFFFF;
+            --neutral-25: #EFEFEF;
+            --neutral-50: #DFE3E7;
+            --neutral-100: #D6DBE0;
+            --neutral-200: #C4CCD2;
+            --neutral-300: #B1BCC5;
+            --neutral-900: #33383D;
+            --alert-500: #E34C53;
+            --alert-700: #9A3438;
+            --alert-50: #F7CDCF;
+            --success-500: #13DF81;
+            --success-700: #0D9858;
+            --success-900: #07502E;
+            --success-50: #BDF6DC;
+            --warning-500: #F0C043;
+            --warning-900: #564518;
+            --warning-50: #FBEDCA;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--neutral-25);
+            color: var(--text-normal);
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        .header-bar {
+            background-color: var(--text-normal);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            color: #fff;
+        }
+        .header-brand { display: flex; align-items: center; gap: 8px; }
+        .header-brand .dj-mark { font-weight: 700; font-size: 13px; letter-spacing: 0.5px; }
+        .header-brand .product-name { color: var(--primary-500); font-size: 15px; font-weight: 500; letter-spacing: 0.5px; }
+        .header-actions { display: flex; align-items: center; }
+        .header-actions span {
+            padding: 0 8px; font-size: 12px; cursor: pointer;
+            border-left: 1px solid var(--text-light); height: 24px;
+            display: flex; align-items: center; transition: color 0.2s;
+        }
+        .header-actions span:hover { color: var(--primary-500); }
+        .header-actions span:first-child { border-left: none; }
+
+        /* ── Main Nav ── */
+        .main-nav {
+            background-color: var(--primary-500);
+            height: 32px;
+            display: flex;
+            align-items: stretch;
+        }
+        .main-nav a {
+            display: flex; align-items: center; padding: 0 16px;
+            color: #fff; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            text-decoration: none; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .main-nav a:hover { background: var(--primary-600); }
+        .main-nav a.active { background: var(--primary-600); }
+
+        /* ── Page layout ── */
+        .page-wrapper {
+            max-width: 1680px;
+            margin: 0 auto;
+            padding: 0 16px 32px;
+        }
+
+        /* ── Card ── */
+        .tp-card {
+            background: var(--neutral-00);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            margin-top: 16px;
+            overflow: hidden;
+        }
+
+        /* ── Title row ── */
+        .tp-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px 0;
+        }
+        .tp-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-normal);
+        }
+        .tp-title-actions { display: flex; align-items: center; gap: 8px; }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 4px; height: 32px; padding: 0 12px;
+            border-radius: 4px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer; border: none; font-family: inherit;
+            transition: background 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+        .btn-filled { background: var(--primary-500); color: #fff; }
+        .btn-filled:hover { background: var(--primary-600); }
+        .btn-outline {
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-300);
+            color: var(--text-normal);
+        }
+        .btn-outline:hover { background: var(--neutral-25); border-color: var(--neutral-200); }
+        .btn-icon {
+            width: 32px; padding: 0;
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-300);
+            color: var(--text-light);
+        }
+        .btn-icon:hover { background: var(--neutral-25); }
+
+        /* Standard view dropdown button */
+        .btn-view {
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-200);
+            color: var(--text-normal);
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            padding: 0 10px;
+            min-width: 160px;
+            justify-content: space-between;
+        }
+        .btn-view:hover { background: var(--neutral-25); }
+
+        /* ── Divider ── */
+        .tp-divider { height: 1px; background: var(--neutral-50); margin: 16px 16px 0; }
+
+        /* ── Toolbar row ── */
+        .tp-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+        }
+        .tp-toolbar-left { display: flex; align-items: center; gap: 8px; }
+        .tp-toolbar-right { display: flex; align-items: center; gap: 8px; }
+
+        /* Quick search */
+        .search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-input {
+            height: 32px;
+            width: 300px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 0 36px 0 10px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--text-normal);
+            background: var(--neutral-00);
+        }
+        .search-input::placeholder { color: var(--text-light-alt); }
+        .search-icon {
+            position: absolute;
+            right: 8px;
+            color: var(--text-light);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        /* ── Table wrapper ── */
+        .tp-table-wrap { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 900px;
+        }
+
+        thead th {
+            background: var(--neutral-25);
+            border-top: 1px solid var(--neutral-50);
+            border-bottom: 1px solid var(--neutral-50);
+            border-left: 1px solid var(--neutral-50);
+            padding: 8px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+        thead th:first-child { border-left: none; }
+        thead th .sort-icon { font-size: 14px; vertical-align: middle; color: var(--text-light); }
+
+        tbody tr { border-bottom: 1px solid var(--neutral-50); transition: background 0.15s; }
+        tbody tr:nth-child(odd) { background: var(--primary-08); }
+        tbody tr:nth-child(even) { background: var(--neutral-00); }
+        tbody tr:hover { background: #d5f2fb; }
+
+        tbody td {
+            padding: 8px;
+            vertical-align: middle;
+            color: var(--text-light);
+            border-left: 1px solid var(--neutral-50);
+        }
+        tbody td:first-child { border-left: none; }
+
+        .cell-link {
+            color: var(--primary-600);
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .cell-link:hover { text-decoration: underline; }
+
+        /* ── Risk badges ── */
+        .risk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+        .risk-badge .material-icons-outlined { font-size: 14px; }
+        .risk-high { background: var(--alert-50); color: var(--alert-700); }
+        .risk-medium { background: var(--warning-50); color: var(--warning-900); }
+        .risk-low { background: var(--success-50); color: var(--success-900); }
+
+        /* ── Tag chip ── */
+        .tag-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 3px;
+            background: var(--neutral-900);
+            color: var(--neutral-00);
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* ── Pagination ── */
+        .tp-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--neutral-50);
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .tp-pagination-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tp-pagination-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .tp-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .page-size-select {
+            height: 32px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 0 24px 0 8px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--text-normal);
+            background: var(--neutral-00);
+            appearance: auto;
+            cursor: pointer;
+        }
+        .page-btn {
+            width: 28px; height: 28px;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 3px; border: none; background: none;
+            color: var(--text-light); cursor: pointer; font-size: 18px;
+            transition: background 0.15s;
+        }
+        .page-btn:hover { background: var(--neutral-25); color: var(--text-normal); }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-input {
+            width: 44px; height: 32px;
+            border: 1px solid var(--neutral-200); border-radius: 2px;
+            text-align: center; font-size: 13px; font-family: inherit;
+            color: var(--text-normal);
+        }
+        .page-label { font-size: 13px; color: var(--text-light); }
+
+        /* ── Footer ── */
+        .page-footer {
+            padding: 16px; border-top: 1px solid var(--neutral-50);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 12px; color: var(--text-light); margin-top: 16px;
+        }
+        .page-footer a { color: var(--text-light); text-decoration: none; margin: 0 6px; }
+        .footer-brand { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-light-alt); }
+    </style>
+</head>
+<body>
+
+<!-- ══ Top Header ══ -->
+<header class="header-bar">
+    <div class="header-brand">
+        <span class="dj-mark">DOW JONES</span>
+        <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
+    </div>
+    <div class="header-actions">
+        <span>Customer Support</span>
+        <span>Feedback</span>
+        <span class="material-icons-outlined" style="font-size:18px">notifications</span>
+        <span class="material-icons-outlined" style="font-size:18px">settings</span>
+    </div>
+</header>
+
+<!-- ══ Main Nav ══ -->
+<nav class="main-nav">
+    <a>Dashboard</a>
+    <a class="active">Third Parties</a>
+    <a>Employees</a>
+    <a>Risk Search</a>
+    <a>Company Admin</a>
+    <a>Settings</a>
+    <a>Reports</a>
+</nav>
+
+<!-- ══ Page Body ══ -->
+<div class="page-wrapper">
+    <div class="tp-card">
+
+        <!-- Title row -->
+        <div class="tp-title-row">
+            <h1 class="tp-title">Third parties</h1>
+            <div class="tp-title-actions">
+                <button class="btn btn-view">
+                    Standard View
+                    <span class="material-icons-outlined" style="font-size:18px">arrow_drop_down</span>
+                </button>
+                <button class="btn btn-icon">
+                    <span class="material-icons-outlined" style="font-size:18px">filter_list</span>
+                </button>
+                <button class="btn btn-outline">
+                    <span class="material-icons-outlined" style="font-size:16px">upload</span>
+                    Bulk Import
+                </button>
+                <button class="btn btn-filled">
+                    <span class="material-icons-outlined" style="font-size:16px">add</span>
+                    Add New
+                </button>
+            </div>
+        </div>
+
+        <div class="tp-divider"></div>
+
+        <!-- Toolbar row -->
+        <div class="tp-toolbar">
+            <div class="tp-toolbar-left">
+                <div class="search-wrap">
+                    <input class="search-input" type="text" placeholder="Quick search">
+                    <span class="material-icons-outlined search-icon">search</span>
+                </div>
+                <button class="btn btn-icon">
+                    <span class="material-icons-outlined" style="font-size:18px">refresh</span>
+                </button>
+            </div>
+            <div class="tp-toolbar-right">
+                <button class="btn btn-outline">
+                    <span class="material-icons-outlined" style="font-size:16px">download</span>
+                    Export
+                </button>
+                <button class="btn btn-outline">Save</button>
+                <button class="btn btn-outline">Save As</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="tp-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name <span class="material-icons-outlined sort-icon">arrow_upward</span></th>
+                        <th>Owner Name <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Business Unit <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Tags <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Approval Stage <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Current Risk Level <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Internal Reference <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Current Status <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Acme company LTDA</a></td>
+                        <td>Claudio Merino</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-high">High Risk <span class="material-icons-outlined">error</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">ACME INC</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Requires Risk Assessment</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">ADIDAS ITALY SPA</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-high">High Risk <span class="material-icons-outlined">error</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Adidas Italy SPA</a></td>
+                        <td>Claudio Merino</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Ali Baba</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Entity Verification</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-high">High Risk <span class="material-icons-outlined">error</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Apparel Empire</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Entity Verification</td>
+                        <td><span class="tag-chip">Gas &amp; Oil</span></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-medium">Medium Risk <span class="material-icons-outlined">error_outline</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Apparel Empire</a></td>
+                        <td>This is the name of my default group</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Apple</a></td>
+                        <td>Emily Forbes</td>
+                        <td>test</td>
+                        <td><span class="tag-chip">Gas &amp; Oil</span></td>
+                        <td>Requires Risk Mitigation</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Arlei</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Baxter Juarez</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Entity Verification</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td>SoleMaker0001</td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Baxter Juarez</a></td>
+                        <td>Claudio Merino</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-high">High Risk <span class="material-icons-outlined">error</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">BESTWAY WHOLESALE HOLDINGS LIMITED</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Requires Risk Assessment</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Blanco</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-high">High Risk <span class="material-icons-outlined">error</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">BMW</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td><span class="tag-chip">Gas &amp; Oil</span></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-medium">Medium Risk <span class="material-icons-outlined">error_outline</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">BP P.L.C.</a></td>
+                        <td>Emily Forbes</td>
+                        <td>test</td>
+                        <td></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">British Petroleum</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-medium">Medium Risk <span class="material-icons-outlined">error_outline</span></span></td>
+                        <td>Ea ut sint laboriosa</td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Coinbase</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Coke</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Europe</td>
+                        <td></td>
+                        <td>Approved</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Donald John Trump</a></td>
+                        <td>Emily Forbes</td>
+                        <td>Entity Verification</td>
+                        <td></td>
+                        <td>Requires Onboarding</td>
+                        <td><span class="risk-badge risk-high">High Risk <span class="material-icons-outlined">error</span></span></td>
+                        <td></td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="index.html">Dundler Mifflin</a></td>
+                        <td>Emily Forbes</td>
+                        <td>test</td>
+                        <td></td>
+                        <td>Requires Risk Mitigation</td>
+                        <td><span class="risk-badge risk-low">Low Risk <span class="material-icons-outlined">check_circle</span></span></td>
+                        <td></td>
+                        <td>Open (Pending Review)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="tp-pagination">
+            <div class="tp-pagination-left">
+                <select class="page-size-select">
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+                <span class="page-label">Showing results 1 – 20 of 199</span>
+            </div>
+            <div class="tp-pagination-right">
+                <button class="page-btn" disabled title="First page">
+                    <span class="material-icons-outlined">first_page</span>
+                </button>
+                <button class="page-btn" disabled title="Previous page">
+                    <span class="material-icons-outlined">chevron_left</span>
+                </button>
+                <span class="page-label">Page</span>
+                <input class="page-input" type="number" value="1" min="1" max="8">
+                <span class="page-label">of 8</span>
+                <button class="page-btn" title="Next page">
+                    <span class="material-icons-outlined">chevron_right</span>
+                </button>
+                <button class="page-btn" title="Last page">
+                    <span class="material-icons-outlined">last_page</span>
+                </button>
+            </div>
+        </div>
+
+    </div><!-- /.tp-card -->
+</div><!-- /.page-wrapper -->
+
+<!-- ══ Footer ══ -->
+<footer class="page-footer">
+    <div>
+        <a href="#">Privacy Notice</a> |
+        <a href="#">Cookie Policy</a> |
+        <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-brand">
+        <span style="font-weight:700;font-size:11px;color:var(--text-light)">DOW JONES</span>
+        &copy; 2025 Dow Jones &amp; Company, Inc. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>
