@@ -127,18 +127,19 @@
         @media (min-width: 1712px) {
             .tp-top-strip { margin-left: auto; margin-right: auto; }
         }
-        /* ── Connection success alert ── */
+        /* ── Connection alert banner ── */
         .conn-alert {
             display: none;
             width: 100%;
             height: 60px;
-            background: #5fe9a9;
             align-items: center;
             padding: 0 29px;
             gap: 8px;
             overflow: hidden;
         }
         .conn-alert.visible { display: flex; }
+        .conn-alert.success { background: #5fe9a9; }
+        .conn-alert.warning { background: var(--alert-50); }
         .conn-alert-icon {
             display: flex;
             align-items: center;
@@ -146,15 +147,17 @@
             width: 24px;
             height: 24px;
             flex-shrink: 0;
-            color: #07502e;
         }
+        .conn-alert.success .conn-alert-icon { color: #07502e; }
+        .conn-alert.warning .conn-alert-icon { color: var(--alert-700); }
         .conn-alert-text {
             font-family: 'Roboto', sans-serif;
             font-weight: 500;
             font-size: 14px;
-            color: #07502e;
             white-space: nowrap;
         }
+        .conn-alert.success .conn-alert-text { color: #07502e; }
+        .conn-alert.warning .conn-alert-text { color: var(--alert-700); }
 
         .breadcrumb-row {
             display: flex;
@@ -1669,13 +1672,18 @@
 </div>
 
 <script>
-// ── Connection success alert ──
+// ── Connection alert banner ──
 let connAlertTimer = null;
-function showConnAlert() {
-    const alert = document.getElementById('conn-alert');
-    alert.classList.add('visible');
+function showConnAlert(type, message) {
+    const el = document.getElementById('conn-alert');
+    const icon = el.querySelector('.conn-alert-icon');
+    const text = el.querySelector('.conn-alert-text');
+    el.classList.remove('success', 'warning', 'visible');
+    el.classList.add(type, 'visible');
+    icon.textContent = type === 'success' ? 'check_circle' : 'remove_circle';
+    text.textContent = message;
     clearTimeout(connAlertTimer);
-    connAlertTimer = setTimeout(() => alert.classList.remove('visible'), 5000);
+    connAlertTimer = setTimeout(() => el.classList.remove('visible'), 5000);
 }
 
 // ── Shared: move checked rows into Connected Third Parties ──
@@ -1701,7 +1709,7 @@ function connectRows(sourceTbody, checkClass) {
         // Microinteraction: flash green on add
         newRow.classList.add('row-added');
         newRow.addEventListener('animationend', () => newRow.classList.remove('row-added'), { once: true });
-        showConnAlert();
+        showConnAlert('success', 'Connection added successfully');
     });
 }
 
@@ -1747,6 +1755,7 @@ function connectRows(sourceTbody, checkClass) {
         row.style.transition = 'opacity 0.25s ease';
         row.style.opacity = '0';
         setTimeout(() => row.remove(), 250);
+        showConnAlert('warning', 'Third party disconnected successfully');
     });
 
     document.getElementById('ctx-edit').addEventListener('click', () => {
