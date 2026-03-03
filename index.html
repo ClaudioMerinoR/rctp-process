@@ -127,6 +127,35 @@
         @media (min-width: 1712px) {
             .tp-top-strip { margin-left: auto; margin-right: auto; }
         }
+        /* ── Connection success alert ── */
+        .conn-alert {
+            display: none;
+            width: 100%;
+            height: 60px;
+            background: #5fe9a9;
+            align-items: center;
+            padding: 0 29px;
+            gap: 8px;
+            overflow: hidden;
+        }
+        .conn-alert.visible { display: flex; }
+        .conn-alert-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            color: #07502e;
+        }
+        .conn-alert-text {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: #07502e;
+            white-space: nowrap;
+        }
+
         .breadcrumb-row {
             display: flex;
             align-items: center;
@@ -1036,6 +1065,12 @@
     <a>Reports</a>
 </nav>
 
+<!-- ══ Connection success alert ══ -->
+<div class="conn-alert" id="conn-alert">
+    <span class="conn-alert-icon material-icons-outlined">check_circle</span>
+    <span class="conn-alert-text">Connection added successfully</span>
+</div>
+
 <!-- ══ Breadcrumbs (on grey background) ══ -->
 <div style="max-width:1680px;margin:0 auto;">
     <div class="breadcrumb-row">
@@ -1634,6 +1669,15 @@
 </div>
 
 <script>
+// ── Connection success alert ──
+let connAlertTimer = null;
+function showConnAlert() {
+    const alert = document.getElementById('conn-alert');
+    alert.classList.add('visible');
+    clearTimeout(connAlertTimer);
+    connAlertTimer = setTimeout(() => alert.classList.remove('visible'), 5000);
+}
+
 // ── Shared: move checked rows into Connected Third Parties ──
 function connectRows(sourceTbody, checkClass) {
     const connectedTbody = document.getElementById('connected-tbody');
@@ -1657,6 +1701,7 @@ function connectRows(sourceTbody, checkClass) {
         // Microinteraction: flash green on add
         newRow.classList.add('row-added');
         newRow.addEventListener('animationend', () => newRow.classList.remove('row-added'), { once: true });
+        showConnAlert();
     });
 }
 
