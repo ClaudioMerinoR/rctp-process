@@ -1831,7 +1831,7 @@ function connectRows(sourceTbody, checkClass) {
         if (e.target.classList.contains('ss-check')) updateSsButtons();
     });
     btnDiscard.addEventListener('click', () => {
-        tbody.querySelectorAll('.ss-check').forEach(cb => cb.checked = false);
+        [...tbody.querySelectorAll('tr')].filter(tr => tr.querySelector('.ss-check:checked')).forEach(tr => tr.remove());
         selectAll.checked = false;
         selectAll.indeterminate = false;
         updateSsButtons();
