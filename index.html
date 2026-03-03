@@ -446,27 +446,7 @@
             color: var(--text-normal);
         }
         .btn-discard:disabled { opacity: 0.4; cursor: not-allowed; }
-        .btn-search {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            height: 36px;
-            padding: 0 16px;
-            border: 1px solid var(--neutral-200);
-            border-radius: 4px;
-            background: var(--neutral-00);
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-normal);
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.3s ease, border-color 0.3s ease;
-        }
-        .btn-search:hover {
-            background: var(--neutral-25);
-            border-color: var(--neutral-300);
-        }
+        .btn-search { gap: 6px; }
         .field-link { color: var(--primary-500); text-decoration: none; }
         .field-link:hover { text-decoration: underline; }
 
@@ -1239,8 +1219,8 @@
                     </div>
 
                     <div style="display:flex;justify-content:flex-end;padding-top:8px">
-                        <button class="btn-search">
-                            <span class="material-icons-outlined" style="font-size:18px">search</span>
+                        <button class="btn btn-outline btn-search">
+                            <span class="material-icons-outlined" style="font-size:16px">search</span>
                             Look for more connections
                         </button>
                     </div>
