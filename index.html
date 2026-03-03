@@ -470,6 +470,48 @@
         .field-link { color: var(--primary-500); text-decoration: none; }
         .field-link:hover { text-decoration: underline; }
 
+        /* ── Row add microinteraction ── */
+        @keyframes rowAdded {
+            0%   { background-color: var(--success-50); }
+            60%  { background-color: var(--success-50); }
+            100% { background-color: transparent; }
+        }
+        #connected-tbody tr.row-added td {
+            animation: rowAdded 1.4s ease forwards;
+        }
+
+        /* ── Contextual menu ── */
+        .ctx-menu {
+            display: none;
+            position: fixed;
+            z-index: 600;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px rgba(0,0,0,0.15);
+            min-width: 112px;
+            width: 160px;
+            padding: 8px 0;
+            outline: none;
+        }
+        .ctx-menu.open { display: block; }
+        .ctx-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            color: var(--text-normal);
+            letter-spacing: 0.4px;
+            line-height: 16px;
+            cursor: pointer;
+            background: #fff;
+            transition: background 0.15s ease;
+            white-space: nowrap;
+        }
+        .ctx-menu-item:hover { background: var(--neutral-25); }
+        .ctx-menu-item.danger { color: var(--alert-500); }
+
         /* ── Connections Sidesheet ── */
         .sidesheet-overlay {
             display: none;
@@ -1130,7 +1172,7 @@
                                     <th style="width:32px"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="connected-tbody">
                                 <tr>
                                     <td><span class="cell-link">GAZPROM PAO</span></td>
                                     <td>Subsidiary</td>
@@ -1167,29 +1209,29 @@
                             <tbody id="suggested-tbody">
                                 <tr>
                                     <td><input type="checkbox" class="suggested-check"></td>
-                                    <td><span class="cell-link">GAZPROM PAO</span></td>
-                                    <td>Subsidiary</td>
-                                    <td>DUNS Number</td>
-                                    <td>644908233</td>
-                                    <td>F5543343K</td>
-                                    <td>Russian Federation</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="suggested-check"></td>
                                     <td><span class="cell-link">GAZMASH IO</span></td>
                                     <td>Subsidiary</td>
                                     <td>DUNS Number</td>
-                                    <td>644908233</td>
-                                    <td>F5543343K</td>
+                                    <td>788234901</td>
+                                    <td>G9921234A</td>
                                     <td>Russian Federation</td>
                                 </tr>
                                 <tr>
                                     <td><input type="checkbox" class="suggested-check"></td>
-                                    <td><span class="cell-link">GAZPROM PAO</span></td>
-                                    <td>Subsidiary</td>
-                                    <td>DUNS Number</td>
-                                    <td>644908233</td>
-                                    <td>F5543343K</td>
+                                    <td><span class="cell-link">NOVATEK PJSC</span></td>
+                                    <td>Parent</td>
+                                    <td>LEI</td>
+                                    <td>RU0520000045</td>
+                                    <td>N4456789B</td>
+                                    <td>Russian Federation</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="suggested-check"></td>
+                                    <td><span class="cell-link">LUKOIL OAO</span></td>
+                                    <td>Affiliate</td>
+                                    <td>BVD ID</td>
+                                    <td>BVD432187</td>
+                                    <td>L3312678C</td>
                                     <td>Russian Federation</td>
                                 </tr>
                             </tbody>
@@ -1473,6 +1515,12 @@
     </div>
 </footer>
 
+<!-- ── Contextual menu ── -->
+<div class="ctx-menu" id="ctx-menu" tabindex="-1">
+    <div class="ctx-menu-item" id="ctx-edit">Edit</div>
+    <div class="ctx-menu-item danger" id="ctx-disconnect">Disconnect</div>
+</div>
+
 <!-- ── Connections Sidesheet ── -->
 <div class="sidesheet-overlay" id="conn-sidesheet-overlay"></div>
 <div class="sidesheet" id="conn-sidesheet" role="dialog" aria-modal="true" aria-label="Search for connections">
@@ -1520,29 +1568,29 @@
                 <tbody id="ss-tbody">
                     <tr>
                         <td><input type="checkbox" class="ss-check"></td>
-                        <td><span class="ss-cell-link">GAZPROM PAO</span></td>
+                        <td><span class="ss-cell-link">ROSNEFT OIL CO</span></td>
                         <td>Subsidiary</td>
                         <td>DUNS Number</td>
-                        <td>644908233</td>
-                        <td>F5543343K</td>
+                        <td>512340987</td>
+                        <td>R7712345D</td>
                         <td>Russian Federation</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" class="ss-check"></td>
-                        <td><span class="ss-cell-link">GAZMASH IO</span></td>
-                        <td>Subsidiary</td>
-                        <td>DUNS Number</td>
-                        <td>644908233</td>
-                        <td>F5543343K</td>
+                        <td><span class="ss-cell-link">TRANSNEFT PJSC</span></td>
+                        <td>Affiliate</td>
+                        <td>LEI</td>
+                        <td>RU0430000072</td>
+                        <td>T8823456E</td>
                         <td>Russian Federation</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" class="ss-check"></td>
-                        <td><span class="ss-cell-link">GAZPROM PAO</span></td>
-                        <td>Subsidiary</td>
-                        <td>DUNS Number</td>
-                        <td>644908233</td>
-                        <td>F5543343K</td>
+                        <td><span class="ss-cell-link">SIBUR HOLDING</span></td>
+                        <td>Parent</td>
+                        <td>BVD ID</td>
+                        <td>BVD891234</td>
+                        <td>S5534567F</td>
                         <td>Russian Federation</td>
                     </tr>
                 </tbody>
@@ -1552,6 +1600,88 @@
 </div>
 
 <script>
+// ── Shared: move checked rows into Connected Third Parties ──
+function connectRows(sourceTbody, checkClass) {
+    const connectedTbody = document.getElementById('connected-tbody');
+    const checkedRows = [...sourceTbody.querySelectorAll('tr')].filter(tr =>
+        tr.querySelector('.' + checkClass + ':checked')
+    );
+    checkedRows.forEach(tr => {
+        const cells = tr.querySelectorAll('td');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td><span class="cell-link">${cells[1].textContent.trim()}</span></td>
+            <td>${cells[2].textContent.trim()}</td>
+            <td>${cells[3].textContent.trim()}</td>
+            <td>${cells[4].textContent.trim()}</td>
+            <td>${cells[5].textContent.trim()}</td>
+            <td>${cells[6].textContent.trim()}</td>
+            <td class="more-menu"><span class="material-icons-outlined" style="font-size:18px">more_vert</span></td>
+        `;
+        connectedTbody.appendChild(newRow);
+        tr.remove();
+        // Microinteraction: flash green on add
+        newRow.classList.add('row-added');
+        newRow.addEventListener('animationend', () => newRow.classList.remove('row-added'), { once: true });
+    });
+}
+
+// ── Context menu ──
+(() => {
+    const menu = document.getElementById('ctx-menu');
+    let activeRow = null;
+
+    function openMenu(row, anchorEl) {
+        activeRow = row;
+        const rect = anchorEl.getBoundingClientRect();
+        menu.style.top  = rect.bottom + 4 + 'px';
+        menu.style.left = rect.right - menu.offsetWidth + 'px';
+        menu.classList.add('open');
+        // Adjust if off-screen right
+        const menuRect = menu.getBoundingClientRect();
+        if (menuRect.right > window.innerWidth - 8) {
+            menu.style.left = (window.innerWidth - menuRect.width - 8) + 'px';
+        }
+    }
+
+    function closeMenu() {
+        menu.classList.remove('open');
+        activeRow = null;
+    }
+
+    document.getElementById('connected-tbody').addEventListener('click', e => {
+        const btn = e.target.closest('.more-menu');
+        if (!btn) return;
+        const row = btn.closest('tr');
+        if (activeRow === row && menu.classList.contains('open')) {
+            closeMenu();
+        } else {
+            openMenu(row, btn);
+        }
+        e.stopPropagation();
+    });
+
+    document.getElementById('ctx-disconnect').addEventListener('click', () => {
+        if (!activeRow) return;
+        activeRow.style.transition = 'opacity 0.25s ease';
+        activeRow.style.opacity = '0';
+        setTimeout(() => activeRow.remove(), 250);
+        closeMenu();
+    });
+
+    document.getElementById('ctx-edit').addEventListener('click', () => {
+        closeMenu();
+    });
+
+    document.addEventListener('click', e => {
+        if (!menu.contains(e.target)) closeMenu();
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeMenu();
+    });
+})();
+
 // ── Suggested Third Parties checkbox logic ──
 (() => {
     const selectAll = document.getElementById('suggested-select-all');
@@ -1563,11 +1693,8 @@
         const checks = tbody.querySelectorAll('.suggested-check');
         const checkedCount = tbody.querySelectorAll('.suggested-check:checked').length;
         const hasSelection = checkedCount > 0;
-
         btnDiscard.disabled = !hasSelection;
         btnConnect.disabled = !hasSelection;
-
-        // Update select-all state
         if (checkedCount === 0) {
             selectAll.checked = false;
             selectAll.indeterminate = false;
@@ -1581,15 +1708,26 @@
     }
 
     selectAll.addEventListener('change', () => {
-        const checks = tbody.querySelectorAll('.suggested-check');
-        checks.forEach(cb => cb.checked = selectAll.checked);
+        tbody.querySelectorAll('.suggested-check').forEach(cb => cb.checked = selectAll.checked);
         updateButtons();
     });
 
     tbody.addEventListener('change', (e) => {
-        if (e.target.classList.contains('suggested-check')) {
-            updateButtons();
-        }
+        if (e.target.classList.contains('suggested-check')) updateButtons();
+    });
+
+    btnConnect.addEventListener('click', () => {
+        connectRows(tbody, 'suggested-check');
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+        updateButtons();
+    });
+
+    btnDiscard.addEventListener('click', () => {
+        tbody.querySelectorAll('.suggested-check').forEach(cb => cb.checked = false);
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+        updateButtons();
     });
 })();
 
@@ -1659,6 +1797,14 @@
         selectAll.checked = false;
         selectAll.indeterminate = false;
         updateSsButtons();
+    });
+    btnConnect.addEventListener('click', () => {
+        if (!btnConnect.classList.contains('active')) return;
+        connectRows(tbody, 'ss-check');
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+        updateSsButtons();
+        closeSheet();
     });
 })();
 
