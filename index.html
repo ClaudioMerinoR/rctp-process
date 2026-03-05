@@ -766,6 +766,11 @@
             cursor: pointer;
             padding: 0 4px;
         }
+        /* ── Connect TP info panel ── */
+        .connect-tp-field { display:flex; flex-direction:column; gap:2px; }
+        .connect-tp-label { font-size:11px; font-weight:500; color:var(--primary-600); text-transform:uppercase; letter-spacing:0.5px; }
+        .connect-tp-value { font-size:14px; color:var(--text-normal); }
+
         .ss-btn-connect {
             height: 32px;
             padding: 0 12px;
@@ -1351,7 +1356,6 @@
                                 <tr>
                                     <th style="width:32px"><input type="checkbox" id="suggested-select-all"></th>
                                     <th>Third Party Name</th>
-                                    <th>Connection Type</th>
                                     <th>ID Type</th>
                                     <th>ID Value</th>
                                     <th>Internal Reference or ID</th>
@@ -1362,7 +1366,6 @@
                                 <tr>
                                     <td><input type="checkbox" class="suggested-check"></td>
                                     <td><span class="cell-link">GAZMASH IO</span></td>
-                                    <td>Subsidiary</td>
                                     <td>DUNS Number</td>
                                     <td>788234901</td>
                                     <td>G9921234A</td>
@@ -1371,7 +1374,6 @@
                                 <tr>
                                     <td><input type="checkbox" class="suggested-check"></td>
                                     <td><span class="cell-link">NOVATEK PJSC</span></td>
-                                    <td>Parent</td>
                                     <td>LEI</td>
                                     <td>RU0520000045</td>
                                     <td>N4456789B</td>
@@ -1380,7 +1382,6 @@
                                 <tr>
                                     <td><input type="checkbox" class="suggested-check"></td>
                                     <td><span class="cell-link">LUKOIL OAO</span></td>
-                                    <td>Affiliate</td>
                                     <td>BVD ID</td>
                                     <td>BVD432187</td>
                                     <td>L3312678C</td>
@@ -1675,6 +1676,42 @@
     <div class="ctx-menu-item danger" id="ctx-disconnect">Disconnect</div>
 </div>
 
+<!-- ── Connect Third Party Sidesheet ── -->
+<div class="sidesheet-overlay" id="connect-tp-overlay"></div>
+<div class="sidesheet" id="connect-tp-sheet" role="dialog" aria-modal="true" aria-label="Connect Third Party" style="width:480px;min-width:480px">
+    <div class="sidesheet-header">
+        <div class="sidesheet-title">Connect Third Party</div>
+    </div>
+    <div class="sidesheet-title-bar"></div>
+    <div style="padding:24px 16px;display:flex;flex-direction:column;gap:20px;flex:1;overflow-y:auto">
+        <!-- TP info -->
+        <div id="connect-tp-info" style="display:flex;flex-direction:column;gap:8px"></div>
+        <!-- Connection type -->
+        <div style="display:flex;flex-direction:column;gap:4px">
+            <label style="font-size:11px;font-weight:500;color:var(--primary-600);text-transform:uppercase;letter-spacing:0.5px">Connection Type</label>
+            <select id="connect-tp-type" style="height:32px;border:1px solid var(--neutral-200);border-radius:2px;padding:0 8px;font-size:14px;font-family:inherit;color:var(--text-normal);background:#fff;width:100%">
+                <option value="">Please select</option>
+                <option value="Director">Director</option>
+                <option value="Entity">Entity</option>
+                <option value="Joint Venture Partner">Joint Venture Partner</option>
+                <option value="Key Employee">Key Employee</option>
+                <option value="Other Associated Entity">Other Associated Entity</option>
+                <option value="Parent Company">Parent Company</option>
+                <option value="Primary Entity">Primary Entity</option>
+                <option value="Shareholder">Shareholder</option>
+                <option value="Subcontractor">Subcontractor</option>
+                <option value="Subsidiary">Subsidiary</option>
+                <option value="UBO">UBO</option>
+            </select>
+        </div>
+        <!-- Actions -->
+        <div style="display:flex;gap:8px;justify-content:flex-end;padding-top:8px">
+            <button class="btn btn-outline" id="connect-tp-cancel">Cancel</button>
+            <button class="btn btn-filled" id="connect-tp-confirm">Connect</button>
+        </div>
+    </div>
+</div>
+
 <!-- ── Connections Sidesheet ── -->
 <div class="sidesheet-overlay" id="conn-sidesheet-overlay"></div>
 <div class="sidesheet" id="conn-sidesheet" role="dialog" aria-modal="true" aria-label="Search for connections">
@@ -1894,10 +1931,13 @@ function connectRows(sourceTbody, checkClass) {
     });
 
     btnConnect.addEventListener('click', () => {
-        connectRows(tbody, 'suggested-check');
-        selectAll.checked = false;
-        selectAll.indeterminate = false;
-        updateButtons();
+        const checkedRows = [...tbody.querySelectorAll('tr')].filter(tr => tr.querySelector('.suggested-check:checked'));
+        if (!checkedRows.length) return;
+        openConnectSheet(checkedRows, () => {
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+            updateButtons();
+        });
     });
 
     btnDiscard.addEventListener('click', () => {
@@ -2023,6 +2063,81 @@ function connectRows(sourceTbody, checkClass) {
             relMenu.classList.remove('open');
         }
     });
+})();
+
+// ── Connect Third Party Sidesheet ──
+(() => {
+    const overlay  = document.getElementById('connect-tp-overlay');
+    const sheet    = document.getElementById('connect-tp-sheet');
+    const infoEl   = document.getElementById('connect-tp-info');
+    const typeEl   = document.getElementById('connect-tp-type');
+    const confirmBtn = document.getElementById('connect-tp-confirm');
+    const cancelBtn  = document.getElementById('connect-tp-cancel');
+    let pendingRows = [];
+    let onDone = null;
+
+    window.openConnectSheet = function(rows, callback) {
+        pendingRows = rows;
+        onDone = callback;
+        typeEl.value = '';
+
+        // Build info from first selected row (cells: 0=cb,1=name,2=idType,3=idValue,4=intRef,5=country)
+        const cells = rows[0].querySelectorAll('td');
+        const fields = [
+            { label: 'Third Party Name', value: cells[1].textContent.trim() },
+            { label: 'ID Type',          value: cells[2].textContent.trim() },
+            { label: 'ID Value',         value: cells[3].textContent.trim() },
+            { label: 'Internal Ref.',    value: cells[4].textContent.trim() },
+            { label: 'Country',          value: cells[5].textContent.trim() },
+        ];
+        if (rows.length > 1) {
+            fields[0].value = `${rows.length} third parties selected`;
+        }
+        infoEl.innerHTML = fields.map(f =>
+            `<div class="connect-tp-field">
+                <span class="connect-tp-label">${f.label}</span>
+                <span class="connect-tp-value">${f.value || '—'}</span>
+            </div>`
+        ).join('');
+
+        overlay.classList.add('open');
+        sheet.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+
+    function closeSheet() {
+        overlay.classList.remove('open');
+        sheet.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    confirmBtn.addEventListener('click', () => {
+        const connType = typeEl.value;
+        const connectedTbody = document.getElementById('connected-tbody');
+        pendingRows.forEach(tr => {
+            const cells = tr.querySelectorAll('td');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><span class="cell-link">${cells[1].textContent.trim()}</span></td>
+                <td>${connType}</td>
+                <td>${cells[2].textContent.trim()}</td>
+                <td>${cells[3].textContent.trim()}</td>
+                <td>${cells[4].textContent.trim()}</td>
+                <td>${cells[5].textContent.trim()}</td>
+                <td class="more-menu"><span class="material-icons-outlined" style="font-size:18px">more_vert</span></td>
+            `;
+            connectedTbody.appendChild(newRow);
+            tr.remove();
+            newRow.classList.add('row-added');
+            newRow.addEventListener('animationend', () => newRow.classList.remove('row-added'), { once: true });
+            showConnAlert('success', 'Connection added successfully');
+        });
+        closeSheet();
+        if (onDone) onDone();
+    });
+
+    cancelBtn.addEventListener('click', closeSheet);
+    overlay.addEventListener('click', closeSheet);
 })();
 
 // ── Tab switching logic ──
