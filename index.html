@@ -321,6 +321,54 @@
         .dot-grey   { background: var(--text-light); }
         .dot-amber  { background: var(--warning-500); }
         .nav-divider { height: 1px; background: var(--neutral-50); margin: 8px 16px; }
+
+        /* ── Nav partner tooltip & NEW tag ── */
+        .nav-item-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 8px;
+        }
+        .nav-new-tag {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fff;
+            background: var(--primary-500);
+            border-radius: 3px;
+            padding: 1px 5px;
+            flex-shrink: 0;
+            line-height: 14px;
+        }
+        .nav-tooltip {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 8px;
+            background: var(--text-normal);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 400;
+            white-space: nowrap;
+            padding: 4px 8px;
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .nav-tooltip::before {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-right-color: var(--text-normal);
+        }
+        .nav-item:hover .nav-tooltip { display: block; }
         .nav-section-label {
             padding: 8px 16px;
             font-size: 14px;
@@ -1150,14 +1198,19 @@
         <div class="nav-item-active">Summary page</div>
         <div class="nav-divider"></div>
         <div class="nav-item"><span class="dot dot-red"></span> Risk Assessment</div>
-        <div class="nav-item">
-            <span class="dot dot-red"></span> Integrity Check
-            <span class="nav-partner-icon">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
-                <img src="partner-icon-integrity.png" alt="">
-            </span>
-        </div>
         <div class="nav-item"><span class="dot dot-grey"></span> Due Diligence</div>
+        <div class="nav-item">
+            <div class="nav-item-wrap">
+                <span class="dot dot-red"></span>
+                Integrity Check
+                <span class="nav-partner-icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                    <img src="partner-icon-integrity.png" alt="">
+                </span>
+                <span class="nav-new-tag">New</span>
+                <span class="nav-tooltip">Powered by Xapiens</span>
+            </div>
+        </div>
         <div class="nav-item"><span class="dot dot-grey"></span> Enhanced Due Diligence Reports</div>
         <div class="nav-item">
             <span class="dot dot-green"></span> UBO
