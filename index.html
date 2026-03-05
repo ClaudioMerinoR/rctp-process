@@ -781,6 +781,71 @@
             cursor: pointer;
             padding: 0 4px;
         }
+        /* ── Notes sidesheet ── */
+        .notes-threads {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: var(--neutral-00);
+        }
+        .notes-divider {
+            height: 4px;
+            background: var(--primary-500);
+            flex-shrink: 0;
+        }
+        .notes-compose {
+            flex-shrink: 0;
+            background: var(--neutral-00);
+            padding: 12px 16px;
+        }
+        .notes-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .notes-tool-btn {
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-light);
+            font-family: 'Roboto', sans-serif;
+            transition: background 0.15s;
+        }
+        .notes-tool-btn:hover { background: var(--neutral-25); color: var(--text-normal); }
+        .notes-tool-btn .material-icons-outlined { font-size: 16px; }
+        .notes-textarea {
+            width: 100%;
+            min-height: 88px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 8px;
+            font-size: 13px;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-normal);
+            resize: vertical;
+            line-height: 1.5;
+        }
+        .notes-textarea::placeholder { color: var(--text-light-alt); }
+        .notes-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--neutral-50);
+            background: var(--neutral-00);
+            flex-shrink: 0;
+        }
+        .notes-actions .btn { font-size: 11px; padding: 0 10px; }
+
         /* ── Connect TP info panel ── */
         .connect-tp-field { display:flex; flex-direction:column; gap:2px; }
         .connect-tp-label { font-size:11px; font-weight:500; color:var(--primary-600); text-transform:uppercase; letter-spacing:0.5px; }
@@ -1281,7 +1346,7 @@
                         <span class="active-text">Active</span>
                         <span class="material-icons-outlined" style="font-size:16px; color:var(--success-700)">verified</span>
                     </div>
-                    <button class="btn btn-outline">Notes</button>
+                    <button class="btn btn-outline" id="btn-notes">Notes</button>
                     <button class="btn btn-filled">Edit</button>
                 </div>
             </div>
@@ -1685,6 +1750,43 @@
     </div>
 </footer>
 
+<!-- ── Notes Sidesheet ── -->
+<div class="sidesheet-overlay" id="notes-overlay"></div>
+<div class="sidesheet" id="notes-sheet" role="dialog" aria-modal="true" aria-label="Notes" style="width:520px;min-width:520px">
+    <div class="sidesheet-header" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px 0">
+        <div class="sidesheet-title" style="padding-bottom:0;font-size:16px">Note - Third Party Summary / Available Threads</div>
+        <button class="btn btn-outline" id="notes-close-btn" style="flex-shrink:0">Close</button>
+    </div>
+    <div class="sidesheet-title-bar" style="margin-top:12px"></div>
+    <div class="notes-threads" id="notes-threads">
+        <!-- Notes/threads appear here -->
+    </div>
+    <div class="notes-divider"></div>
+    <div class="notes-compose">
+        <div class="notes-toolbar">
+            <button class="notes-tool-btn" title="Bold"><strong>B</strong></button>
+            <button class="notes-tool-btn" title="Italic"><em>I</em></button>
+            <button class="notes-tool-btn" title="Underline"><u>U</u></button>
+            <button class="notes-tool-btn" title="Bullet list">
+                <span class="material-icons-outlined">format_list_bulleted</span>
+            </button>
+            <button class="notes-tool-btn" title="Numbered list">
+                <span class="material-icons-outlined">format_list_numbered</span>
+            </button>
+            <button class="notes-tool-btn" title="Line break">
+                <span class="material-icons-outlined">keyboard_return</span>
+            </button>
+        </div>
+        <textarea class="notes-textarea" id="notes-textarea" placeholder="Start a new thread..."></textarea>
+    </div>
+    <div class="notes-actions">
+        <button class="btn btn-outline">Include Internal User</button>
+        <button class="btn btn-outline">Include External User</button>
+        <button class="btn btn-outline">Add Attachment</button>
+        <button class="btn btn-filled" style="margin-left:auto">Add Note</button>
+    </div>
+</div>
+
 <!-- ── Contextual menu ── -->
 <div class="ctx-menu" id="ctx-menu" tabindex="-1">
     <div class="ctx-menu-item" id="ctx-edit">Edit</div>
@@ -2078,6 +2180,29 @@ function connectRows(sourceTbody, checkClass) {
             relMenu.classList.remove('open');
         }
     });
+})();
+
+// ── Notes Sidesheet ──
+(() => {
+    const overlay  = document.getElementById('notes-overlay');
+    const sheet    = document.getElementById('notes-sheet');
+    const openBtn  = document.getElementById('btn-notes');
+    const closeBtn = document.getElementById('notes-close-btn');
+
+    function open() {
+        overlay.classList.add('open');
+        sheet.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function close() {
+        overlay.classList.remove('open');
+        sheet.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
 // ── Connect Third Party Sidesheet ──
