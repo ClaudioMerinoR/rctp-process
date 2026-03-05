@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAZPROM, PAO - Documents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary-500: #02A3D5;
+            --primary-600: #0289B3;
+            --primary-700: #016F91;
+            --primary-08: #E8F9FE;
+            --primary-200: #7BCFE9;
+            --text-normal: #0C2A31;
+            --text-light: #516267;
+            --text-light-alt: #5A6E73;
+            --text-dark: #061619;
+            --neutral-00: #FFFFFF;
+            --neutral-25: #EFEFEF;
+            --neutral-50: #DFE3E7;
+            --neutral-100: #D6DBE0;
+            --neutral-200: #C4CCD2;
+            --neutral-300: #B1BCC5;
+            --neutral-900: #33383D;
+            --alert-500: #E34C53;
+            --alert-700: #9A3438;
+            --alert-50: #F7CDCF;
+            --success-500: #13DF81;
+            --success-700: #0D9858;
+            --success-900: #07502E;
+            --success-50: #BDF6DC;
+            --warning-500: #F0C043;
+            --warning-900: #564518;
+            --warning-50: #FBEDCA;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--neutral-25);
+            color: var(--text-normal);
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── Header ── */
+        .header-bar { background-color: var(--text-normal); height: 40px; color: #fff; }
+        .header-bar-inner {
+            max-width: 1920px; margin: 0 auto; height: 100%;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+        }
+        .header-brand { display: flex; align-items: center; gap: 8px; }
+        .header-brand .dj-mark { font-weight: 700; font-size: 13px; letter-spacing: 0.5px; }
+        .header-brand .product-name { color: var(--primary-500); font-size: 15px; font-weight: 500; letter-spacing: 0.5px; }
+        .header-actions { display: flex; align-items: center; }
+        .header-actions span {
+            padding: 0 8px; font-size: 12px; cursor: pointer;
+            border-left: 1px solid var(--text-light); height: 24px;
+            display: flex; align-items: center; transition: color 0.2s;
+        }
+        .header-actions span:hover { color: var(--primary-500); }
+        .header-actions span:first-child { border-left: none; }
+
+        /* ── Main Nav ── */
+        .main-nav { background-color: var(--primary-500); height: 32px; }
+        .main-nav-inner {
+            max-width: 1920px; margin: 0 auto; height: 100%;
+            display: flex; align-items: stretch; padding: 0 16px;
+        }
+        .main-nav a {
+            display: flex; align-items: center; padding: 0 16px;
+            color: #fff; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            text-decoration: none; cursor: pointer; transition: background 0.2s;
+        }
+        .main-nav a:hover { background: var(--primary-600); }
+        .main-nav a.active { background: var(--primary-600); }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb-wrap { max-width: 1920px; margin: 0 auto; }
+        .breadcrumb-row {
+            display: flex; align-items: center; gap: 4px;
+            padding: 8px 16px; font-size: 12px;
+            color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .breadcrumb-row .material-icons-outlined { font-size: 18px; color: var(--text-light); cursor: pointer; }
+        .breadcrumb-row .sep { margin: 0 2px; }
+
+        /* ── TP Top Strip ── */
+        .tp-top-strip {
+            max-width: 1888px; margin: 0 auto;
+            background-color: var(--neutral-00); padding: 0 16px;
+        }
+        .tp-page-header { padding: 0 16px 12px; margin: 16px 0; }
+        .tp-back {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 13px; font-weight: 500; color: var(--text-normal);
+            cursor: pointer; margin-bottom: 8px; text-decoration: none;
+        }
+        .tp-back:hover { color: var(--primary-600); }
+        .tp-title-row { display: flex; align-items: flex-start; justify-content: space-between; }
+        .tp-name-group { display: flex; align-items: center; gap: 10px; }
+        .tp-name-group h1 { font-size: 24px; font-weight: 500; color: var(--text-normal); }
+        .tp-verified {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 12px; font-weight: 500; color: var(--success-700);
+            background: var(--success-50); border-radius: 4px; padding: 2px 8px;
+        }
+        .tp-verified .material-icons-outlined { font-size: 14px; }
+        .tp-badges { display: flex; align-items: center; gap: 12px; }
+        .tp-badge-group { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-light); }
+        .tp-badge-label { font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; font-size: 11px; }
+        .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-pending { background: var(--warning-50); color: var(--warning-900); }
+        .badge-high { background: var(--alert-50); color: var(--alert-700); }
+        .badge-btn { cursor: pointer; }
+
+        /* ── Page layout ── */
+        .page-container { max-width: 1920px; margin: 0 auto; }
+        .page-body { display: flex; gap: 0; align-items: flex-start; }
+
+        /* ── Side Nav ── */
+        .side-nav { width: 256px; flex-shrink: 0; background: var(--neutral-25); padding: 8px 0; }
+        .side-nav .nav-item-active {
+            display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+            font-size: 14px; font-weight: 500; color: var(--text-normal);
+            background: rgba(74,68,89,0.12); border-radius: 4px; cursor: pointer;
+        }
+        .side-nav .nav-item {
+            display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+            font-size: 14px; color: var(--text-normal); cursor: pointer;
+            border-radius: 4px; text-decoration: none;
+        }
+        .side-nav .nav-item { transition: background 0.2s; }
+        .side-nav .nav-item:hover { background: rgba(0,0,0,0.06); }
+        .dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+        .dot-red   { background: var(--alert-500); }
+        .dot-grey  { background: var(--text-light); }
+        .dot-green { background: var(--success-500); }
+        .dot-amber { background: var(--warning-500); }
+        .nav-divider { height: 1px; background: var(--neutral-50); margin: 8px 16px; }
+        .nav-section-label {
+            display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+            font-size: 14px; font-weight: 500; color: #49454F; cursor: pointer;
+        }
+        .nav-section-label:hover { background: rgba(0,0,0,0.04); }
+        .nav-section-label.active { color: var(--primary-600); font-weight: 600; }
+        .nav-partner-icon { position: relative; width: 16px; height: 16px; flex-shrink: 0; display: inline-flex; }
+        .nav-partner-icon svg { position: absolute; inset: 0; }
+        .nav-partner-icon img { position: absolute; inset: 0; width: 16px; height: 16px; object-fit: cover; border-radius: 50%; }
+
+        /* ── Main Content ── */
+        .main-content { flex: 1; padding: 16px; min-width: 0; }
+
+        /* ── Documents Card ── */
+        .doc-card {
+            background: var(--neutral-00);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .doc-card-header {
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-normal);
+            border-bottom: 1px solid var(--neutral-50);
+        }
+
+        /* ── Table ── */
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead th {
+            background: var(--neutral-25);
+            border-top: 1px solid var(--neutral-50);
+            border-bottom: 1px solid var(--neutral-50);
+            border-left: 1px solid var(--neutral-50);
+            padding: 8px;
+            text-align: left;
+            font-size: 11px; font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            white-space: nowrap; cursor: pointer; user-select: none;
+        }
+        thead th:first-child { border-left: none; }
+        thead th .sort-icon { font-size: 14px; vertical-align: middle; color: var(--text-light); }
+
+        tbody tr { border-bottom: 1px solid var(--neutral-50); }
+        tbody tr:nth-child(odd) { background: var(--primary-08); }
+        tbody tr:nth-child(even) { background: var(--neutral-00); }
+        tbody tr:hover { background: #d5f2fb; }
+
+        tbody td {
+            padding: 8px; vertical-align: middle;
+            color: var(--text-light);
+            border-left: 1px solid var(--neutral-50);
+        }
+        tbody td:first-child { border-left: none; }
+
+        .cell-link { color: var(--primary-600); font-weight: 500; cursor: pointer; text-decoration: none; }
+        .cell-link:hover { text-decoration: underline; }
+
+        /* ── Pagination ── */
+        .doc-pagination {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px; border-top: 1px solid var(--neutral-50);
+            font-size: 13px; color: var(--text-light);
+        }
+        .page-size-select {
+            height: 32px; border: 1px solid var(--neutral-200); border-radius: 2px;
+            padding: 0 24px 0 8px; font-size: 13px; font-family: inherit;
+            color: var(--text-normal); background: var(--neutral-00); cursor: pointer;
+        }
+        .page-btn {
+            width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 3px; border: none; background: none;
+            color: var(--text-light); cursor: pointer; font-size: 18px; transition: background 0.15s;
+        }
+        .page-btn:hover { background: var(--neutral-25); color: var(--text-normal); }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-input {
+            width: 44px; height: 32px; border: 1px solid var(--neutral-200); border-radius: 2px;
+            text-align: center; font-size: 13px; font-family: inherit; color: var(--text-normal);
+        }
+
+        /* ── Footer ── */
+        .page-footer { border-top: 1px solid var(--neutral-50); font-size: 12px; color: var(--text-light); margin-top: 16px; }
+        .page-footer-inner {
+            max-width: 1920px; margin: 0 auto; padding: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .page-footer a { color: var(--text-light); text-decoration: none; margin: 0 6px; }
+        .footer-brand { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-light-alt); }
+    </style>
+</head>
+<body>
+
+<!-- ══ Top Header ══ -->
+<header class="header-bar">
+    <div class="header-bar-inner">
+        <div class="header-brand">
+            <span class="dj-mark">DOW JONES</span>
+            <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
+        </div>
+        <div class="header-actions">
+            <span>Customer Support</span>
+            <span>Feedback</span>
+            <span class="material-icons-outlined" style="font-size:18px">notifications</span>
+            <span class="material-icons-outlined" style="font-size:18px">settings</span>
+        </div>
+    </div>
+</header>
+
+<!-- ══ Main Nav ══ -->
+<nav class="main-nav">
+    <div class="main-nav-inner">
+        <a>Dashboard</a>
+        <a class="active" href="third-parties.html">Third Parties</a>
+        <a>Employees</a>
+        <a>Risk Search</a>
+        <a>Company Admin</a>
+        <a>Settings</a>
+        <a>Reports</a>
+    </div>
+</nav>
+
+<!-- ══ Breadcrumbs ══ -->
+<div class="breadcrumb-wrap">
+    <div class="breadcrumb-row">
+        <span class="material-icons-outlined">home</span>
+        <span class="sep">/</span>
+        <span>THIRD PARTIES</span>
+        <span class="sep">/</span>
+        <span>GAZPROM</span>
+    </div>
+</div>
+
+<!-- ══ TP Top Strip ══ -->
+<div class="tp-top-strip">
+    <div class="tp-page-header">
+        <a class="tp-back" href="index.html">
+            <span class="material-icons-outlined" style="font-size:18px">chevron_left</span> Back
+        </a>
+        <div class="tp-title-row">
+            <div class="tp-name-group">
+                <h1>GAZPROM, PAO</h1>
+                <span class="tp-verified">
+                    <span class="material-icons-outlined">verified</span>
+                    Entity Verified
+                </span>
+            </div>
+            <div class="tp-badges">
+                <div class="tp-badge-group">
+                    <div class="tp-badge-label">Current Status:</div>
+                    <div class="badge badge-pending badge-btn">
+                        Pending Approval
+                        <span class="material-icons-outlined" style="font-size:16px">pending</span>
+                    </div>
+                </div>
+                <div class="tp-badge-group">
+                    <div class="tp-badge-label">Risk Level:</div>
+                    <div class="badge badge-high badge-btn">
+                        High
+                        <span class="material-icons-outlined" style="font-size:16px">warning</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Page Body ══ -->
+<div class="page-container">
+<div class="page-body">
+
+    <!-- ── Side Nav ── -->
+    <aside class="side-nav">
+        <a class="nav-item" href="index.html">Summary page</a>
+        <div class="nav-divider"></div>
+        <div class="nav-item"><span class="dot dot-red"></span> Risk Assessment</div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Due Diligence</div>
+        <div class="nav-item">
+            <span class="dot dot-red"></span> Integrity Check
+            <span class="nav-partner-icon" style="margin-left:4px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                <img src="partner-icon-integrity.png" alt="">
+            </span>
+        </div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Enhanced Due Diligence Reports</div>
+        <div class="nav-item">
+            <span class="dot dot-green"></span> UBO
+            <span class="nav-partner-icon" style="margin-left:4px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                <img src="partner-icon-ubo.png" alt="">
+            </span>
+        </div>
+        <div class="nav-item"><span class="dot dot-red"></span> Risk Mitigation</div>
+        <div class="nav-item"><span class="dot dot-amber"></span> Approval</div>
+        <div class="nav-item"><span class="dot dot-red"></span> Screening &amp; Monitoring</div>
+        <div class="nav-divider"></div>
+        <div class="nav-section-label">Properties</div>
+        <div class="nav-section-label active">Documents</div>
+        <div class="nav-section-label">
+            Entity Verification
+            <span class="nav-partner-icon" style="margin-left:4px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                <img src="partner-icon-ubo.png" alt="">
+            </span>
+        </div>
+        <div class="nav-section-label">Audit</div>
+        <div class="nav-divider"></div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <main class="main-content">
+        <div class="doc-card">
+            <div class="doc-card-header">Documents</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name <span class="material-icons-outlined sort-icon">arrow_upward</span></th>
+                        <th>Type <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Size <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Section <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Date <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                        <th>Owner <span class="material-icons-outlined sort-icon">unfold_more</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a class="cell-link" href="#">Passport-John Luther</a></td>
+                        <td>PDF</td>
+                        <td>1.1 MB</td>
+                        <td>Risk Assessment</td>
+                        <td>10 Nov 2025</td>
+                        <td>Compliance Group</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="#">VAT-Registration</a></td>
+                        <td>PDF</td>
+                        <td>0.5 MB</td>
+                        <td>Risk Assessment</td>
+                        <td>10 Nov 2025</td>
+                        <td>Compliance Group</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="#">AuditedAccounts</a></td>
+                        <td>XLSX</td>
+                        <td>2.2 MB</td>
+                        <td>Due Diligence</td>
+                        <td>7 Nov 2025</td>
+                        <td>Third Party Contact</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="#">Insurance</a></td>
+                        <td>PDF</td>
+                        <td>1.1 MB</td>
+                        <td>Onboarding</td>
+                        <td>7 Nov 2025</td>
+                        <td>Sustainability Team</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="#">AntiBriberyPolicy</a></td>
+                        <td>PDF</td>
+                        <td>850 KB</td>
+                        <td>Risk Assessment</td>
+                        <td>2 Nov 2025</td>
+                        <td>Emily Forbes</td>
+                    </tr>
+                    <tr>
+                        <td><a class="cell-link" href="#">Third Party Contract</a></td>
+                        <td>PDF</td>
+                        <td>2.2 MB</td>
+                        <td>Onboarding</td>
+                        <td>2 Nov 2025</td>
+                        <td>Red Flag Approval Group</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="doc-pagination">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <select class="page-size-select">
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                    <span>Showing results 1 – 20 of 199</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px">
+                    <button class="page-btn" disabled title="First page">
+                        <span class="material-icons-outlined">first_page</span>
+                    </button>
+                    <button class="page-btn" disabled title="Previous page">
+                        <span class="material-icons-outlined">chevron_left</span>
+                    </button>
+                    <span style="font-size:13px;color:var(--text-light)">Page</span>
+                    <input class="page-input" type="number" value="1" min="1" max="8">
+                    <span style="font-size:13px;color:var(--text-light)">of 8</span>
+                    <button class="page-btn" title="Next page">
+                        <span class="material-icons-outlined">chevron_right</span>
+                    </button>
+                    <button class="page-btn" title="Last page">
+                        <span class="material-icons-outlined">last_page</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div><!-- /.page-body -->
+</div><!-- /.page-container -->
+
+<!-- ══ Footer ══ -->
+<footer class="page-footer">
+    <div class="page-footer-inner">
+        <div>
+            <a href="#">Privacy Notice</a> |
+            <a href="#">Cookie Policy</a> |
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-brand">
+            <span style="font-weight:700;font-size:11px;color:var(--text-light)">DOW JONES</span>
+            &copy; 2025 Dow Jones &amp; Company, Inc. All Rights Reserved.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
