@@ -1673,7 +1673,7 @@
         </section>
 
         <!-- Risk Level Report -->
-        <section class="risk-report">
+        <section class="risk-report" id="section-risk-report">
             <div class="section-row">
                 <h2 class="card-title">Risk Level Report</h2>
                 <a href="risk-level-report.html" class="link-text">VIEW FULL REPORT</a>
@@ -1746,7 +1746,7 @@
         </section>
 
         <!-- Open Tasks -->
-        <section class="table-card">
+        <section class="table-card" id="section-open-tasks">
             <div class="section-bar">
                 <div class="section-row">
                     <h2 class="card-title">Open Tasks</h2>
@@ -1832,7 +1832,7 @@
         </section>
 
         <!-- Screening and Monitoring Associations -->
-        <section class="table-card" style="box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.08);">
+        <section class="table-card" id="section-screening" style="box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.08);">
             <div style="padding: 16px 16px 0;">
                 <div class="section-row">
                     <h2 class="card-title">Screening and Monitoring Associations</h2>
@@ -2379,10 +2379,17 @@ function connectRows(sourceTbody, checkClass) {
     const tabs      = document.querySelector('.tabs');
     const tabPanels = document.querySelector('.tab-panels');
 
+    const sectionsToHide = [
+        document.getElementById('section-risk-report'),
+        document.getElementById('section-open-tasks'),
+        document.getElementById('section-screening'),
+    ];
+
     function enterEdit() {
         tabs.style.display = 'none';
         tabPanels.style.display = 'none';
         editForm.classList.add('active');
+        sectionsToHide.forEach(s => s && (s.style.display = 'none'));
         btnEdit.textContent = 'Editing…';
         btnEdit.disabled = true;
     }
@@ -2390,6 +2397,7 @@ function connectRows(sourceTbody, checkClass) {
         editForm.classList.remove('active');
         tabs.style.display = '';
         tabPanels.style.display = '';
+        sectionsToHide.forEach(s => s && (s.style.display = ''));
         btnEdit.textContent = 'Edit';
         btnEdit.disabled = false;
     }
