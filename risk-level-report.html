@@ -52,10 +52,8 @@
         .header-bar {
             background-color: var(--text-normal);
             height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
+                    align-items: center;
+                    
             color: #fff;
         }
         .header-brand {
@@ -95,8 +93,14 @@
         .main-nav {
             background-color: var(--primary-500);
             height: 32px;
+        }
+        .main-nav-inner {
+            max-width: 1920px;
+            margin: 0 auto;
+            height: 100%;
             display: flex;
             align-items: stretch;
+            padding: 0 16px;
         }
         .main-nav a {
             display: flex;
@@ -116,11 +120,11 @@
 
         /* -- Breadcrumb + Back row -- */
         .page-container {
-            max-width: 1680px;
+            max-width: 1920px;
             margin: 0 auto;
         }
         .tp-top-strip {
-            max-width: 1680px;
+            max-width: 1920px;
             margin: 8px 16px 16px;
             padding: 0 16px;
             background-color: var(--neutral-00);
@@ -232,7 +236,7 @@
             display: flex;
             padding: 0 16px 16px;
             gap: 24px;
-            max-width: 1680px;
+            max-width: 1920px;
             margin: 0 auto;
         }
 
@@ -645,14 +649,18 @@
 
         /* -- Footer -- */
         .page-footer {
-            padding: 16px;
             border-top: 1px solid var(--neutral-50);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             font-size: 12px;
             color: var(--text-light);
             margin-top: 16px;
+        }
+        .page-footer-inner {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .page-footer a { color: var(--text-light); text-decoration: none; margin: 0 6px; }
         .footer-brand {
@@ -672,6 +680,7 @@
 
 <!-- Top Header -->
 <header class="header-bar">
+    <div class="header-bar-inner">
     <div class="header-brand">
         <span class="dj-mark">DOW JONES</span>
         <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
@@ -682,10 +691,12 @@
         <span class="material-icons-outlined" style="font-size:18px">notifications</span>
         <span class="material-icons-outlined" style="font-size:18px">settings</span>
     </div>
+    </div>
 </header>
 
 <!-- Main Nav -->
 <nav class="main-nav">
+    <div class="main-nav-inner">
     <a>Dashboard</a>
     <a class="active" href="third-parties.html">Third Parties</a>
     <a>Employees</a>
@@ -693,10 +704,11 @@
     <a>Company Admin</a>
     <a>Settings</a>
     <a>Reports</a>
+    </div>
 </nav>
 
 <!-- Breadcrumbs -->
-<div style="max-width:1680px;margin:0 auto;">
+<div style="max-width:1920px;margin:0 auto;">
     <div class="breadcrumb-row">
         <span class="material-icons-outlined">home</span>
         <span class="sep">/</span>
@@ -1294,7 +1306,8 @@
 </div>
 
 <!-- Footer -->
-<footer class="page-footer" style="max-width:1680px;margin:0 auto;">
+<footer class="page-footer">
+    <div class="page-footer-inner">
     <div>
         <a href="#">Privacy Notice</a> |
         <a href="#">Cookie Policy</a> |
@@ -1303,6 +1316,7 @@
     <div class="footer-brand">
         <span class="dj-mark" style="font-weight:700;font-size:11px;color:var(--text-light)">DOW JONES</span>
         &copy; 2025 Dow Jones &amp; Company, Inc. All Rights Reserved.
+    </div>
     </div>
 </footer>
 
