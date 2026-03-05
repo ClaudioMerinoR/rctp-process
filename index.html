@@ -781,6 +781,104 @@
             cursor: pointer;
             padding: 0 4px;
         }
+        /* ── Edit form ── */
+        .edit-form { display: none; padding: 16px 0 0; }
+        .edit-form.active { display: block; }
+        .edit-form-title {
+            font-size: 20px; font-weight: 500;
+            color: var(--text-normal); margin-bottom: 20px;
+        }
+        .edit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 32px;
+            margin-bottom: 24px;
+        }
+        .edit-field { display: flex; flex-direction: column; gap: 6px; }
+        .edit-field-full { grid-column: 1 / -1; }
+        .edit-label {
+            font-size: 11px; font-weight: 500;
+            color: var(--primary-600);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .edit-label .req { color: var(--alert-500); }
+        .edit-label .material-icons-outlined { font-size: 14px; color: var(--neutral-300); cursor: help; }
+        .edit-input {
+            height: 36px; border: 1px solid var(--neutral-200);
+            border-radius: 2px; padding: 0 10px;
+            font-size: 14px; font-family: inherit;
+            color: var(--text-normal); background: var(--neutral-00);
+            width: 100%;
+        }
+        .edit-input::placeholder { color: var(--text-light-alt); }
+        .edit-select {
+            height: 36px; border: 1px solid var(--neutral-200);
+            border-radius: 2px; padding: 0 10px;
+            font-size: 14px; font-family: inherit;
+            color: var(--text-normal); background: var(--neutral-00);
+            width: 100%; appearance: auto; cursor: pointer;
+        }
+        .edit-search-wrap {
+            border: 1px solid var(--neutral-200); border-radius: 2px;
+            background: var(--neutral-00);
+        }
+        .edit-search-inner {
+            display: flex; align-items: center; gap: 6px;
+            padding: 0 10px; height: 36px;
+            font-size: 14px; color: var(--text-light-alt);
+        }
+        .edit-search-inner .material-icons-outlined { font-size: 18px; color: var(--text-light); }
+        .edit-tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 10px 8px; border-top: 1px solid var(--neutral-50); }
+        .edit-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--text-normal); color: #fff;
+            border-radius: 3px; padding: 4px 8px;
+            font-size: 12px; font-weight: 500;
+        }
+        .edit-tag-remove {
+            cursor: pointer; opacity: 0.7; font-size: 14px;
+            background: none; border: none; color: #fff;
+            display: flex; align-items: center; padding: 0;
+        }
+        .edit-tag-remove:hover { opacity: 1; }
+        /* Active toggle */
+        .edit-toggle-wrap { display: flex; align-items: center; }
+        .edit-toggle {
+            position: relative; width: 72px; height: 32px;
+            border-radius: 2px; overflow: hidden;
+            border: 1px solid var(--neutral-200);
+            cursor: pointer;
+        }
+        .edit-toggle input { display: none; }
+        .edit-toggle-track {
+            position: absolute; inset: 0;
+            background: var(--success-500);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; color: var(--success-900);
+            letter-spacing: 0.5px;
+        }
+        /* Owner group/user toggle */
+        .edit-owner-toggle {
+            display: inline-flex; border: 1px solid var(--primary-500);
+            border-radius: 2px; overflow: hidden; margin-bottom: 8px;
+        }
+        .edit-owner-btn {
+            padding: 6px 14px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer; border: none; background: var(--neutral-00);
+            color: var(--primary-500); transition: background 0.15s;
+        }
+        .edit-owner-btn.active { background: var(--primary-500); color: #fff; }
+        /* Helper text */
+        .edit-helper { font-size: 12px; color: var(--text-light); margin-top: 4px; line-height: 1.4; }
+        /* Edit footer */
+        .edit-footer {
+            display: flex; justify-content: flex-end; align-items: center;
+            gap: 8px; padding: 16px 0 0;
+            border-top: 1px solid var(--neutral-50);
+        }
+
         /* ── Notes sidesheet ── */
         .notes-threads {
             flex: 1;
@@ -1347,7 +1445,7 @@
                         <span class="material-icons-outlined" style="font-size:16px; color:var(--success-700)">verified</span>
                     </div>
                     <button class="btn btn-outline" id="btn-notes">Notes</button>
-                    <button class="btn btn-filled">Edit</button>
+                    <button class="btn btn-filled" id="btn-edit">Edit</button>
                 </div>
             </div>
 
@@ -1481,6 +1579,97 @@
                 </div>
 
             </div><!-- /.tab-panels -->
+
+            <!-- ── Edit Form ── -->
+            <div class="edit-form" id="edit-form">
+                <h3 class="edit-form-title">Summary</h3>
+                <div class="edit-grid">
+
+                    <!-- Third Party Name -->
+                    <div class="edit-field">
+                        <label class="edit-label">Third Party Name <span class="req">*</span></label>
+                        <input class="edit-input" type="text" value="GAZPROM, PAO">
+                    </div>
+
+                    <!-- Active toggle -->
+                    <div class="edit-field">
+                        <label class="edit-label">Active <span class="material-icons-outlined">info</span></label>
+                        <div class="edit-toggle-wrap">
+                            <div class="edit-toggle">
+                                <div class="edit-toggle-track">YES</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Unit -->
+                    <div class="edit-field">
+                        <label class="edit-label">Business Unit <span class="req">*</span></label>
+                        <div class="edit-search-wrap">
+                            <div class="edit-search-inner">
+                                <span class="material-icons-outlined">expand_more</span>
+                                Search
+                            </div>
+                            <div class="edit-tags">
+                                <span class="edit-tag">Entity Verification <button class="edit-tag-remove">&#x2715;</button></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Owner + User -->
+                    <div class="edit-field">
+                        <label class="edit-label">Owner <span class="req">*</span> <span class="material-icons-outlined">info</span></label>
+                        <div class="edit-owner-toggle">
+                            <button class="edit-owner-btn">Group</button>
+                            <button class="edit-owner-btn active">User</button>
+                        </div>
+                        <input class="edit-input" type="text" placeholder="Type And Select Employee Name" style="margin-bottom:6px">
+                        <div style="display:flex;flex-wrap:wrap;gap:6px">
+                            <span class="edit-tag">Miruna Menzopol (Admin) <button class="edit-tag-remove">&#x2715;</button></span>
+                        </div>
+                    </div>
+
+                    <!-- Process -->
+                    <div class="edit-field">
+                        <label class="edit-label">Process <span class="material-icons-outlined">info</span></label>
+                        <select class="edit-select">
+                            <option selected>Standard RCTP</option>
+                            <option>Enhanced RCTP</option>
+                        </select>
+                    </div>
+
+                    <!-- Screening & Monitoring Policy -->
+                    <div class="edit-field">
+                        <label class="edit-label">Screening &amp; Monitoring Policy <span class="req">*</span> <span class="material-icons-outlined">info</span></label>
+                        <select class="edit-select">
+                            <option selected>Default Standard KYBP Policy</option>
+                            <option>Default Screening &amp; Monitoring Policy</option>
+                        </select>
+                    </div>
+
+                    <!-- Third Party Tags -->
+                    <div class="edit-field edit-field-full">
+                        <label class="edit-label">Third Party Tags</label>
+                        <div class="edit-search-wrap">
+                            <div class="edit-search-inner">
+                                <span class="material-icons-outlined">expand_more</span>
+                                Search
+                            </div>
+                            <div class="edit-tags">
+                                <span class="edit-tag">Gas &amp; Oil <button class="edit-tag-remove">&#x2715;</button></span>
+                            </div>
+                        </div>
+                        <p class="edit-helper">Tag your Third party to allow for faster searching. Just start typing and if we have tags available they will appear in the dropdown where you can click to select them.</p>
+                    </div>
+
+                </div>
+
+                <div class="edit-footer">
+                    <button class="btn btn-outline" id="edit-cancel-btn">Cancel</button>
+                    <button class="btn btn-outline">Delete</button>
+                    <button class="btn btn-filled">Save</button>
+                </div>
+            </div>
+
         </section>
 
         <!-- Risk Level Report -->
@@ -2180,6 +2369,32 @@ function connectRows(sourceTbody, checkClass) {
             relMenu.classList.remove('open');
         }
     });
+})();
+
+// ── Edit mode ──
+(() => {
+    const btnEdit   = document.getElementById('btn-edit');
+    const btnCancel = document.getElementById('edit-cancel-btn');
+    const editForm  = document.getElementById('edit-form');
+    const tabs      = document.querySelector('.tabs');
+    const tabPanels = document.querySelector('.tab-panels');
+
+    function enterEdit() {
+        tabs.style.display = 'none';
+        tabPanels.style.display = 'none';
+        editForm.classList.add('active');
+        btnEdit.textContent = 'Editing…';
+        btnEdit.disabled = true;
+    }
+    function exitEdit() {
+        editForm.classList.remove('active');
+        tabs.style.display = '';
+        tabPanels.style.display = '';
+        btnEdit.textContent = 'Edit';
+        btnEdit.disabled = false;
+    }
+    btnEdit.addEventListener('click', enterEdit);
+    btnCancel.addEventListener('click', exitEdit);
 })();
 
 // ── Notes Sidesheet ──
