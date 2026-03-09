@@ -171,6 +171,75 @@
         .conn-alert.success .conn-alert-text { color: #07502e; }
         .conn-alert.warning .conn-alert-text { color: var(--alert-700); }
 
+        /* ── Delete modal ── */
+        .delete-modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4); z-index: 600;
+            align-items: flex-start; justify-content: center;
+            padding-top: 88px;
+        }
+        .delete-modal-overlay.open { display: flex; }
+        .delete-modal {
+            background: #fff; border-radius: 4px;
+            width: 504px; overflow: hidden;
+        }
+        .delete-modal-header {
+            display: flex; align-items: center;
+            padding: 8px 8px 8px 12px; height: 45px;
+        }
+        .delete-modal-title {
+            flex: 1; font-size: 18px; font-weight: 500;
+            color: var(--text-normal); letter-spacing: 0;
+        }
+        .delete-modal-close {
+            width: 24px; height: 24px; border: none; background: none;
+            cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath transform='translate(5.56,5.56)' d='M8.87 6.42L12.52 10.11C13 10.55 13 11.28 12.52 11.71L11.71 12.52C11.28 12.99 10.55 12.99 10.11 12.52L6.46 8.87L2.77 12.52C2.33 12.99 1.6 12.99 1.16 12.52L0.36 11.71C-.12 11.28-.12 10.55.36 10.11L4.01 6.42L.36 2.77C-.12 2.33-.12 1.6.36 1.16L1.16.36C1.6-.12 2.33-.12 2.77.36L6.46 4.01 10.11.36C10.55-.12 11.28-.12 11.71.36L12.52 1.16C13 1.6 13 2.33 12.52 2.77L8.87 6.42Z' fill='%23516267'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: center; background-size: 14px 14px;
+            opacity: 0.8;
+        }
+        .delete-modal-close:hover { opacity: 1; }
+        .delete-modal-body {
+            border-top: 1px solid #D6DBE0;
+            padding: 12px 12px 8px;
+        }
+        .delete-modal-question {
+            font-size: 16px; font-weight: 500;
+            color: var(--text-light); letter-spacing: 0.5px;
+            line-height: 24px; margin-bottom: 2px;
+        }
+        .delete-modal-name {
+            font-size: 16px; font-weight: 500;
+            color: var(--text-light); letter-spacing: 0.5px;
+            line-height: 24px; margin-bottom: 12px;
+        }
+        .delete-modal-confirm {
+            font-size: 16px; font-style: italic;
+            color: var(--text-light); letter-spacing: 0.5px;
+            line-height: 24px;
+        }
+        .delete-modal-actions {
+            display: flex; justify-content: flex-end;
+            gap: 8px; padding: 8px 8px 8px 16px;
+        }
+        .delete-modal-btn {
+            height: 32px; padding: 0 8px;
+            font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-radius: 4px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .delete-modal-cancel {
+            background: #fff; border: 1px solid var(--neutral-300);
+            color: var(--text-light);
+        }
+        .delete-modal-cancel:hover { border-color: #8D9CA9; }
+        .delete-modal-continue {
+            background: var(--primary-500); border: none;
+            color: var(--neutral-25);
+        }
+        .delete-modal-continue:hover { background: var(--primary-600); }
+
         .breadcrumb-row {
             display: flex;
             align-items: center;
@@ -1544,6 +1613,25 @@
     <span class="conn-alert-text">Connection added successfully</span>
 </div>
 
+<!-- ══ Delete Third Party modal ══ -->
+<div class="delete-modal-overlay" id="delete-modal-overlay">
+    <div class="delete-modal" id="delete-modal" role="dialog" aria-modal="true">
+        <div class="delete-modal-header">
+            <span class="delete-modal-title">Delete a Third party</span>
+            <button class="delete-modal-close" id="delete-modal-close" aria-label="Close"></button>
+        </div>
+        <div class="delete-modal-body">
+            <p class="delete-modal-question">Are you sure you wish to delete the following Third Party?</p>
+            <p class="delete-modal-name">Gazprom</p>
+            <p class="delete-modal-confirm">Do you want to continue?</p>
+        </div>
+        <div class="delete-modal-actions">
+            <button class="delete-modal-btn delete-modal-cancel" id="delete-modal-cancel">Cancel</button>
+            <button class="delete-modal-btn delete-modal-continue" id="delete-modal-continue">Continue</button>
+        </div>
+    </div>
+</div>
+
 <!-- ══ Breadcrumbs (on grey background) ══ -->
 <div style="max-width:1920px;margin:0 auto;">
     <div class="breadcrumb-row">
@@ -1915,8 +2003,8 @@
 
                 <div class="edit-footer">
                     <button class="btn btn-outline" id="edit-cancel-btn">Cancel</button>
-                    <button class="btn btn-outline">Delete</button>
-                    <button class="btn btn-filled">Save</button>
+                    <button class="btn btn-outline" id="edit-delete-btn">Delete</button>
+                    <button class="btn btn-filled" id="edit-save-btn">Save</button>
                 </div>
             </div>
 
@@ -2655,6 +2743,27 @@ function connectRows(sourceTbody, checkClass) {
     }
     btnEdit.addEventListener('click', enterEdit);
     btnCancel.addEventListener('click', exitEdit);
+
+    // Save
+    document.getElementById('edit-save-btn').addEventListener('click', () => {
+        exitEdit();
+        showConnAlert('success', 'Third Party updated successfully.');
+    });
+
+    // Delete — open confirmation modal
+    const deleteModalOverlay = document.getElementById('delete-modal-overlay');
+    document.getElementById('edit-delete-btn').addEventListener('click', () => {
+        deleteModalOverlay.classList.add('open');
+    });
+    function closeDeleteModal() { deleteModalOverlay.classList.remove('open'); }
+    document.getElementById('delete-modal-close').addEventListener('click', closeDeleteModal);
+    document.getElementById('delete-modal-cancel').addEventListener('click', closeDeleteModal);
+    deleteModalOverlay.addEventListener('click', e => { if (e.target === deleteModalOverlay) closeDeleteModal(); });
+    document.getElementById('delete-modal-continue').addEventListener('click', () => {
+        closeDeleteModal();
+        exitEdit();
+        showConnAlert('success', 'Third Party deleted successfully.');
+    });
 
     // Active toggle
     const activeToggle = document.getElementById('edit-active-toggle');
