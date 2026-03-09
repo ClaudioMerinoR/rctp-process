@@ -682,9 +682,133 @@
         /* Link text */
         .link-text { color: var(--primary-600); font-size: 14px; font-weight: 500; cursor: pointer; text-transform: uppercase; transition: color 0.3s ease; text-decoration: none; }
         .link-text:hover { color: var(--primary-700); }
+
+        /* ── Amend Risk Level panel ── */
+        .amend-panel { display: none; margin: 16px; }
+        .amend-panel.active { display: block; }
+
+        .amend-card {
+            background: var(--neutral-00);
+            border: 1px solid rgba(0,0,0,0.13);
+            border-top: 4px solid var(--primary-500);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            padding: 24px 20px 20px;
+        }
+
+        .amend-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px;
+        }
+        .amend-title { font-size: 20px; font-weight: 500; color: var(--text-normal); }
+        .amend-header-actions { display: flex; gap: 8px; }
+
+        .amend-body {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .amend-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+        .amend-field:last-child { margin-bottom: 0; }
+
+        .amend-label {
+            font-size: 11px; font-weight: 500;
+            color: var(--primary-500);
+            text-transform: uppercase; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .amend-label .req { color: var(--alert-500); }
+
+        .amend-current-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            height: 37px; padding: 0 14px;
+            font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-radius: 2px;
+        }
+        .amend-current-badge.high   { background: var(--alert-50);   color: var(--alert-700);   border: 1px solid var(--alert-500);   opacity: 0.85; }
+        .amend-current-badge.medium { background: var(--warning-50); color: var(--warning-900); border: 1px solid var(--warning-500); opacity: 0.85; }
+        .amend-current-badge.low    { background: var(--success-50); color: var(--success-900); border: 1px solid var(--success-500); opacity: 0.85; }
+
+        .amend-value { font-size: 16px; color: var(--text-normal); line-height: 24px; }
+
+        .amend-level-group { display: inline-flex; }
+        .amend-level-btn {
+            height: 37px; padding: 0 16px;
+            font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer;
+            background: var(--neutral-00); color: var(--text-light);
+            border-top: 1px solid var(--neutral-300);
+            border-bottom: 1px solid var(--neutral-300);
+            border-left: 1px solid var(--neutral-300);
+            border-right: none;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .amend-level-btn:first-child { border-radius: 4px 0 0 4px; }
+        .amend-level-btn:last-child  { border-right: 1px solid var(--neutral-300); border-radius: 0 4px 4px 0; }
+        .amend-level-btn.active {
+            background: var(--primary-500); color: var(--neutral-25);
+            border-color: var(--primary-500);
+        }
+
+        .amend-textarea {
+            width: 100%; height: 156px;
+            border: 1px solid #dee1e0; border-radius: 2px;
+            padding: 12px; resize: vertical;
+            font-size: 14px; font-family: inherit;
+            color: var(--text-normal);
+            outline: none; transition: border-color 0.15s;
+        }
+        .amend-textarea:focus { border-color: #8D9CA9; }
+        .amend-textarea::placeholder { color: #8D9CA9; }
+
+        .amend-file-row {
+            display: flex; align-items: stretch;
+            border: 1px solid #dee1e0; border-radius: 2px; overflow: hidden;
+            height: 35px;
+        }
+        .amend-file-name {
+            flex: 1; padding: 0 12px;
+            font-size: 11px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-normal);
+            display: flex; align-items: center;
+        }
+        .amend-browse-btn {
+            padding: 0 14px;
+            background: #e9ecef; border: none;
+            border-left: 1px solid #dee1e0;
+            font-size: 11px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-normal); cursor: pointer;
+        }
+        .amend-browse-btn:hover { background: #dde0e3; }
+
+        .amend-helper {
+            font-size: 12px; color: #6c757d; line-height: 1.5;
+        }
+        .amend-helper strong { font-weight: 600; }
+
+        .amend-upload-btn { align-self: flex-start; }
+
+        /* ── Alert banner (reused pattern) ── */
+        .rlr-alert {
+            display: none; position: fixed; top: 72px; left: 0; right: 0;
+            height: 40px; align-items: center; padding: 0 29px; gap: 8px; z-index: 500;
+        }
+        .rlr-alert.visible { display: flex; }
+        .rlr-alert.success { background: #5fe9a9; }
+        .rlr-alert-icon { font-size: 20px; color: #07502e; display: flex; align-items: center; }
+        .rlr-alert-text { font-size: 14px; font-weight: 500; color: #07502e; }
     </style>
 </head>
 <body>
+
+<!-- Amend success alert -->
+<div class="rlr-alert" id="rlr-alert">
+    <span class="rlr-alert-icon material-icons-outlined">check_circle</span>
+    <span class="rlr-alert-text"></span>
+</div>
 
 <!-- Top Header -->
 <header class="header-bar">
@@ -752,7 +876,7 @@
             </div>
             <div class="tp-badge-group">
                 <div class="tp-badge-label">Risk level:</div>
-                <div class="badge badge-high badge-btn">
+                <div class="badge badge-high badge-btn" id="tp-level-badge">
                     High
                     <span class="material-icons-outlined" style="font-size:16px">warning</span>
                 </div>
@@ -807,14 +931,65 @@
     <!-- Main Content -->
     <main class="main-content">
 
+        <!-- ── Amend Risk Level Panel ── -->
+        <div class="amend-panel" id="amend-panel">
+            <div class="amend-card">
+                <div class="amend-header">
+                    <h2 class="amend-title">Amend Risk Level</h2>
+                    <div class="amend-header-actions">
+                        <button class="btn btn-outline" id="amend-cancel-btn">Cancel</button>
+                        <button class="btn btn-filled" id="amend-save-btn">Save</button>
+                    </div>
+                </div>
+                <div class="amend-body">
+                    <!-- Left: current info -->
+                    <div>
+                        <div class="amend-field">
+                            <div class="amend-label">Current Risk Level :</div>
+                            <div><span class="amend-current-badge high">High</span></div>
+                        </div>
+                        <div class="amend-field">
+                            <div class="amend-label">Current Reason :</div>
+                            <div class="amend-value">Final Risk Score: 25</div>
+                            <div class="amend-value">Final Risk Level: High</div>
+                        </div>
+                    </div>
+                    <!-- Right: new values -->
+                    <div>
+                        <div class="amend-field">
+                            <div class="amend-label">New Current Risk Level <span class="req">*</span></div>
+                            <div class="amend-level-group">
+                                <button class="amend-level-btn" data-level="low">Low</button>
+                                <button class="amend-level-btn" data-level="medium">Medium</button>
+                                <button class="amend-level-btn" data-level="high">High</button>
+                            </div>
+                        </div>
+                        <div class="amend-field">
+                            <div class="amend-label">Amend Reason <span class="req">*</span></div>
+                            <textarea class="amend-textarea" id="amend-reason" placeholder="Amend Reason"></textarea>
+                        </div>
+                        <div class="amend-field">
+                            <div class="amend-file-row">
+                                <span class="amend-file-name" id="amend-file-name">Choose file</span>
+                                <button class="amend-browse-btn" id="amend-browse-btn">Browse</button>
+                                <input type="file" id="amend-file-input" accept=".csv,.pdf,.doc,.docx" style="display:none">
+                            </div>
+                            <p class="amend-helper">Click the 'Choose Files' button to browse for a file and then click the 'Upload'. Uploaded files will appear below. Allowed file types include: <strong>.csv,.pdf,.doc,.docx</strong><br>Multiple uploads are permitted.</p>
+                            <button class="btn btn-outline amend-upload-btn">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- A. RLR Header Card -->
         <section class="rlr-header-card">
             <!-- Row 1: Title + Buttons -->
             <div class="rlr-row1">
                 <h2 class="card-title">Current Risk Level Report</h2>
                 <div class="card-header-right">
-                    <button class="btn btn-outline" style="gap:4px">Print <span class="material-icons-outlined" style="font-size:14px">print</span></button>
-                    <button class="btn btn-filled">Amend</button>
+                    <button class="btn btn-outline" style="gap:4px" onclick="window.print()">Print <span class="material-icons-outlined" style="font-size:14px">print</span></button>
+                    <button class="btn btn-filled" id="btn-amend">Amend</button>
                 </div>
             </div>
 
@@ -829,7 +1004,7 @@
                 </div>
                 <div class="rlr-meta-item">
                     <span class="rlr-meta-label">Risk Level:</span>
-                    <span class="badge badge-high">
+                    <span class="badge badge-high" id="rlr-level-badge">
                         HIGH
                     </span>
                 </div>
@@ -1378,6 +1553,81 @@
                 }, 380);
             }, 250);
         });
+    });
+})();
+
+// ── Amend Risk Level ──
+(() => {
+    const amendPanel   = document.getElementById('amend-panel');
+    const headerCard   = document.querySelector('.rlr-header-card');
+    const tabPanels    = document.querySelector('.rlr-tab-panels');
+    const btnAmend     = document.getElementById('btn-amend');
+    const btnCancel    = document.getElementById('amend-cancel-btn');
+    const btnSave      = document.getElementById('amend-save-btn');
+    const alert        = document.getElementById('rlr-alert');
+    const alertText    = alert.querySelector('.rlr-alert-text');
+    let alertTimer     = null;
+
+    function showAlert(msg) {
+        alertText.textContent = msg;
+        alert.classList.add('visible', 'success');
+        clearTimeout(alertTimer);
+        alertTimer = setTimeout(() => alert.classList.remove('visible'), 5000);
+    }
+
+    function openAmend() {
+        headerCard.style.display = 'none';
+        tabPanels.style.display  = 'none';
+        amendPanel.classList.add('active');
+    }
+    function closeAmend() {
+        amendPanel.classList.remove('active');
+        headerCard.style.display = '';
+        tabPanels.style.display  = '';
+    }
+
+    btnAmend.addEventListener('click', openAmend);
+    btnCancel.addEventListener('click', closeAmend);
+    btnSave.addEventListener('click', () => {
+        const activeBtn = document.querySelector('.amend-level-btn.active');
+        if (activeBtn) {
+            const level = activeBtn.dataset.level; // 'low' | 'medium' | 'high'
+            const label = activeBtn.textContent.trim();
+            const badgeClass = 'badge-' + level;
+
+            [document.getElementById('rlr-level-badge'), document.getElementById('tp-level-badge')].forEach(badge => {
+                if (!badge) return;
+                badge.classList.remove('badge-low', 'badge-medium', 'badge-high');
+                badge.classList.add(badgeClass);
+                // preserve inner icon if present
+                const icon = badge.querySelector('.material-icons-outlined');
+                badge.textContent = label.toUpperCase();
+                if (icon) badge.appendChild(icon);
+            });
+
+            // update the "current" info in the amend form for future opens
+            document.querySelector('.amend-current-badge').className = 'amend-current-badge ' + level;
+            document.querySelector('.amend-current-badge').textContent = label;
+        }
+        closeAmend();
+        showAlert('Risk Level amended successfully.');
+    });
+
+    // Level button group toggle
+    document.querySelectorAll('.amend-level-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.amend-level-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // File browse
+    const fileInput  = document.getElementById('amend-file-input');
+    const browsBtn   = document.getElementById('amend-browse-btn');
+    const fileNameEl = document.getElementById('amend-file-name');
+    browsBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+        fileNameEl.textContent = fileInput.files.length ? fileInput.files[0].name : 'Choose file';
     });
 })();
 
