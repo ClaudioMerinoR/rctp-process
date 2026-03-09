@@ -132,13 +132,9 @@
             margin: 0 auto;
         }
         .tp-top-strip {
-            max-width: 1920px;
-            margin: 8px 16px 16px;
-            padding: 0 16px;
+            max-width: 1888px;
+            margin: 0 auto;
             background-color: var(--neutral-00);
-        }
-        @media (min-width: 1712px) {
-            .tp-top-strip { margin-left: auto; margin-right: auto; }
         }
         .breadcrumb-row {
             display: flex;
@@ -155,7 +151,8 @@
 
         /* -- Third-Party Page Header -- */
         .tp-page-header {
-            padding: 0 0 12px;
+            padding: 0 16px 12px;
+            margin: 16px 0;
         }
         .tp-back {
             display: inline-flex;
@@ -684,7 +681,7 @@
         .link-text:hover { color: var(--primary-700); }
 
         /* ── Amend Risk Level panel ── */
-        .amend-panel { display: none; margin: 16px; }
+        .amend-panel { display: none; }
         .amend-panel.active { display: block; }
 
         .amend-card {
