@@ -124,6 +124,7 @@
             height: 37px; padding: 0 16px; font-size: 12px; font-weight: 500;
             text-transform: uppercase; letter-spacing: 0.5px; border-radius: 0;
             cursor: pointer; border: none; font-family: inherit; white-space: nowrap;
+            border-radius: 4px;
             transition: background 0.15s, border-color 0.15s;
         }
         .btn-outline { background: var(--neutral-00); border: 1px solid #8d9ca9; color: var(--neutral-500); }
@@ -145,10 +146,10 @@
         /* ── Section ── */
         .content-section { padding: 20px 20px 0; }
         .section-heading {
-            font-size: 11px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 1px; color: var(--text-light); margin-bottom: 6px;
+            font-size: 16px; font-weight: 500;
+            letter-spacing: 0.5px; color: var(--text-normal); margin-bottom: 4px;
         }
-        .section-desc { font-size: 12px; color: var(--neutral-500); margin-bottom: 20px; }
+        .section-desc { font-size: 14px; color: var(--text-light-alt); margin-bottom: 16px; }
 
         /* ── Edit mode: button visibility ── */
         .edit-only { display: none; }
@@ -180,54 +181,63 @@
         .slot-cell.slot-readonly .slot-option-label { color: var(--neutral-400); }
         .admin-content.editing .slot-option-label { display: block; }
 
+        /* ── Helper text for readonly slots (edit mode only) ── */
+        .slot-helper-text {
+            display: none;
+            font-size: 11px;
+            color: var(--neutral-500);
+            font-style: italic;
+            line-height: 14px;
+            margin-top: 4px;
+        }
+        .admin-content.editing .slot-cell.slot-readonly .slot-helper-text { display: block; }
+
         /* ── Input wrap ── */
         .input-wrap { position: relative; }
 
-        /* ── Input trigger (the "select" box) ── */
-        .input-trigger {
-            position: relative;
+        /* ── Combo input: styled as static box in view mode, typeable in edit mode ── */
+        .combo-input {
+            display: block;
+            width: 100%;
             height: 32px;
+            padding: 0 9px;
             border: 1px solid var(--neutral-200);
             border-radius: 2px;
             background: var(--neutral-25);
-            display: flex;
-            align-items: center;
-            padding: 0 9px;
-            cursor: default;
-            user-select: none;
-            width: 100%;
-            transition: border-color 0.15s;
-        }
-        .input-val {
             font-family: 'Roboto', sans-serif;
             font-size: 14px;
             color: var(--text-normal);
+            cursor: default;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            flex: 1;
-            min-width: 0;
-            line-height: 20px;
         }
-        .input-val.is-empty {
-            color: var(--neutral-400);
-            font-style: italic;
-        }
+        .combo-input::placeholder { color: var(--neutral-400); font-style: italic; }
+
+        /* ── Caret icon ── */
         .input-caret {
+            position: absolute;
+            right: 5px;
+            top: 5px;
             font-size: 22px;
             color: var(--neutral-500);
-            flex-shrink: 0;
-            margin-left: 2px;
             display: none;
-        }
-
-        /* ── Editable slot in edit mode ── */
-        .admin-content.editing .slot-cell:not(.slot-readonly) .input-trigger {
-            background: var(--neutral-00);
             cursor: pointer;
         }
-        .admin-content.editing .slot-cell:not(.slot-readonly) .input-trigger:hover,
-        .admin-content.editing .slot-cell:not(.slot-readonly) .input-trigger.open {
+
+        /* ── Edit mode: editable slots ── */
+        .admin-content.editing .slot-cell:not(.slot-readonly) .combo-input {
+            background: var(--neutral-00);
+            cursor: text;
+            padding-right: 28px;
+        }
+        .admin-content.editing .slot-cell:not(.slot-readonly) .combo-input:hover {
+            border-color: var(--primary-500);
+        }
+        .admin-content.editing .slot-cell:not(.slot-readonly) .combo-input:focus {
             border-color: var(--primary-500);
         }
         .admin-content.editing .slot-cell:not(.slot-readonly) .input-caret {
@@ -240,13 +250,13 @@
             top: calc(100% + 2px);
             left: 0;
             min-width: 100%;
-            max-height: 216px;
+            max-height: 220px;
             overflow-y: auto;
             background: var(--primary-08);
             border-radius: 4px;
             box-shadow: 0px 1px 2px rgba(0,0,0,0.30), 0px 2px 6px rgba(0,0,0,0.15);
             z-index: 1000;
-            padding: 8px 0;
+            padding: 4px 0;
         }
         .dropdown-panel::-webkit-scrollbar { width: 4px; }
         .dropdown-panel::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 100px; }
@@ -269,6 +279,13 @@
         .dropdown-item:hover { background: #f0fbfe; }
         .dropdown-item.is-selected { background: var(--neutral-25); color: var(--text-light); }
         .dropdown-item.is-empty-opt { color: var(--neutral-400); font-style: italic; }
+        .dropdown-no-results {
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--neutral-400);
+            font-style: italic;
+            background: var(--neutral-00);
+        }
 
         /* ── Footer ── */
         .site-footer { background: #dee1e0; margin-top: auto; flex-shrink: 0; }
@@ -422,66 +439,275 @@
 </footer>
 
 <script>
-    /* ── Field pool ── */
+    /* ── Slugify helper ── */
+    function slugify(str) {
+        return str.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+    }
+
+    /* ── Full field list ── */
+    const FIELD_LABELS = [
+        'ABC Policy Applies to', 'ABC Risk Assess', 'Active Date', 'Adequate housing',
+        'Adverse Impact Awareness on Biodiversity', 'Adverse Impact Awareness on Biodiversity Details',
+        'AFTE Policy', 'AFTE Risk Assessment', 'Agreement Documented', 'All Relevant Client Units',
+        'Allowed POPs usage', 'Allowed POPs usage details', 'Allowed working minimum age',
+        'Allowed working minimum age details', 'Amended Risk Level', 'Anti-Bribery Policy',
+        'Audited Accounts', 'Average Turnover',
+        'Awareness Usage of Hazardous Chemicals Ozone Layer in Value Chain',
+        'Awareness Usage of Hazardous Chemicals Ozone Layer in Value Chain Details',
+        'Bank Account Country', 'Biodiversity Laws Compliance',
+        'Biodiversity Laws in Country of Operations', 'Biodiversity Laws in Country of Operations Details',
+        'Bribery and Corruption Risk Level', 'Bribery and Corruption Risk Score',
+        'Business Description', 'Business Description Details',
+        'Business environmental enforcement', 'Business environmental enforcement details',
+        'Child labour awareness', 'Child labour awareness details',
+        'Child workforce supply chain', 'Child workforce supply chain details',
+        'Children education', 'Children education details',
+        'Children exploitation', 'Children exploitation details',
+        'Children health', 'Children health details',
+        'Children rights compliance', 'Children rights compliance details',
+        'Children Welfare', 'Children Welfare details',
+        'Chlorine alkaline method usage', 'Collective labour agreements',
+        'Collective labour compliance', 'Collective labour laws',
+        'Comission Fee Details', 'Comission Success Fee',
+        'Commercial Significance of Product or Service',
+        'Commercial Significance of Product or Service Unknown Details',
+        'Commission Success Fee', 'Commission Success Fee Details', 'Commission Success Fee Unknown',
+        'Compliance natural resources protection laws', 'Compliance Training', 'Compliance Training Details',
+        'Confirmation ESG Legislation Compliance', 'Contract Value Amount', 'Contract Value Banding',
+        'Contract Value Known', 'Contract Value Not Known Explanation',
+        'Contractors', 'Contractors Entities', 'Contractors Persons',
+        'Country/Territory Risk Level', 'Country/Territory Risk Score',
+        'Current Risk Level', 'Current Risk Level - BreakDown', 'Current Risk Score', 'Current Risk Status',
+        'Date business established', 'Date of Decision',
+        'Degradation natural resources', 'Degradation natural resources details',
+        'Deleted Date', 'Detention instances', 'Detention instances details', 'Directors',
+        'Disagree with External Questionnaire Certification',
+        'Disagree with External Questionnaire Certification Details',
+        'Discrimination', 'Discrimination Details',
+        'Dumping Laws in Country of Operations', 'Dumping Prevention from Ships',
+        'Dumping Prevention from Ships Other Details',
+        'EDD Acknowledement', 'EDD Signature Job Title',
+        'Endangered Species Trade Permit', 'Endangered Species Trade Permit Details',
+        'Ensurement of No Negative Impact in Biodiversity',
+        'Entity Company Number', 'Entity ID Type', 'Entity ID Value',
+        'Entity Industry Sector - onboarding', 'Entity Industry Sector Other Details',
+        'Entity Industry Sector Unknown Details', 'Entity Other Known Name or Alias',
+        'Entity Registered Address', 'Entity Registered Country',
+        'Entity Third Party Legal Name', 'Entity Website',
+        'Environmental Impact Reports', 'Environmental Impact Reports Details',
+        'Environmental Impact Reports Documentation', 'Environmental Policies',
+        'Environmental Risk Level', 'Environmental Risk Score',
+        'Equal Pay Compliance', 'Equal Pay Laws', 'Equal Pay Non Compliance Details',
+        'ESG and CSR Guidelines', 'ESG and CSR Guidelines Other', 'ESG and CSR Guidelines Reporting Standards',
+        'ESG Legislation Compliance', 'ESG Legislation Compliance Other',
+        'ESG Non-Compliance Vulnerable Groups', 'ESG Non-Compliance Vulnerable Groups Other',
+        'Financial Referee 1', 'Financial Referee 2', 'Financial Referee 3',
+        'Forced Labour', 'Forced Labour details', 'Fourth Party Due Diligence',
+        'Freedom interference', 'Freedom to move', 'Freedom to move details', 'Gender',
+        'Genetically Modified Materials Access Provider',
+        'Genetically Modified Materials Access Provider Details',
+        'Genetically Modified Materials Crossborder Transfer',
+        'Genetically Modified Materials Crossborder Transfer Details',
+        'Gifts and Hospitality', 'Government Contracts Debarment', 'Government Contracts Debarment Details',
+        'Government Interaction', 'Government Interaction Details',
+        'Green field production sites', 'Green field production sites details',
+        'Handling of Genetically Modified Material', 'Handling of Genetically Modified Material Details',
+        'Handling of Hazardous Chemicals Others', 'Handling of Hazardous Chemicals Others Under PIC',
+        'Handling of Hazardous Chemicals Others Under PIC Details',
+        'Handling of Hazardous Chemicals Ozone Layer', 'Handling of Hazardous Chemicals Ozone Layer Details',
+        'Handling of Hazardous Waste',
+        'Handling of Product Containing Hazardous Chemicals Ozone Layer',
+        'Harmful Substances Transportation', 'Harmful Substances Transportation Details',
+        'Harmful work', 'Harmful work by children',
+        'Hazardous Chemicals Details', 'Hazardous Laws Compliance',
+        'Hazardous Waste Exportation Details', 'Hazardous Waste Exportation Other Details',
+        'Hazardous Waste Importation Details', 'Hazardous Waste Laws in Country of Operations',
+        'Health and safety compliance', 'Health and safety compliance details',
+        'Health and safety incidents', 'Health and safety incidents details',
+        'Health and safety KPIs', 'Health and safety risk assessment',
+        'Health and safety risk assessment frequency', 'Health exposure',
+        'Housing', 'Housing details',
+        'Human Rights Incidents', 'Human Rights Incidents Details',
+        'Human Rights Risk Level', 'Human Rights Risk Score',
+        'Human Rights Violations', 'Human Rights Violations Details',
+        'Human Rights Violations Prevention', 'Human Rights Violations Prevention Other',
+        'Human Rights Violations Value Chain Prevention',
+        'Human Rights Violations Value Chain Prevention Other',
+        'Illegal Activity', 'Illegal Activity Details',
+        'Immigrant workers', 'Immigrant workers details',
+        'Importation of Hazardous Waste', 'InActive Date',
+        'Instances of Trafficking', 'Instances of Trafficking Details',
+        'Internal investigations responsibles', 'Internal investigations responsibles other',
+        'Internal Reference or ID',
+        'Key health and safety risks', 'Key Products', 'Key Products Other Details',
+        'Local mercury laws', 'Mandatory schooling', 'Mandatory schooling details',
+        'MARPOL Compliance', 'Maximum working hours',
+        'Mercury disposal', 'Mercury in chlorine alkaline method', 'Mercury law compliance',
+        'Mercury presence', 'Mercury presence details', 'Mercury usage', 'Mercury waste',
+        'Minimization Adverse Impacts on Wetlands', 'Minimization Adverse Impacts on World Heritage',
+        'Minimum age engagement', 'Minimum age engagement details',
+        'Minimum Wage Compliance', 'Minimum Wage Laws',
+        'Modern Slavery Policy Applies To', 'Monitoring Last Update',
+        'National regulations on POPs', 'Negative impact in value chain',
+        'Negative impact in value chain details', 'No association freedom',
+        'No association freedom details', 'No basic facilities', 'No basic facilities details',
+        'No Slavery or Human Trafficking Policy',
+        'Non Discrimination', 'Non Discrimination Laws', 'Non retaliation',
+        'Non-Discrimination Compliance',
+        'Noxious Liquid Substances Transportation', 'Noxious Liquid Substances Transportation Details',
+        'OHS issues in value chain', 'OHS issues in value chain details',
+        'Order Volume to Total Purchase Volume', 'Other Red Flag(s)', 'Other Red Flag(s) Details',
+        'Ozone Hazards Annex D Detail', 'Passport custody', 'Passport custody details',
+        'Payment Method', 'Person Business Address', 'Person Country of Residence',
+        'Person ID Type', 'Person ID Value',
+        'Person Industry Sector - onboarding', 'Person Industry Sector Other Details',
+        'Person Industry Sector Unknown Details', 'Person Operating as Entity',
+        'Person Operating as Entity Company Number', 'Person Operating as Entity Legal Name',
+        'Person Operating as Entity Registered Address', 'Person Operating as Entity Registered Country',
+        'Person Other Known Name or Alias', 'Person Third Party Legal Name', 'Person Year of Birth',
+        'Police arrest circumstances', 'Politically Exposed Person', 'Politically Exposed Persons Details',
+        'POPs compliance', 'POPs disposal', 'POPs products supplied', 'POPs products supplied details',
+        'POPs used', 'POPs used details', 'POPs waste',
+        'Potential Conflicts of Interest', 'Potential Conflicts of Interest Details',
+        'Potential Environmental Risk', 'Potential Environmental Risk Details',
+        'Potential Environmental Risk Details Other', 'Potential Environmental Risk Explanation',
+        'Potential Human Rights Risk', 'Potential Human Rights Risk Details',
+        'Potential Human Rights Risk Details Other', 'Potential Human Rights Risk Explanation',
+        'Privacy training', 'Privacy training other', 'Private investigators',
+        'Private investigators details',
+        'Products Containing Hazardous Chemicals Ozone Layer Compliance Laws',
+        'Products containing POPs', 'Products containing POPs details',
+        'Products produced with chlorine alkaline method',
+        'Protective environmental measures', 'Protective environmental measures details',
+        'Protective equipment', 'Publicly listed company', 'Purge Date',
+        'Raw Material Share Percentage', 'Raw Material Share Significant',
+        'Reasonable Living Standard', 'Recommended by customer or individual',
+        'Recommended by customer or individual Details',
+        'References 1', 'References 2', 'References 3', 'References 4',
+        'Relevant Client Unit Other Details', 'Relevant Experience', 'Religious breaks',
+        'Relocation of inhabitants', 'Relocation of inhabitants details',
+        'Responsible Client Unit', 'Rest period',
+        'Sector Industry - Bribery and Corruption', 'Sector Industry - Human Rights',
+        'Sector Industry - Other', 'Security forces control', 'Security forces control details',
+        'Security forces protection', 'Security issues', 'Security issues details',
+        'Service Type ESG - Bribery and Corruption', 'Service Type ESG - Human Rights',
+        'Shared Internal Reference Confirmation', 'Shareholder legal structure',
+        'Shareholders', 'Shareholding company',
+        'Ship Transportation in Business Operations', 'Ship Transportation in Business Operations Details',
+        'Slavery Practice', 'Slavery Practice details', 'Slavery Practice Value Chain',
+        'Staff Age', 'Staff housing', 'Staff housing description', 'Staff housing requirements',
+        'Staff minorities religions', 'Staff minorities religions protections',
+        'Staff minorities religions protections details', 'Staff religions',
+        'Stock Market Details', 'Strikes', 'Subcontractor legal structure',
+        'Subsidiaries', 'Subsidiaries or parent company',
+        'Third Party Code of Conduct', 'Third Party Contact Email Address',
+        'Third Party Contact First Name', 'Third Party Contact Name', 'Third Party Contact Surname',
+        'Third Party Contract Description', 'Third Party Contract Name',
+        'Third Party Country of Operation', 'Third Party Country of Operation - EDD',
+        'Third Party Country of Sourcing', 'Third Party Country of Sourcing - EDD',
+        'Third Party Email Address', 'Third Party Expiry Date',
+        'Third Party Interaction with Public Officials',
+        'Third Party Interaction with Public Officials Details',
+        'Third Party Legal Structure', 'Third Party Product Type', 'Third Party Service Type Other',
+        'Torture events', 'Torture events details', 'Total Number of Employees',
+        'Trade Licence or Commercial Licence', 'Trade Licence or Commercial Licence Number',
+        'Trade of Endangered Species Awareness', 'Trade of Endangered Species Awareness Details',
+        'Trade unions', 'Trade unions percentage',
+        'Trafficking Risk Explanation Steps Details', 'Trafficking Risk Explanation Steps List2',
+        'UnDeleted Date', 'Unknown ID Types', 'Unknown ID Value',
+        'Unknown Industry Sector - onboarding', 'Unknown Industry Sector Other Details',
+        'Unknown Industry Sector Unknown Details', 'Unknown Other Known Name or Alias',
+        'Unknown Registered Address', 'Unknown Registered Country',
+        'Unknown Third Party Legal Name', 'Unknown Third Party Type',
+        'Unknown Third Party Type Other details',
+        'Unlawful arrests', 'Unlawful arrests details',
+        'Unlawful eviction awareness', 'Unlawful eviction awareness details',
+        'Usage Awareness of Hazardous Chemicals Others Under PIC in Value Chain',
+        'Usage Awareness of Hazardous Chemicals Others Under PIC in Value Chain Details',
+        'VAT Registration or Tax Code', 'VAT Registration or Tax Code Value',
+        'Vulnerable Groups Impacted', 'Wage Levels Details', 'Wage to Average Income',
+        'Wages Below Minimum', 'Wages Below Minimum Details',
+        'Wetlands Interference Awareness', 'Wetlands Interference Awareness Yes Details',
+        'Work Force Diversity Details', 'Workplace sanitation',
+        'World Bank Contracts Debarment', 'World Bank Contracts Debarment Details',
+        'World Heritage Interference Awareness', 'World Heritage Interference Awareness Yes Details',
+    ];
+
+    /* ── Field pool (built from FIELD_LABELS) ── */
     const ALL_FIELDS = [
-        { value: '',                label: '—' },
-        { value: 'legal_name',      label: 'Legal Name' },
-        { value: 'industry',        label: 'Industry / Sector' },
-        { value: 'owner',           label: 'Third Party Owner' },
-        { value: 'process',         label: 'Process' },
-        { value: 'country_reg',     label: 'Country of Registration' },
-        { value: 'contact_email',   label: 'Third Party Contact Email' },
-        { value: 'business_unit',   label: 'Business Unit' },
-        { value: 'screening',       label: 'Screening & Monitoring Policy' },
-        { value: 'entity_type',     label: 'Entity Type' },
-        { value: 'commercial_sig',  label: 'Commercial Significance' },
-        { value: 'expiry_date',     label: 'Expiry Date' },
-        { value: 'tags',            label: 'Tags' },
-        { value: 'also_known_as',   label: 'Also Known As' },
-        { value: 'client_unit',     label: 'Responsible Client Unit' },
-        { value: 'company_number',  label: 'Company Number' },
-        { value: 'id_type',         label: 'Identification Type' },
-        { value: 'id_value',        label: 'Identification Value' },
-        { value: 'address',         label: 'Address Details' },
-        { value: 'all_client_units',label: 'All Relevant Client Units' },
-        { value: 'internal_ref',    label: 'Internal Reference or ID' },
-        { value: 'website',         label: 'Company Website' },
-        { value: 'telephone',       label: 'Company Telephone' },
+        { value: '', label: '—' },
+        ...FIELD_LABELS.map(label => ({ value: slugify(label), label }))
     ];
 
     /* ── Slot definitions ──
        readonly: columns 3 & 4 (0-indexed positions 2,3,6,7,10,11) in Overview */
     const OVERVIEW_SLOTS = [
-        { value: 'legal_name',     readonly: false },
-        { value: 'industry',       readonly: false },
-        { value: 'owner',          readonly: true  },
-        { value: 'process',        readonly: true  },
-        { value: 'country_reg',    readonly: false },
-        { value: 'contact_email',  readonly: false },
-        { value: 'business_unit',  readonly: true  },
-        { value: 'screening',      readonly: true  },
-        { value: 'entity_type',    readonly: false },
-        { value: 'commercial_sig', readonly: false },
-        { value: 'expiry_date',    readonly: true  },
-        { value: 'tags',           readonly: true  },
+        { value: slugify('Entity Third Party Legal Name'),                readonly: false },
+        { value: slugify('Entity Industry Sector - onboarding'),          readonly: false },
+        { value: slugify('Responsible Client Unit'),                       readonly: true  },
+        { value: slugify('Current Risk Level'),                            readonly: true  },
+        { value: slugify('Entity Registered Country'),                     readonly: false },
+        { value: slugify('Third Party Contact Email Address'),             readonly: false },
+        { value: slugify('All Relevant Client Units'),                     readonly: true  },
+        { value: slugify('Internal Reference or ID'),                      readonly: true  },
+        { value: slugify('Entity ID Type'),                                readonly: false },
+        { value: slugify('Commercial Significance of Product or Service'), readonly: false },
+        { value: slugify('Entity Company Number'),                         readonly: true  },
+        { value: slugify('Third Party Expiry Date'),                       readonly: true  },
     ];
 
     const ADDITIONAL_SLOTS = [
-        { value: 'also_known_as',    readonly: false },
-        { value: 'client_unit',      readonly: false },
-        { value: 'company_number',   readonly: false },
-        { value: 'id_type',          readonly: false },
-        { value: 'address',          readonly: false },
-        { value: 'all_client_units', readonly: false },
-        { value: 'internal_ref',     readonly: false },
-        { value: 'id_value',         readonly: false },
-        { value: 'website',          readonly: false },
-        { value: 'telephone',        readonly: false },
-        { value: '',                 readonly: false },
-        { value: '',                 readonly: false },
+        { value: slugify('Entity Other Known Name or Alias'),              readonly: false },
+        { value: slugify('Relevant Client Unit Other Details'),            readonly: false },
+        { value: slugify('Entity Company Number'),                         readonly: false },
+        { value: slugify('Entity ID Type'),                                readonly: false },
+        { value: slugify('Entity Registered Address'),                     readonly: false },
+        { value: slugify('All Relevant Client Units'),                     readonly: false },
+        { value: slugify('Internal Reference or ID'),                      readonly: false },
+        { value: slugify('Entity ID Value'),                               readonly: false },
+        { value: slugify('Entity Website'),                                readonly: false },
+        { value: slugify('Third Party Contact Email Address'),             readonly: false },
+        { value: '',                                                       readonly: false },
+        { value: '',                                                       readonly: false },
+        { value: '',                                                       readonly: false },
+        { value: '',                                                       readonly: false },
+        { value: '',                                                       readonly: false },
+        { value: '',                                                       readonly: false },
     ];
 
     const card = document.getElementById('admin-content');
+
+    /* ── Helpers ── */
+    function fieldByValue(value) {
+        return ALL_FIELDS.find(f => f.value === value) || null;
+    }
+
+    function setComboValue(input, value) {
+        const f = fieldByValue(value);
+        if (f && f.value) {
+            input.value = f.label;
+        } else {
+            input.value = '';
+            input.placeholder = '—';
+        }
+    }
+
+    function resetFilter(panel) {
+        panel.querySelectorAll('.dropdown-item').forEach(i => { i.hidden = false; });
+        const nr = panel.querySelector('.dropdown-no-results');
+        if (nr) nr.hidden = true;
+    }
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-panel').forEach(p => {
+            if (!p.hidden) {
+                p.hidden = true;
+                resetFilter(p);
+                const cell = p.closest('.slot-cell');
+                if (cell) setComboValue(cell.querySelector('.combo-input'), cell.dataset.current);
+            }
+        });
+    }
 
     /* ── Build a slot cell ── */
     function buildSlot(slotDef, slotNumber) {
@@ -490,36 +716,42 @@
         cell.dataset.original = slotDef.value;
         cell.dataset.current  = slotDef.value;
 
-        // Option label (shows in edit mode)
-        const label = document.createElement('div');
-        label.className = 'slot-option-label';
-        label.textContent = 'Option ' + slotNumber;
-        cell.appendChild(label);
+        // Option label (edit mode only)
+        const labelEl = document.createElement('div');
+        labelEl.className = 'slot-option-label';
+        labelEl.textContent = 'Option ' + slotNumber;
+        cell.appendChild(labelEl);
 
         // Input wrap
         const wrap = document.createElement('div');
         wrap.className = 'input-wrap';
 
-        // Trigger
-        const trigger = document.createElement('div');
-        trigger.className = 'input-trigger';
+        // The combobox input — read-only in view mode, typeable in edit mode
+        const combo = document.createElement('input');
+        combo.type = 'text';
+        combo.className = 'combo-input';
+        combo.readOnly = true;
+        combo.autocomplete = 'off';
+        combo.spellcheck = false;
+        setComboValue(combo, slotDef.value);
 
-        const valSpan = document.createElement('span');
-        valSpan.className = 'input-val';
-        setValueDisplay(valSpan, slotDef.value);
-
+        // Caret
         const caret = document.createElement('span');
         caret.className = 'input-caret material-icons-outlined';
         caret.textContent = 'expand_more';
-
-        trigger.appendChild(valSpan);
-        trigger.appendChild(caret);
 
         // Dropdown panel
         const panel = document.createElement('div');
         panel.className = 'dropdown-panel';
         panel.hidden = true;
 
+        // No-results message
+        const noRes = document.createElement('div');
+        noRes.className = 'dropdown-no-results';
+        noRes.textContent = 'No results found';
+        noRes.hidden = true;
+
+        // Populate items
         ALL_FIELDS.forEach(field => {
             const item = document.createElement('div');
             item.className = 'dropdown-item';
@@ -527,105 +759,150 @@
             if (field.value === slotDef.value) item.classList.add('is-selected');
             item.dataset.value = field.value;
             item.textContent = field.label;
+            // mousedown keeps focus on the input, then we commit
             item.addEventListener('mousedown', e => {
-                e.preventDefault(); // keep focus
-                pickValue(cell, field.value);
-                closeDropdown(trigger, panel);
+                e.preventDefault();
+                commit(field.value);
             });
             panel.appendChild(item);
         });
+        panel.appendChild(noRes);
 
-        wrap.appendChild(trigger);
+        // Commit a selection
+        function commit(value) {
+            cell.dataset.current = value;
+            setComboValue(combo, value);
+            panel.querySelectorAll('.dropdown-item').forEach(i => {
+                i.classList.toggle('is-selected', i.dataset.value === value);
+                i.hidden = false;
+            });
+            noRes.hidden = true;
+            panel.hidden = true;
+        }
+
+        // Focus → show all options, select text for easy replacement
+        combo.addEventListener('focus', () => {
+            if (!card.classList.contains('editing') || slotDef.readonly) return;
+            closeAllDropdowns();
+            resetFilter(panel);
+            panel.hidden = false;
+            combo.select();
+        });
+
+        // Type → filter in real time
+        combo.addEventListener('input', () => {
+            const q = combo.value.toLowerCase();
+            let n = 0;
+            panel.querySelectorAll('.dropdown-item').forEach(item => {
+                const show = !q || item.textContent.toLowerCase().includes(q);
+                item.hidden = !show;
+                if (show) n++;
+            });
+            noRes.hidden = n > 0;
+            panel.hidden = false;
+        });
+
+        // Blur → close and restore if nothing committed
+        combo.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (!panel.hidden) {
+                    setComboValue(combo, cell.dataset.current);
+                    resetFilter(panel);
+                    panel.hidden = true;
+                }
+            }, 150);
+        });
+
+        // Escape → cancel edit of this field
+        combo.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                setComboValue(combo, cell.dataset.current);
+                resetFilter(panel);
+                panel.hidden = true;
+                combo.blur();
+            } else if (e.key === 'Enter') {
+                const first = panel.querySelector('.dropdown-item:not([hidden])');
+                if (first) commit(first.dataset.value);
+                combo.blur();
+            }
+        });
+
+        // Caret click → toggle dropdown
+        caret.addEventListener('mousedown', e => {
+            e.preventDefault();
+            if (panel.hidden) {
+                closeAllDropdowns();
+                resetFilter(panel);
+                panel.hidden = false;
+                combo.focus();
+                combo.select();
+            } else {
+                setComboValue(combo, cell.dataset.current);
+                resetFilter(panel);
+                panel.hidden = true;
+            }
+        });
+
+        wrap.appendChild(combo);
+        wrap.appendChild(caret);
         wrap.appendChild(panel);
         cell.appendChild(wrap);
 
-        // Toggle dropdown on trigger click (edit mode, non-readonly only)
-        trigger.addEventListener('click', () => {
-            if (!card.classList.contains('editing')) return;
-            if (cell.classList.contains('slot-readonly')) return;
-            const isOpen = !panel.hidden;
-            closeAllDropdowns();
-            if (!isOpen) {
-                panel.hidden = false;
-                trigger.classList.add('open');
-            }
-        });
+        // Helper text for readonly slots
+        if (slotDef.readonly) {
+            const helper = document.createElement('div');
+            helper.className = 'slot-helper-text';
+            helper.textContent = "Can't be modified, it's part of the onboarding process";
+            cell.appendChild(helper);
+        }
 
         return cell;
     }
 
-    /* ── Update the displayed value in a trigger ── */
-    function setValueDisplay(valSpan, value) {
-        const field = ALL_FIELDS.find(f => f.value === value);
-        if (field && field.value) {
-            valSpan.textContent = field.label;
-            valSpan.classList.remove('is-empty');
-        } else {
-            valSpan.textContent = '—';
-            valSpan.classList.add('is-empty');
-        }
-    }
-
-    /* ── Pick a value from the dropdown ── */
-    function pickValue(cell, value) {
-        cell.dataset.current = value;
-        const valSpan = cell.querySelector('.input-val');
-        setValueDisplay(valSpan, value);
-        // Update selected state in panel
-        cell.querySelectorAll('.dropdown-item').forEach(item => {
-            item.classList.toggle('is-selected', item.dataset.value === value);
-        });
-    }
-
-    /* ── Close a single dropdown ── */
-    function closeDropdown(trigger, panel) {
-        panel.hidden = true;
-        trigger.classList.remove('open');
-    }
-
-    /* ── Close all open dropdowns ── */
-    function closeAllDropdowns() {
-        document.querySelectorAll('.dropdown-panel').forEach(p => { p.hidden = true; });
-        document.querySelectorAll('.input-trigger.open').forEach(t => t.classList.remove('open'));
-    }
-
-    // Close on outside click
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.input-wrap')) closeAllDropdowns();
-    });
-
     /* ── Render grids ── */
     function renderGrid(containerId, slots) {
         const container = document.getElementById(containerId);
-        slots.forEach((slotDef, i) => {
-            container.appendChild(buildSlot(slotDef, i + 1));
-        });
+        slots.forEach((slotDef, i) => container.appendChild(buildSlot(slotDef, i + 1)));
     }
 
-    renderGrid('grid-overview',    OVERVIEW_SLOTS);
-    renderGrid('grid-additional',  ADDITIONAL_SLOTS);
+    renderGrid('grid-overview',   OVERVIEW_SLOTS);
+    renderGrid('grid-additional', ADDITIONAL_SLOTS);
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('mousedown', e => {
+        if (!e.target.closest('.input-wrap')) closeAllDropdowns();
+    });
 
     /* ── Edit / Cancel / Save ── */
     let alertTimer = null;
 
     document.getElementById('btn-edit').addEventListener('click', () => {
         card.classList.add('editing');
+        // Unlock editable inputs
+        document.querySelectorAll('.slot-cell:not(.slot-readonly) .combo-input')
+            .forEach(i => { i.readOnly = false; });
     });
 
     document.getElementById('btn-cancel').addEventListener('click', () => {
         closeAllDropdowns();
         card.classList.remove('editing');
-        // Restore all cells to original values
         document.querySelectorAll('.slot-cell').forEach(cell => {
-            pickValue(cell, cell.dataset.original);
+            const combo = cell.querySelector('.combo-input');
+            cell.dataset.current = cell.dataset.original;
+            setComboValue(combo, cell.dataset.original);
+            cell.querySelectorAll('.dropdown-item').forEach(i => {
+                i.classList.toggle('is-selected', i.dataset.value === cell.dataset.original);
+                i.hidden = false;
+            });
+            combo.readOnly = true;
         });
     });
 
     document.getElementById('btn-save').addEventListener('click', () => {
         closeAllDropdowns();
-        // Commit current → original
         document.querySelectorAll('.slot-cell').forEach(cell => {
             cell.dataset.original = cell.dataset.current;
+            cell.querySelector('.combo-input').readOnly = true;
         });
         card.classList.remove('editing');
         const el = document.getElementById('page-alert');
