@@ -2459,7 +2459,7 @@ function connectRows(sourceTbody, checkClass) {
         row.style.transition = 'opacity 0.25s ease';
         row.style.opacity = '0';
         setTimeout(() => row.remove(), 250);
-        showConnAlert('warning', 'Third party disconnected successfully');
+        showConnAlert('success', 'Third party disconnected successfully');
     });
 
     document.getElementById('ctx-edit').addEventListener('click', () => {
@@ -2599,11 +2599,16 @@ function connectRows(sourceTbody, checkClass) {
     });
     btnConnect.addEventListener('click', () => {
         if (!btnConnect.classList.contains('active')) return;
-        connectRows(tbody, 'ss-check');
-        selectAll.checked = false;
-        selectAll.indeterminate = false;
-        updateSsButtons();
+        const checkedRows = [...tbody.querySelectorAll('tr')].filter(tr => tr.querySelector('.ss-check:checked'));
+        if (!checkedRows.length) return;
         closeSheet();
+        // ss-tbody has an extra "Connection Type" column at index 2, so pass colOffset = 1
+        openConnectSheet(checkedRows, () => {
+            checkedRows.forEach(tr => tr.remove());
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+            updateSsButtons();
+        }, 1);
     });
 
 })();
@@ -2839,21 +2844,24 @@ function connectRows(sourceTbody, checkClass) {
     const confirmBtn = document.getElementById('connect-tp-confirm');
     const cancelBtn  = document.getElementById('connect-tp-cancel');
     let pendingRows = [];
+    let pendingColOffset = 0;
     let onDone = null;
 
-    window.openConnectSheet = function(rows, callback) {
+    window.openConnectSheet = function(rows, callback, colOffset) {
         pendingRows = rows;
+        pendingColOffset = colOffset || 0;
         onDone = callback;
         typeEl.value = '';
 
-        // Build info from first selected row (cells: 0=cb,1=name,2=idType,3=idValue,4=intRef,5=country)
+        // Build info from first selected row (cells: 0=cb,1=name,2+=idType,idValue,intRef,country)
         const cells = rows[0].querySelectorAll('td');
+        const o = pendingColOffset;
         const fields = [
             { label: 'Third Party Name', value: cells[1].textContent.trim() },
-            { label: 'ID Type',          value: cells[2].textContent.trim() },
-            { label: 'ID Value',         value: cells[3].textContent.trim() },
-            { label: 'Internal Ref.',    value: cells[4].textContent.trim() },
-            { label: 'Country',          value: cells[5].textContent.trim() },
+            { label: 'ID Type',          value: cells[2 + o].textContent.trim() },
+            { label: 'ID Value',         value: cells[3 + o].textContent.trim() },
+            { label: 'Internal Ref.',    value: cells[4 + o].textContent.trim() },
+            { label: 'Country',          value: cells[5 + o].textContent.trim() },
         ];
         if (rows.length > 1) {
             fields[0].value = `${rows.length} third parties selected`;
@@ -2879,16 +2887,17 @@ function connectRows(sourceTbody, checkClass) {
     confirmBtn.addEventListener('click', () => {
         const connType = typeEl.value;
         const connectedTbody = document.getElementById('connected-tbody');
+        const o = pendingColOffset;
         pendingRows.forEach(tr => {
             const cells = tr.querySelectorAll('td');
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td><span class="cell-link">${cells[1].textContent.trim()}</span></td>
                 <td>${connType}</td>
-                <td>${cells[2].textContent.trim()}</td>
-                <td>${cells[3].textContent.trim()}</td>
-                <td>${cells[4].textContent.trim()}</td>
-                <td>${cells[5].textContent.trim()}</td>
+                <td>${cells[2 + o].textContent.trim()}</td>
+                <td>${cells[3 + o].textContent.trim()}</td>
+                <td>${cells[4 + o].textContent.trim()}</td>
+                <td>${cells[5 + o].textContent.trim()}</td>
                 <td class="more-menu"><span class="material-icons-outlined" style="font-size:18px">more_vert</span></td>
             `;
             connectedTbody.appendChild(newRow);
