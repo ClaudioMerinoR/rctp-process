@@ -11,11 +11,14 @@
             --primary-500: #02A3D5;
             --primary-600: #0289B3;
             --primary-700: #016F91;
+            --primary-08: #E8F9FE;
             --text-normal: #0C2A31;
             --text-light: #516267;
+            --text-light-alt: #5A6E73;
             --neutral-00: #FFFFFF;
             --neutral-25: #EFEFEF;
             --neutral-50: #DFE3E7;
+            --neutral-200: #C4CCD2;
             --neutral-400: #9FACB7;
             --neutral-500: #8D9CA9;
             --alert-500: #E34C53;
@@ -37,149 +40,74 @@
         }
 
         /* ── Top Header Bar ── */
-        .header-bar {
-            background-color: var(--text-normal);
-            height: 40px;
-            color: #fff;
-            flex-shrink: 0;
-        }
+        .header-bar { background-color: var(--text-normal); height: 40px; color: #fff; flex-shrink: 0; }
         .header-bar-inner {
-            max-width: 1920px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
+            max-width: 1920px; margin: 0 auto; height: 100%;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
         }
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .header-brand .dj-mark {
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-        }
-        .header-brand .product-name {
-            color: var(--primary-500);
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-        }
+        .header-brand { display: flex; align-items: center; gap: 8px; }
+        .header-brand .dj-mark { font-weight: 700; font-size: 13px; letter-spacing: 0.5px; }
+        .header-brand .product-name { color: var(--primary-500); font-size: 15px; font-weight: 500; letter-spacing: 0.5px; }
+        .header-actions { display: flex; align-items: center; }
         .header-actions span {
-            padding: 0 8px;
-            font-size: 12px;
-            cursor: pointer;
-            border-left: 1px solid var(--text-light);
-            height: 24px;
-            display: flex;
-            align-items: center;
+            padding: 0 8px; font-size: 12px; cursor: pointer;
+            border-left: 1px solid var(--text-light); height: 24px;
+            display: flex; align-items: center; transition: color 0.3s ease;
         }
-        .header-actions span { transition: color 0.3s ease; }
         .header-actions span:hover { color: var(--primary-500); }
         .header-actions span:first-child { border-left: none; }
 
         /* ── Main Navigation ── */
-        .main-nav {
-            background-color: var(--primary-500);
-            height: 32px;
-            flex-shrink: 0;
-        }
+        .main-nav { background-color: var(--primary-500); height: 32px; flex-shrink: 0; }
         .main-nav-inner {
-            max-width: 1920px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: stretch;
-            padding: 0 16px;
+            max-width: 1920px; margin: 0 auto; height: 100%;
+            display: flex; align-items: stretch; padding: 0 16px;
         }
         .main-nav a {
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            cursor: pointer;
+            display: flex; align-items: center; padding: 0 16px;
+            font-size: 12px; font-weight: 500; color: #fff;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            text-decoration: none; cursor: pointer; transition: background 0.3s ease;
         }
-        .main-nav a { transition: background 0.3s ease; }
         .main-nav a:hover { background-color: var(--primary-600); }
         .main-nav a.active { background-color: var(--primary-600); }
 
         /* ── Page body ── */
-        .page-body {
-            flex: 1;
-            max-width: 1920px; width: 100%; margin: 0 auto;
-            padding: 0 16px;
-        }
+        .page-body { flex: 1; max-width: 1920px; width: 100%; margin: 0 auto; padding: 0 16px; }
 
         /* ── Breadcrumb ── */
         .breadcrumb-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 16px;
-            font-size: 12px;
-            color: var(--text-light);
+            display: flex; align-items: center; gap: 6px;
+            padding: 12px 16px; font-size: 12px; color: var(--text-light);
         }
         .breadcrumb-row .material-icons-outlined { font-size: 18px; color: var(--text-light); cursor: pointer; }
         .breadcrumb-row .sep { margin: 0 2px; }
 
         /* ── Page header card ── */
         .page-header-card {
-            background: var(--neutral-00);
-            border: 1px solid var(--neutral-50);
-            height: 64px;
-            display: flex; align-items: center;
-            padding: 0 16px;
-            gap: 6px;
+            background: var(--neutral-00); border: 1px solid var(--neutral-50);
+            height: 64px; display: flex; align-items: center; padding: 0 16px; gap: 6px;
         }
-        .page-header-title {
-            font-size: 20px; font-weight: 500;
-            color: var(--text-normal); letter-spacing: 0;
-        }
-        .page-header-info {
-            font-size: 18px; color: var(--neutral-500);
-            display: flex; align-items: center;
-        }
+        .page-header-title { font-size: 20px; font-weight: 500; color: var(--text-normal); }
+        .page-header-info { font-size: 18px; color: var(--neutral-500); display: flex; align-items: center; }
 
-        /* ── Grey gap ── */
+        /* ── Grey gaps ── */
         .section-gap { height: 8px; }
+        .section-gap-inner { height: 24px; }
 
         /* ── Two-column layout ── */
-        .admin-layout {
-            display: flex; align-items: flex-start; gap: 16px;
-        }
+        .admin-layout { display: flex; align-items: flex-start; gap: 16px; }
 
         /* ── Left nav ── */
-        .admin-nav {
-            width: 256px; flex-shrink: 0;
-            background: var(--neutral-00);
-            border: 1px solid #dee1e0;
-        }
+        .admin-nav { width: 256px; flex-shrink: 0; background: var(--neutral-00); border: 1px solid #dee1e0; }
         .admin-nav a {
-            display: flex; align-items: center;
-            height: 40px; padding: 0 16px;
-            font-size: 16px; color: var(--neutral-500);
-            text-decoration: none;
-            border-bottom: 1px solid #dee1e0;
-            transition: background 0.15s, color 0.15s;
+            display: flex; align-items: center; height: 40px; padding: 0 16px;
+            font-size: 16px; color: var(--neutral-500); text-decoration: none;
+            border-bottom: 1px solid #dee1e0; transition: background 0.15s, color 0.15s;
         }
         .admin-nav a:last-child { border-bottom: none; }
         .admin-nav a:hover:not(.active) { background: var(--neutral-25); color: var(--text-normal); }
-        .admin-nav a.active {
-            background: var(--primary-500);
-            color: var(--neutral-00);
-        }
+        .admin-nav a.active { background: var(--primary-500); color: var(--neutral-00); }
 
         /* ── Right content card ── */
         .admin-content {
@@ -193,18 +121,12 @@
         /* ── Buttons ── */
         .btn {
             display: inline-flex; align-items: center; gap: 4px;
-            height: 37px; padding: 0 16px;
-            font-size: 12px; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            border-radius: 0; cursor: pointer; border: none;
-            font-family: inherit; white-space: nowrap;
+            height: 37px; padding: 0 16px; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px; border-radius: 0;
+            cursor: pointer; border: none; font-family: inherit; white-space: nowrap;
             transition: background 0.15s, border-color 0.15s;
         }
-        .btn-outline {
-            background: var(--neutral-00);
-            border: 1px solid #8d9ca9;
-            color: var(--neutral-500);
-        }
+        .btn-outline { background: var(--neutral-00); border: 1px solid #8d9ca9; color: var(--neutral-500); }
         .btn-outline:hover { border-color: var(--primary-500); color: var(--primary-500); }
         .btn-filled { background: var(--primary-500); color: #fff; }
         .btn-filled:hover { background: var(--primary-600); }
@@ -214,9 +136,7 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 20px 20px 16px;
         }
-        .content-title {
-            font-size: 20px; font-weight: 500; color: var(--text-normal);
-        }
+        .content-title { font-size: 20px; font-weight: 500; color: var(--text-normal); }
         .content-actions { display: flex; gap: 8px; }
 
         /* ── Divider ── */
@@ -225,130 +145,143 @@
         /* ── Section ── */
         .content-section { padding: 20px 20px 0; }
         .section-heading {
-            font-size: 11px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px;
-            color: var(--text-light); margin-bottom: 12px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--text-light); margin-bottom: 6px;
         }
-        .section-desc {
-            font-size: 12px; color: var(--neutral-500);
-            margin-top: 2px; margin-bottom: 16px;
-        }
+        .section-desc { font-size: 12px; color: var(--neutral-500); margin-bottom: 20px; }
 
-        /* ── Fields table ── */
-        .fields-table { width: 100%; border-collapse: collapse; }
-        .fields-table th {
-            padding: 8px 12px; text-align: left;
-            font-size: 11px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.8px;
-            color: var(--text-light);
-            background: var(--neutral-25);
-            border-bottom: 1px solid #dee1e0;
-            border-top: 1px solid #dee1e0;
-        }
-        .fields-table th:last-child { text-align: center; width: 100px; }
-        .fields-table td {
-            padding: 12px 12px;
-            border-bottom: 1px solid var(--neutral-50);
-            vertical-align: middle;
-            font-size: 14px;
-        }
-        .fields-table tr:last-child td { border-bottom: none; }
-        .fields-table tbody tr:hover td { background: #fafbfc; }
+        /* ── Edit mode: button visibility ── */
+        .edit-only { display: none; }
+        .admin-content.editing .view-only { display: none; }
+        .admin-content.editing .edit-only { display: inline-flex; }
 
-        .field-name { font-weight: 500; color: var(--text-normal); }
-        .field-req { color: var(--alert-500); margin-left: 2px; }
-        .field-desc { font-size: 12px; color: var(--neutral-500); margin-top: 2px; }
-
-        .field-tag {
-            display: inline-flex; align-items: center;
-            font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
-            text-transform: uppercase; padding: 2px 6px; border-radius: 2px;
-        }
-        .field-tag.system { background: #E8F9FE; color: var(--primary-600); }
-        .field-tag.custom { background: var(--neutral-50); color: var(--text-light); }
-
-        .field-toggle-cell { text-align: center; }
-
-        /* ── Field toggle (on/off) ── */
-        .field-toggle {
-            position: relative; display: inline-flex; align-items: center;
-            width: 80px; height: 28px; border-radius: 2px; overflow: hidden;
-            border: 1px solid var(--success-500);
-            background: var(--success-500);
-            cursor: pointer; user-select: none;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .field-toggle.off { background: #dee1e0; border-color: #b1bcc5; }
-        .field-toggle-track {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 600;
-            letter-spacing: 0.5px; text-transform: uppercase;
-            color: var(--success-900); padding-right: 12px;
-        }
-        .field-toggle.off .field-toggle-track {
-            color: var(--text-light); padding-right: 0; padding-left: 12px;
-        }
-        .field-toggle-thumb {
-            position: absolute; top: -2px; bottom: -2px; width: 22px;
-            background: #fff; right: -11px; transition: right 0.15s, left 0.15s;
-        }
-        .field-toggle.off .field-toggle-thumb { right: auto; left: -11px; }
-
-        /* Section spacer between tables */
-        .section-gap-inner { height: 24px; }
-
-        /* ── View / Edit mode toggling ── */
-        .view-mode { display: block; }
-        .edit-mode { display: none; }
-        .admin-content.editing .view-mode { display: none; }
-        .admin-content.editing .edit-mode { display: block; }
-
-        /* ── View mode field grid ── */
-        .view-grid {
+        /* ── Slot grid ── */
+        .slot-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px 20px;
-            padding: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px 16px;
         }
-        .view-field-full { grid-column: 1 / -1; }
-        .view-label {
-            font-size: 11px; font-weight: 500;
+
+        /* ── Slot cell ── */
+        .slot-cell { position: relative; }
+
+        /* ── Option label (edit mode only) ── */
+        .slot-option-label {
+            display: none;
+            font-size: 12px;
+            font-weight: 500;
             color: var(--primary-500);
-            text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 16px;
+            margin-bottom: 4px;
+            white-space: nowrap;
         }
-        .view-label .req { color: var(--alert-500); }
-        .view-value {
-            font-size: 16px; color: var(--text-normal);
-            line-height: 24px;
+        .slot-cell.slot-readonly .slot-option-label { color: var(--neutral-400); }
+        .admin-content.editing .slot-option-label { display: block; }
+
+        /* ── Input wrap ── */
+        .input-wrap { position: relative; }
+
+        /* ── Input trigger (the "select" box) ── */
+        .input-trigger {
+            position: relative;
+            height: 32px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            background: var(--neutral-25);
+            display: flex;
+            align-items: center;
+            padding: 0 9px;
+            cursor: default;
+            user-select: none;
+            width: 100%;
+            transition: border-color 0.15s;
         }
-        .view-value.empty { color: var(--neutral-500); }
+        .input-val {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: var(--text-normal);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            min-width: 0;
+            line-height: 20px;
+        }
+        .input-val.is-empty {
+            color: var(--neutral-400);
+            font-style: italic;
+        }
+        .input-caret {
+            font-size: 22px;
+            color: var(--neutral-500);
+            flex-shrink: 0;
+            margin-left: 2px;
+            display: none;
+        }
+
+        /* ── Editable slot in edit mode ── */
+        .admin-content.editing .slot-cell:not(.slot-readonly) .input-trigger {
+            background: var(--neutral-00);
+            cursor: pointer;
+        }
+        .admin-content.editing .slot-cell:not(.slot-readonly) .input-trigger:hover,
+        .admin-content.editing .slot-cell:not(.slot-readonly) .input-trigger.open {
+            border-color: var(--primary-500);
+        }
+        .admin-content.editing .slot-cell:not(.slot-readonly) .input-caret {
+            display: block;
+        }
+
+        /* ── Dropdown panel ── */
+        .dropdown-panel {
+            position: absolute;
+            top: calc(100% + 2px);
+            left: 0;
+            min-width: 100%;
+            max-height: 216px;
+            overflow-y: auto;
+            background: var(--primary-08);
+            border-radius: 4px;
+            box-shadow: 0px 1px 2px rgba(0,0,0,0.30), 0px 2px 6px rgba(0,0,0,0.15);
+            z-index: 1000;
+            padding: 8px 0;
+        }
+        .dropdown-panel::-webkit-scrollbar { width: 4px; }
+        .dropdown-panel::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 100px; }
+
+        /* ── Dropdown item ── */
+        .dropdown-item {
+            background: var(--neutral-00);
+            padding: 8px 12px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-normal);
+            letter-spacing: 0.4px;
+            line-height: 16px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .dropdown-item:hover { background: #f0fbfe; }
+        .dropdown-item.is-selected { background: var(--neutral-25); color: var(--text-light); }
+        .dropdown-item.is-empty-opt { color: var(--neutral-400); font-style: italic; }
 
         /* ── Footer ── */
-        .site-footer {
-            background: #dee1e0;
-            margin-top: auto;
-            flex-shrink: 0;
-        }
-        .site-footer-inner {
-            max-width: 1680px; margin: 0 auto;
-            padding: 20px 16px;
-        }
-        .footer-links {
-            display: flex; align-items: center; gap: 0;
-        }
+        .site-footer { background: #dee1e0; margin-top: auto; flex-shrink: 0; }
+        .site-footer-inner { max-width: 1680px; margin: 0 auto; padding: 20px 16px; }
+        .footer-links { display: flex; align-items: center; }
         .footer-links a {
-            font-size: 13px; color: var(--primary-700);
-            text-decoration: none; padding-right: 8px; margin-right: 8px;
-            border-right: 1px solid var(--neutral-400);
+            font-size: 13px; color: var(--primary-700); text-decoration: none;
+            padding-right: 8px; margin-right: 8px; border-right: 1px solid var(--neutral-400);
         }
         .footer-links a:last-child { border-right: none; margin-right: 0; }
         .footer-links a:hover { text-decoration: underline; }
         .footer-sep { height: 1px; background: #b1bcc5; margin: 12px 0; }
-        .footer-copy {
-            font-size: 12px; color: var(--neutral-500);
-        }
+        .footer-copy { font-size: 12px; color: var(--neutral-500); }
 
         /* ── Alert ── */
         .page-alert {
@@ -372,36 +305,35 @@
 <!-- ══ Top Header ══ -->
 <header class="header-bar">
     <div class="header-bar-inner">
-    <div class="header-brand">
-        <span class="dj-mark">DOW JONES</span>
-        <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
-    </div>
-    <div class="header-actions">
-        <span>Customer Support</span>
-        <span>Feedback</span>
-        <span class="material-icons-outlined" style="font-size:18px">notifications</span>
-        <span class="material-icons-outlined" style="font-size:18px">settings</span>
-    </div>
+        <div class="header-brand">
+            <span class="dj-mark">DOW JONES</span>
+            <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
+        </div>
+        <div class="header-actions">
+            <span>Customer Support</span>
+            <span>Feedback</span>
+            <span class="material-icons-outlined" style="font-size:18px">notifications</span>
+            <span class="material-icons-outlined" style="font-size:18px">settings</span>
+        </div>
     </div>
 </header>
 
 <!-- ══ Main Nav ══ -->
 <nav class="main-nav">
     <div class="main-nav-inner">
-    <a href="#">Dashboard</a>
-    <a href="third-parties.html">Third Parties</a>
-    <a href="#">Employees</a>
-    <a href="#">Risk Search</a>
-    <a class="active" href="#">Company Admin</a>
-    <a href="#">Settings</a>
-    <a href="#">Reports</a>
+        <a href="#">Dashboard</a>
+        <a href="third-parties.html">Third Parties</a>
+        <a href="#">Employees</a>
+        <a href="#">Risk Search</a>
+        <a class="active" href="#">Company Admin</a>
+        <a href="#">Settings</a>
+        <a href="#">Reports</a>
     </div>
 </nav>
 
 <!-- Page body -->
 <div class="page-body">
 
-    <!-- ══ Breadcrumbs (on grey background) ══ -->
     <div style="max-width:1920px;margin:0 auto;">
         <div class="breadcrumb-row">
             <span class="material-icons-outlined">home</span>
@@ -412,7 +344,6 @@
         </div>
     </div>
 
-    <!-- Page header card -->
     <div class="page-header-card">
         <span class="page-header-title">Company Admin</span>
         <span class="page-header-info material-icons-outlined">info</span>
@@ -420,7 +351,6 @@
 
     <div class="section-gap"></div>
 
-    <!-- Two-column layout -->
     <div class="admin-layout">
 
         <!-- Left nav -->
@@ -439,394 +369,33 @@
         <!-- Right content card -->
         <div class="admin-content" id="admin-content">
 
-            <!-- ── View mode header ── -->
-            <div class="view-mode">
-                <div class="content-header">
-                    <div class="content-title">Third Party details</div>
-                    <div class="content-actions">
-                        <button class="btn btn-filled" id="btn-edit">Edit</button>
-                    </div>
-                </div>
-                <div class="content-divider"></div>
-                <div class="view-grid">
-                    <div class="view-field-full">
-                        <div class="view-label">Legal Name <span class="req">*</span></div>
-                        <div class="view-value">Full Screen Company - [CAN BE DELETED AT ANY TIME]</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Country of Registration <span class="req">*</span></div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Address Line 2</div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Address Line 3</div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Address Line 4</div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">City <span class="req">*</span></div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Postcode/Zip <span class="req">*</span></div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Country/Territory <span class="req">*</span></div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Company Telephone <span class="req">*</span></div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
-                    <div>
-                        <div class="view-label">Company Website</div>
-                        <div class="view-value empty">&mdash;</div>
-                    </div>
+            <!-- Content header -->
+            <div class="content-header">
+                <div class="content-title">Third Party Details</div>
+                <div class="content-actions">
+                    <button class="btn btn-filled view-only" id="btn-edit">Edit</button>
+                    <button class="btn btn-outline edit-only" id="btn-cancel">Cancel</button>
+                    <button class="btn btn-filled edit-only" id="btn-save">Save</button>
                 </div>
             </div>
+            <div class="content-divider"></div>
 
-            <!-- ── Edit mode ── -->
-            <div class="edit-mode">
-                <div class="content-header">
-                    <div class="content-title">Third Party details</div>
-                    <div class="content-actions">
-                        <button class="btn btn-outline" id="btn-cancel">Cancel</button>
-                        <button class="btn btn-filled" id="btn-save">Save</button>
-                    </div>
-                </div>
-                <div class="content-divider"></div>
-
-            <!-- Overview section -->
+            <!-- ── Overview ── -->
             <div class="content-section">
                 <div class="section-heading">Overview</div>
-                <div class="section-desc">Fields displayed in the Overview tab of the Third Party summary page.</div>
+                <div class="section-desc">Select which fields appear in each position of the Overview tab on the Third Party summary page.</div>
+                <div class="slot-grid" id="grid-overview"></div>
             </div>
-            <table class="fields-table">
-                <thead>
-                    <tr>
-                        <th>Field Name</th>
-                        <th>Type</th>
-                        <th>Visible</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="field-name">Legal Name <span class="field-req">*</span></div>
-                            <div class="field-desc">The registered legal name of the third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Industry / Sector</div>
-                            <div class="field-desc">The industry or sector the third party operates in.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Third Party Owner <span class="field-req">*</span></div>
-                            <div class="field-desc">The group or user responsible for this third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Process</div>
-                            <div class="field-desc">The RCTP process assigned to this third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Country of Registration <span class="field-req">*</span></div>
-                            <div class="field-desc">The country where the third party is registered.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Third Party Contact Email</div>
-                            <div class="field-desc">Primary contact email address for the third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Business Unit <span class="field-req">*</span></div>
-                            <div class="field-desc">The business unit associated with this third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Screening &amp; Monitoring Policy <span class="field-req">*</span></div>
-                            <div class="field-desc">The policy used to screen and monitor this third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Entity Type</div>
-                            <div class="field-desc">Whether the record represents an entity or an individual.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Commercial Significance</div>
-                            <div class="field-desc">Indicates the commercial importance of the third party.</div>
-                        </td>
-                        <td><span class="field-tag custom">Custom</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Expiry Date</div>
-                            <div class="field-desc">The expiry date for this third party record.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Tags</div>
-                            <div class="field-desc">Labels used to categorise and filter third parties.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
 
             <div class="section-gap-inner"></div>
             <div class="content-divider"></div>
 
-            <!-- Additional Details section -->
-            <div class="content-section">
+            <!-- ── Additional Details ── -->
+            <div class="content-section" style="padding-bottom: 28px;">
                 <div class="section-heading">Additional Details</div>
-                <div class="section-desc">Fields displayed in the Additional Details tab of the Third Party summary page.</div>
+                <div class="section-desc">Select which fields appear in each position of the Additional Details tab on the Third Party summary page.</div>
+                <div class="slot-grid" id="grid-additional"></div>
             </div>
-            <table class="fields-table">
-                <thead>
-                    <tr>
-                        <th>Field Name</th>
-                        <th>Type</th>
-                        <th>Visible</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="field-name">Also Known As</div>
-                            <div class="field-desc">Alternative names or aliases for the third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Responsible Client Unit</div>
-                            <div class="field-desc">The client unit responsible for managing this third party.</div>
-                        </td>
-                        <td><span class="field-tag custom">Custom</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Company Number</div>
-                            <div class="field-desc">Official company registration number.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Identification Type</div>
-                            <div class="field-desc">The type of identifier used (e.g. DUNS, LEI, BVD ID).</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Identification Value</div>
-                            <div class="field-desc">The value of the chosen identifier.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Address Details</div>
-                            <div class="field-desc">Full registered address of the third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">All Relevant Client Units</div>
-                            <div class="field-desc">All business units associated with this third party.</div>
-                        </td>
-                        <td><span class="field-tag custom">Custom</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Internal Reference or ID</div>
-                            <div class="field-desc">Internal tracking reference or identifier.</div>
-                        </td>
-                        <td><span class="field-tag custom">Custom</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle" role="switch" aria-checked="true">
-                                <div class="field-toggle-track">On</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Company Website</div>
-                            <div class="field-desc">Official website URL of the third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle off" role="switch" aria-checked="false">
-                                <div class="field-toggle-track">Off</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="field-name">Company Telephone</div>
-                            <div class="field-desc">Registered telephone number of the third party.</div>
-                        </td>
-                        <td><span class="field-tag system">System</span></td>
-                        <td class="field-toggle-cell">
-                            <div class="field-toggle off" role="switch" aria-checked="false">
-                                <div class="field-toggle-track">Off</div>
-                                <div class="field-toggle-thumb"></div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="section-gap-inner"></div>
-            </div><!-- /.edit-mode -->
 
         </div><!-- /.admin-content -->
 
@@ -853,40 +422,216 @@
 </footer>
 
 <script>
+    /* ── Field pool ── */
+    const ALL_FIELDS = [
+        { value: '',                label: '—' },
+        { value: 'legal_name',      label: 'Legal Name' },
+        { value: 'industry',        label: 'Industry / Sector' },
+        { value: 'owner',           label: 'Third Party Owner' },
+        { value: 'process',         label: 'Process' },
+        { value: 'country_reg',     label: 'Country of Registration' },
+        { value: 'contact_email',   label: 'Third Party Contact Email' },
+        { value: 'business_unit',   label: 'Business Unit' },
+        { value: 'screening',       label: 'Screening & Monitoring Policy' },
+        { value: 'entity_type',     label: 'Entity Type' },
+        { value: 'commercial_sig',  label: 'Commercial Significance' },
+        { value: 'expiry_date',     label: 'Expiry Date' },
+        { value: 'tags',            label: 'Tags' },
+        { value: 'also_known_as',   label: 'Also Known As' },
+        { value: 'client_unit',     label: 'Responsible Client Unit' },
+        { value: 'company_number',  label: 'Company Number' },
+        { value: 'id_type',         label: 'Identification Type' },
+        { value: 'id_value',        label: 'Identification Value' },
+        { value: 'address',         label: 'Address Details' },
+        { value: 'all_client_units',label: 'All Relevant Client Units' },
+        { value: 'internal_ref',    label: 'Internal Reference or ID' },
+        { value: 'website',         label: 'Company Website' },
+        { value: 'telephone',       label: 'Company Telephone' },
+    ];
+
+    /* ── Slot definitions ──
+       readonly: columns 3 & 4 (0-indexed positions 2,3,6,7,10,11) in Overview */
+    const OVERVIEW_SLOTS = [
+        { value: 'legal_name',     readonly: false },
+        { value: 'industry',       readonly: false },
+        { value: 'owner',          readonly: true  },
+        { value: 'process',        readonly: true  },
+        { value: 'country_reg',    readonly: false },
+        { value: 'contact_email',  readonly: false },
+        { value: 'business_unit',  readonly: true  },
+        { value: 'screening',      readonly: true  },
+        { value: 'entity_type',    readonly: false },
+        { value: 'commercial_sig', readonly: false },
+        { value: 'expiry_date',    readonly: true  },
+        { value: 'tags',           readonly: true  },
+    ];
+
+    const ADDITIONAL_SLOTS = [
+        { value: 'also_known_as',    readonly: false },
+        { value: 'client_unit',      readonly: false },
+        { value: 'company_number',   readonly: false },
+        { value: 'id_type',          readonly: false },
+        { value: 'address',          readonly: false },
+        { value: 'all_client_units', readonly: false },
+        { value: 'internal_ref',     readonly: false },
+        { value: 'id_value',         readonly: false },
+        { value: 'website',          readonly: false },
+        { value: 'telephone',        readonly: false },
+        { value: '',                 readonly: false },
+        { value: '',                 readonly: false },
+    ];
+
     const card = document.getElementById('admin-content');
 
-    // Edit button → enter edit mode
+    /* ── Build a slot cell ── */
+    function buildSlot(slotDef, slotNumber) {
+        const cell = document.createElement('div');
+        cell.className = 'slot-cell' + (slotDef.readonly ? ' slot-readonly' : '');
+        cell.dataset.original = slotDef.value;
+        cell.dataset.current  = slotDef.value;
+
+        // Option label (shows in edit mode)
+        const label = document.createElement('div');
+        label.className = 'slot-option-label';
+        label.textContent = 'Option ' + slotNumber;
+        cell.appendChild(label);
+
+        // Input wrap
+        const wrap = document.createElement('div');
+        wrap.className = 'input-wrap';
+
+        // Trigger
+        const trigger = document.createElement('div');
+        trigger.className = 'input-trigger';
+
+        const valSpan = document.createElement('span');
+        valSpan.className = 'input-val';
+        setValueDisplay(valSpan, slotDef.value);
+
+        const caret = document.createElement('span');
+        caret.className = 'input-caret material-icons-outlined';
+        caret.textContent = 'expand_more';
+
+        trigger.appendChild(valSpan);
+        trigger.appendChild(caret);
+
+        // Dropdown panel
+        const panel = document.createElement('div');
+        panel.className = 'dropdown-panel';
+        panel.hidden = true;
+
+        ALL_FIELDS.forEach(field => {
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            if (!field.value) item.classList.add('is-empty-opt');
+            if (field.value === slotDef.value) item.classList.add('is-selected');
+            item.dataset.value = field.value;
+            item.textContent = field.label;
+            item.addEventListener('mousedown', e => {
+                e.preventDefault(); // keep focus
+                pickValue(cell, field.value);
+                closeDropdown(trigger, panel);
+            });
+            panel.appendChild(item);
+        });
+
+        wrap.appendChild(trigger);
+        wrap.appendChild(panel);
+        cell.appendChild(wrap);
+
+        // Toggle dropdown on trigger click (edit mode, non-readonly only)
+        trigger.addEventListener('click', () => {
+            if (!card.classList.contains('editing')) return;
+            if (cell.classList.contains('slot-readonly')) return;
+            const isOpen = !panel.hidden;
+            closeAllDropdowns();
+            if (!isOpen) {
+                panel.hidden = false;
+                trigger.classList.add('open');
+            }
+        });
+
+        return cell;
+    }
+
+    /* ── Update the displayed value in a trigger ── */
+    function setValueDisplay(valSpan, value) {
+        const field = ALL_FIELDS.find(f => f.value === value);
+        if (field && field.value) {
+            valSpan.textContent = field.label;
+            valSpan.classList.remove('is-empty');
+        } else {
+            valSpan.textContent = '—';
+            valSpan.classList.add('is-empty');
+        }
+    }
+
+    /* ── Pick a value from the dropdown ── */
+    function pickValue(cell, value) {
+        cell.dataset.current = value;
+        const valSpan = cell.querySelector('.input-val');
+        setValueDisplay(valSpan, value);
+        // Update selected state in panel
+        cell.querySelectorAll('.dropdown-item').forEach(item => {
+            item.classList.toggle('is-selected', item.dataset.value === value);
+        });
+    }
+
+    /* ── Close a single dropdown ── */
+    function closeDropdown(trigger, panel) {
+        panel.hidden = true;
+        trigger.classList.remove('open');
+    }
+
+    /* ── Close all open dropdowns ── */
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-panel').forEach(p => { p.hidden = true; });
+        document.querySelectorAll('.input-trigger.open').forEach(t => t.classList.remove('open'));
+    }
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.input-wrap')) closeAllDropdowns();
+    });
+
+    /* ── Render grids ── */
+    function renderGrid(containerId, slots) {
+        const container = document.getElementById(containerId);
+        slots.forEach((slotDef, i) => {
+            container.appendChild(buildSlot(slotDef, i + 1));
+        });
+    }
+
+    renderGrid('grid-overview',    OVERVIEW_SLOTS);
+    renderGrid('grid-additional',  ADDITIONAL_SLOTS);
+
+    /* ── Edit / Cancel / Save ── */
+    let alertTimer = null;
+
     document.getElementById('btn-edit').addEventListener('click', () => {
         card.classList.add('editing');
     });
 
-    // Cancel → exit edit mode, reset toggles
     document.getElementById('btn-cancel').addEventListener('click', () => {
+        closeAllDropdowns();
         card.classList.remove('editing');
-        document.querySelectorAll('.field-toggle').forEach(t => {
-            const isOff = t.getAttribute('aria-checked') === 'false';
-            t.classList.toggle('off', isOff);
-            t.querySelector('.field-toggle-track').textContent = isOff ? 'Off' : 'On';
+        // Restore all cells to original values
+        document.querySelectorAll('.slot-cell').forEach(cell => {
+            pickValue(cell, cell.dataset.original);
         });
     });
 
-    // Save → exit edit mode, show alert
-    let alertTimer = null;
     document.getElementById('btn-save').addEventListener('click', () => {
+        closeAllDropdowns();
+        // Commit current → original
+        document.querySelectorAll('.slot-cell').forEach(cell => {
+            cell.dataset.original = cell.dataset.current;
+        });
         card.classList.remove('editing');
         const el = document.getElementById('page-alert');
         el.classList.add('visible', 'success');
         clearTimeout(alertTimer);
         alertTimer = setTimeout(() => el.classList.remove('visible'), 5000);
-    });
-
-    // Toggle on/off
-    document.querySelectorAll('.field-toggle').forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            const isOff = toggle.classList.toggle('off');
-            toggle.querySelector('.field-toggle-track').textContent = isOff ? 'Off' : 'On';
-            toggle.setAttribute('aria-checked', String(!isOff));
-        });
     });
 </script>
 </body>
