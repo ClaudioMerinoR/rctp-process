@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Third Party – RiskCenter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary-08:  #E8F9FE;
+            --primary-200: #7BCFE9;
+            --primary-500: #02A3D5;
+            --primary-600: #0289B3;
+            --primary-700: #016F91;
+            --text-normal:  #0C2A31;
+            --text-light:   #516267;
+            --text-light-alt: #5A6E73;
+            --neutral-00:  #FFFFFF;
+            --neutral-25:  #EFEFEF;
+            --neutral-50:  #DFE3E7;
+            --neutral-200: #C4CCD2;
+            --neutral-300: #B1BCC5;
+            --neutral-400: #9FACB7;
+            --neutral-500: #8D9CA9;
+            --alert-500:   #E34C53;
+            --warning-50:  #FBEDCA;
+            --warning-500: #F0C043;
+            --warning-900: #564518;
+            --success-50:  #BDF6DC;
+            --success-500: #13DF81;
+            --success-900: #07502E;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-y: scroll; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--neutral-25);
+            color: var(--text-normal);
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Header ── */
+        .header-bar { background: var(--text-normal); height: 40px; color: #fff; flex-shrink: 0; }
+        .header-bar-inner {
+            max-width: 1920px; margin: 0 auto; height: 100%;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+        }
+        .header-brand { display: flex; align-items: center; gap: 8px; }
+        .header-brand .dj-mark { font-weight: 700; font-size: 13px; letter-spacing: 0.5px; }
+        .header-brand .product-name { color: var(--primary-500); font-size: 15px; font-weight: 500; letter-spacing: 0.5px; }
+        .header-actions { display: flex; align-items: center; }
+        .header-actions span {
+            padding: 0 8px; font-size: 12px; cursor: pointer;
+            border-left: 1px solid var(--text-light); height: 24px;
+            display: flex; align-items: center; transition: color 0.2s;
+        }
+        .header-actions span:hover { color: var(--primary-500); }
+        .header-actions span:first-child { border-left: none; }
+
+        /* ── Main Nav ── */
+        .main-nav { background: var(--primary-500); height: 32px; flex-shrink: 0; }
+        .main-nav-inner {
+            max-width: 1920px; margin: 0 auto; height: 100%;
+            display: flex; align-items: stretch; padding: 0 16px;
+        }
+        .main-nav a {
+            display: flex; align-items: center; padding: 0 16px;
+            color: #fff; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            text-decoration: none; cursor: pointer; transition: background 0.2s;
+        }
+        .main-nav a:hover { background: var(--primary-600); }
+        .main-nav a.active { background: var(--primary-600); }
+
+        /* ── Page body ── */
+        .page-body {
+            flex: 1;
+            max-width: 1920px; width: 100%; margin: 0 auto;
+            padding: 0 16px 48px;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb-row {
+            display: flex; align-items: center; gap: 6px;
+            padding: 12px 0 8px; font-size: 12px; color: var(--text-light);
+        }
+        .breadcrumb-row .material-icons-outlined { font-size: 16px; color: var(--text-light); }
+        .breadcrumb-row a { color: var(--text-light); text-decoration: none; }
+        .breadcrumb-row a:hover { color: var(--primary-500); }
+        .breadcrumb-row .sep { margin: 0 2px; color: var(--neutral-400); }
+        .breadcrumb-row .current { color: var(--text-normal); font-weight: 500; }
+
+        /* ── Wizard wrapper ── */
+        .wizard-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        /* ── Stepper ── */
+        .stepper {
+            display: flex;
+            align-items: flex-start;
+            padding: 32px 0 28px;
+        }
+        .step-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex: 0 0 auto;
+        }
+        .step-connector {
+            flex: 1;
+            height: 2px;
+            background: var(--neutral-200);
+            margin-top: 19px;
+            border-radius: 1px;
+            transition: background 0.4s ease;
+            min-width: 40px;
+        }
+        .step-connector.filled { background: var(--primary-500); }
+
+        .step-circle {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 600;
+            border: 2px solid var(--neutral-200);
+            color: var(--neutral-400);
+            background: var(--neutral-00);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .step-circle .material-icons-outlined { font-size: 18px; display: none; }
+        .step-node.active .step-circle {
+            border-color: var(--primary-500);
+            background: var(--primary-500);
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(2,163,213,0.15);
+        }
+        .step-node.completed .step-circle {
+            border-color: var(--primary-500);
+            background: var(--primary-500);
+            color: #fff;
+        }
+        .step-node.completed .step-circle .num { display: none; }
+        .step-node.completed .step-circle .material-icons-outlined { display: block; }
+
+        .step-label {
+            font-size: 11px; font-weight: 500;
+            color: var(--neutral-400);
+            text-transform: uppercase; letter-spacing: 0.6px;
+            text-align: center;
+            white-space: nowrap;
+            transition: color 0.3s;
+        }
+        .step-node.active .step-label { color: var(--primary-500); }
+        .step-node.completed .step-label { color: var(--primary-600); }
+
+        /* ── Form card ── */
+        .form-card {
+            background: var(--neutral-00);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary-500);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            border-radius: 0 0 4px 4px;
+            overflow: hidden;
+        }
+
+        /* ── Card header ── */
+        .card-header {
+            padding: 28px 36px 20px;
+            border-bottom: 1px solid var(--neutral-50);
+        }
+        .card-step-tag {
+            font-size: 10px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--primary-500);
+            background: var(--primary-08);
+            padding: 3px 8px; border-radius: 20px;
+            display: inline-block; margin-bottom: 8px;
+        }
+        .card-title {
+            font-size: 20px; font-weight: 500;
+            color: var(--text-normal);
+            margin-bottom: 4px;
+        }
+        .card-subtitle {
+            font-size: 13px; color: var(--text-light-alt);
+        }
+
+        /* ── Card body ── */
+        .card-body { padding: 32px 36px; }
+
+        /* ── Step panels ── */
+        .step-panel { display: none; }
+        .step-panel.active { display: block; animation: fadeIn 0.25s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Type selection cards ── */
+        .type-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .type-card {
+            position: relative;
+            border: 2px solid var(--neutral-50);
+            border-radius: 8px;
+            padding: 24px 20px 20px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            user-select: none;
+        }
+        .type-card:hover {
+            border-color: var(--primary-200);
+            background: #fafeff;
+            box-shadow: 0 2px 12px rgba(2,163,213,0.1);
+        }
+        .type-card.selected {
+            border-color: var(--primary-500);
+            background: var(--primary-08);
+            box-shadow: 0 2px 16px rgba(2,163,213,0.18);
+        }
+        .type-card-icon-wrap {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            background: var(--neutral-25);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .type-card-icon-wrap .material-icons-outlined {
+            font-size: 26px;
+            color: var(--neutral-400);
+            transition: color 0.2s;
+        }
+        .type-card:hover .type-card-icon-wrap,
+        .type-card.selected .type-card-icon-wrap {
+            background: var(--primary-500);
+        }
+        .type-card:hover .type-card-icon-wrap .material-icons-outlined,
+        .type-card.selected .type-card-icon-wrap .material-icons-outlined {
+            color: #fff;
+        }
+        .type-card-title {
+            font-size: 16px; font-weight: 600;
+            color: var(--text-normal);
+        }
+        .type-card-desc {
+            font-size: 13px; color: var(--text-light);
+            line-height: 1.5;
+        }
+        .type-card-check {
+            position: absolute;
+            top: 14px; right: 14px;
+            font-size: 20px;
+            color: var(--primary-500);
+            display: none;
+        }
+        .type-card.selected .type-card-check { display: block; }
+
+        /* ── Section heading ── */
+        .section-heading {
+            font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--neutral-50);
+        }
+
+        /* ── Form grid ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 24px;
+        }
+        .form-grid .full { grid-column: 1 / -1; }
+
+        /* ── Field group (Figma input style) ── */
+        .field-group { display: flex; flex-direction: column; gap: 4px; }
+        .field-label {
+            font-size: 11px; font-weight: 500;
+            color: var(--primary-500);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            line-height: 16px;
+        }
+        .field-label .req { color: var(--alert-500); }
+        .field-input, .field-select {
+            height: 32px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 0 9px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-normal);
+            background: var(--neutral-00);
+            outline: none;
+            width: 100%;
+            transition: border-color 0.15s;
+        }
+        .field-input:focus, .field-select:focus { border-color: var(--primary-500); }
+        .field-input::placeholder { color: var(--neutral-400); }
+        .field-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238D9CA9' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            padding-right: 28px;
+        }
+        .field-hint {
+            font-size: 11px;
+            color: var(--neutral-400);
+            margin-top: 2px;
+        }
+
+        /* ── Tags input ── */
+        .tags-wrap {
+            min-height: 32px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 4px 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+            cursor: text;
+            background: var(--neutral-00);
+            transition: border-color 0.15s;
+        }
+        .tags-wrap:focus-within { border-color: var(--primary-500); }
+        .tag-chip {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: var(--primary-08);
+            border: 1px solid var(--primary-200);
+            color: var(--primary-600);
+            font-size: 12px; font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .tag-chip button {
+            background: none; border: none; cursor: pointer;
+            color: var(--primary-500); font-size: 14px;
+            line-height: 1; display: flex; align-items: center;
+            padding: 0;
+        }
+        .tag-chip button:hover { color: var(--alert-500); }
+        .tags-input {
+            border: none; outline: none;
+            font-size: 13px; font-family: inherit;
+            color: var(--text-normal);
+            background: transparent;
+            min-width: 80px; flex: 1;
+            padding: 1px 3px;
+        }
+        .tags-input::placeholder { color: var(--neutral-400); }
+
+        /* ── Step 2: Duplicate check ── */
+        .duplicate-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--warning-50);
+            border: 1px solid var(--warning-500);
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+        .duplicate-banner .material-icons-outlined {
+            color: var(--warning-900);
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .duplicate-banner-text { font-size: 13px; color: var(--warning-900); line-height: 1.5; }
+        .duplicate-banner-text strong { font-weight: 600; }
+
+        .dup-table-wrap { overflow-x: auto; margin-bottom: 24px; }
+        .dup-table {
+            width: 100%; border-collapse: collapse;
+            font-size: 13px;
+        }
+        .dup-table thead th {
+            background: var(--neutral-25);
+            padding: 8px 12px;
+            text-align: left;
+            font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            color: var(--text-light);
+            border-top: 1px solid var(--neutral-50);
+            border-bottom: 1px solid var(--neutral-50);
+            white-space: nowrap;
+        }
+        .dup-table tbody td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--neutral-50);
+            color: var(--text-light);
+            vertical-align: middle;
+        }
+        .dup-table tbody tr:last-child td { border-bottom: none; }
+        .dup-table tbody tr:hover td { background: #fafbfc; }
+        .dup-table .cell-link {
+            color: var(--primary-600); font-weight: 500; cursor: pointer;
+        }
+        .dup-table .cell-link:hover { text-decoration: underline; }
+        .status-badge {
+            display: inline-flex; align-items: center;
+            padding: 2px 8px; border-radius: 20px;
+            font-size: 11px; font-weight: 600;
+        }
+        .status-active { background: var(--success-50); color: var(--success-900); }
+        .status-inactive { background: var(--neutral-25); color: var(--neutral-500); }
+
+        .choice-group { display: flex; flex-direction: column; gap: 10px; }
+        .choice-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 14px 16px;
+            border: 1px solid var(--neutral-50);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .choice-item:hover { border-color: var(--primary-200); background: #fafeff; }
+        .choice-item.selected { border-color: var(--primary-500); background: var(--primary-08); }
+        .choice-item input[type="radio"] { margin-top: 2px; accent-color: var(--primary-500); }
+        .choice-item-text { flex: 1; }
+        .choice-item-label { font-size: 14px; font-weight: 500; color: var(--text-normal); }
+        .choice-item-desc { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+        /* ── Step 3: Entity Verification ── */
+        .verify-intro {
+            padding: 14px 16px;
+            background: var(--primary-08);
+            border: 1px solid var(--primary-200);
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .verify-intro strong { color: var(--text-normal); font-weight: 600; }
+
+        .search-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .search-bar .field-input { flex: 1; }
+        .search-bar .search-icon-wrap {
+            position: relative;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .results-count {
+            font-size: 12px; color: var(--text-light);
+        }
+        .results-count strong { color: var(--text-normal); font-weight: 600; }
+
+        .verify-table-wrap {
+            border: 1px solid var(--neutral-50);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .verify-table {
+            width: 100%; border-collapse: collapse;
+            font-size: 13px;
+        }
+        .verify-table thead th {
+            background: var(--neutral-25);
+            padding: 8px 10px;
+            text-align: left;
+            font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--neutral-50);
+            white-space: nowrap;
+        }
+        .verify-table thead th:first-child { width: 36px; }
+        .verify-table tbody td {
+            padding: 10px 10px;
+            border-bottom: 1px solid var(--neutral-50);
+            color: var(--text-light);
+            vertical-align: top;
+        }
+        .verify-table tbody tr:last-child td { border-bottom: none; }
+        .verify-table tbody tr:hover td { background: #fafbfc; }
+        .verify-table tbody tr.row-selected td { background: var(--primary-08); }
+        .verify-table .company-name {
+            color: var(--text-normal); font-weight: 500;
+            line-height: 1.4;
+        }
+        .verify-table .duns { font-family: monospace; font-size: 12px; }
+        .verify-table .address-cell { font-size: 12px; line-height: 1.4; max-width: 200px; }
+        .source-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 10px; font-weight: 600; letter-spacing: 0.4px;
+            padding: 2px 6px; border-radius: 2px;
+            background: var(--neutral-25); color: var(--neutral-500);
+            text-transform: uppercase;
+        }
+
+        .skip-option {
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 0;
+            font-size: 13px; color: var(--text-light);
+            cursor: pointer;
+        }
+        .skip-option input[type="checkbox"] { accent-color: var(--primary-500); }
+        .skip-option:hover { color: var(--text-normal); }
+
+        /* ── Card footer / navigation ── */
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 36px 24px;
+            border-top: 1px solid var(--neutral-50);
+        }
+        .footer-left { display: flex; align-items: center; gap: 8px; }
+        .footer-right { display: flex; align-items: center; gap: 8px; }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            height: 36px; padding: 0 16px;
+            font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-radius: 4px; cursor: pointer; border: none;
+            font-family: inherit; white-space: nowrap;
+            text-decoration: none;
+            transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+        }
+        .btn .material-icons-outlined { font-size: 16px; }
+        .btn-ghost {
+            background: none;
+            color: var(--text-light);
+            border: none;
+        }
+        .btn-ghost:hover { color: var(--text-normal); background: var(--neutral-25); }
+        .btn-outline {
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-300);
+            color: var(--text-normal);
+        }
+        .btn-outline:hover { border-color: var(--neutral-400); background: var(--neutral-25); }
+        .btn-filled {
+            background: var(--primary-500); color: #fff;
+        }
+        .btn-filled:hover { background: var(--primary-600); }
+        .btn-filled:disabled { opacity: 0.45; cursor: not-allowed; }
+
+        /* ── Validation state ── */
+        .field-input.error, .field-select.error, .tags-wrap.error {
+            border-color: var(--alert-500);
+        }
+        .field-error-msg {
+            font-size: 11px; color: var(--alert-500);
+            margin-top: 2px; display: none;
+        }
+        .field-group.has-error .field-error-msg { display: block; }
+        .field-group.has-error .field-input,
+        .field-group.has-error .field-select { border-color: var(--alert-500); }
+
+        /* ── Onboarding numbered blocks (Step 4) ── */
+        .ob-section-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-500);
+            padding: 20px 0 14px;
+            letter-spacing: 0.3px;
+        }
+        .ob-blocks { display: flex; flex-direction: column; }
+        .ob-block {
+            background: var(--neutral-00);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 18px 24px 20px;
+            margin-bottom: -1px;
+            transition: background 0.12s;
+        }
+        .ob-block:hover { background: #fafbfc; }
+        .ob-block:first-child { border-radius: 4px 4px 0 0; }
+        .ob-block:last-child  { border-radius: 0 0 4px 4px; margin-bottom: 0; }
+        .ob-block-head {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .ob-num   { font-size: 14px; font-weight: 700; color: var(--text-normal); min-width: 22px; }
+        .ob-label { font-size: 14px; font-weight: 600; color: var(--text-normal); }
+        .ob-req   { color: var(--alert-500); font-size: 14px; font-weight: 600; }
+        .ob-info  {
+            font-size: 17px; color: var(--primary-500);
+            cursor: help; user-select: none; line-height: 1;
+        }
+        .ob-input {
+            width: 100%;
+            height: 36px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            padding: 0 10px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-normal);
+            background: var(--neutral-00);
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        .ob-input:focus { border-color: var(--primary-500); }
+        .ob-input::placeholder { color: var(--neutral-400); }
+        .ob-input[readonly] {
+            background: var(--neutral-25);
+            color: var(--text-light);
+            cursor: default;
+        }
+        .ob-textarea {
+            height: auto; min-height: 64px;
+            padding: 8px 10px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        .ob-select {
+            appearance: none; -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238D9CA9' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            padding-right: 28px;
+        }
+        .ob-sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .ob-sub-label {
+            font-size: 11px; font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .ob-block.has-error .ob-input { border-color: var(--alert-500); }
+        .ob-error-msg {
+            font-size: 11px; color: var(--alert-500);
+            margin-top: 4px; display: none;
+        }
+        .ob-block.has-error .ob-error-msg { display: block; }
+
+        /* ── Footer ── */
+        .site-footer { background: #dee1e0; margin-top: auto; flex-shrink: 0; }
+        .site-footer-inner { max-width: 1680px; margin: 0 auto; padding: 20px 16px; }
+        .footer-links { display: flex; align-items: center; }
+        .footer-links a {
+            font-size: 13px; color: var(--primary-700); text-decoration: none;
+            padding-right: 8px; margin-right: 8px; border-right: 1px solid var(--neutral-400);
+        }
+        .footer-links a:last-child { border-right: none; margin-right: 0; }
+        .footer-links a:hover { text-decoration: underline; }
+        .footer-sep { height: 1px; background: #b1bcc5; margin: 12px 0; }
+        .footer-copy { font-size: 12px; color: var(--neutral-500); }
+    </style>
+</head>
+<body>
+
+<!-- ══ Top Header ══ -->
+<header class="header-bar">
+    <div class="header-bar-inner">
+        <div class="header-brand">
+            <span class="dj-mark">DOW JONES</span>
+            <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
+        </div>
+        <div class="header-actions">
+            <span>Customer Support</span>
+            <span>Feedback</span>
+            <span class="material-icons-outlined" style="font-size:18px">notifications</span>
+            <span class="material-icons-outlined" style="font-size:18px">settings</span>
+        </div>
+    </div>
+</header>
+
+<!-- ══ Main Nav ══ -->
+<nav class="main-nav">
+    <div class="main-nav-inner">
+        <a href="#">Dashboard</a>
+        <a href="third-parties.html" class="active">Third Parties</a>
+        <a href="#">Employees</a>
+        <a href="#">Risk Search</a>
+        <a href="#">Company Admin</a>
+        <a href="#">Settings</a>
+        <a href="#">Reports</a>
+    </div>
+</nav>
+
+<!-- ══ Page Body ══ -->
+<div class="page-body">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-row">
+        <span class="material-icons-outlined">home</span>
+        <span class="sep">/</span>
+        <a href="third-parties.html">Third Parties</a>
+        <span class="sep">/</span>
+        <span class="current">Add New Third Party</span>
+    </div>
+
+    <!-- Wizard -->
+    <div class="wizard-wrap">
+
+        <!-- Stepper -->
+        <div class="stepper" id="stepper">
+            <div class="step-node active" data-step="1">
+                <div class="step-circle">
+                    <span class="num">1</span>
+                    <span class="material-icons-outlined">check</span>
+                </div>
+                <div class="step-label">Third Party Details</div>
+            </div>
+            <div class="step-connector" id="connector-1"></div>
+            <div class="step-node" data-step="2">
+                <div class="step-circle">
+                    <span class="num">2</span>
+                    <span class="material-icons-outlined">check</span>
+                </div>
+                <div class="step-label">Duplicate Check</div>
+            </div>
+            <div class="step-connector" id="connector-2"></div>
+            <div class="step-node" data-step="3">
+                <div class="step-circle">
+                    <span class="num">3</span>
+                    <span class="material-icons-outlined">check</span>
+                </div>
+                <div class="step-label">Entity Verification</div>
+            </div>
+            <div class="step-connector" id="connector-3"></div>
+            <div class="step-node" data-step="4">
+                <div class="step-circle">
+                    <span class="num">4</span>
+                    <span class="material-icons-outlined">check</span>
+                </div>
+                <div class="step-label">Onboarding Details</div>
+            </div>
+        </div>
+
+        <!-- Form card -->
+        <div class="form-card">
+
+            <!-- ═══════════════════════ STEP 1 ═══════════════════════ -->
+            <div class="step-panel active" id="panel-1">
+                <div class="card-header">
+                    <div class="card-step-tag">Step 1 of 4</div>
+                    <div class="card-title">Third Party Details</div>
+                    <div class="card-subtitle">Enter the core details of the new third party. Fields marked with <span style="color:var(--alert-500)">*</span> are required.</div>
+                </div>
+                <div class="card-body">
+
+                    <!-- Type selection -->
+                    <div class="section-heading">Third Party Type <span style="color:var(--alert-500)">*</span></div>
+                    <div class="type-cards">
+                        <div class="type-card" data-type="entity" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap">
+                                <span class="material-icons-outlined">business</span>
+                            </div>
+                            <div class="type-card-title">Entity / Organisation</div>
+                            <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
+                        </div>
+                        <div class="type-card" data-type="person" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap">
+                                <span class="material-icons-outlined">person</span>
+                            </div>
+                            <div class="type-card-title">Individual / Person</div>
+                            <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
+                        </div>
+                    </div>
+
+                    <!-- Core fields -->
+                    <div class="section-heading">Basic Information</div>
+                    <div class="form-grid">
+
+                        <div class="field-group full" id="fg-name">
+                            <label class="field-label">Third Party Legal Name <span class="req">*</span></label>
+                            <input class="field-input" id="field-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
+                            <div class="field-error-msg">Legal name is required.</div>
+                        </div>
+
+                        <div class="field-group" id="fg-bu">
+                            <label class="field-label">Business Unit <span class="req">*</span></label>
+                            <select class="field-select" id="field-bu">
+                                <option value="">Select a business unit</option>
+                                <option>Europe</option>
+                                <option>Americas</option>
+                                <option>Asia Pacific</option>
+                                <option>Entity Verification</option>
+                                <option>Global Operations</option>
+                            </select>
+                            <div class="field-error-msg">Business unit is required.</div>
+                        </div>
+
+                        <div class="field-group" id="fg-owner">
+                            <label class="field-label">Owner <span class="req">*</span></label>
+                            <select class="field-select" id="field-owner">
+                                <option value="">Assign an owner</option>
+                                <option>Claudio Merino</option>
+                                <option>Emily Forbes</option>
+                                <option>Tamara Knoetschke</option>
+                                <option>James Richardson</option>
+                            </select>
+                            <div class="field-error-msg">Owner is required.</div>
+                        </div>
+
+                        <div class="field-group">
+                            <label class="field-label">Process</label>
+                            <select class="field-select" id="field-process">
+                                <option value="">Select a process</option>
+                                <option>Standard RCTP</option>
+                                <option>Enhanced RCTP</option>
+                                <option>Simplified RCTP</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group">
+                            <label class="field-label">Screening &amp; Monitoring Policy</label>
+                            <select class="field-select" id="field-policy">
+                                <option value="">Select a policy</option>
+                                <option>Default Standard KYBP Policy</option>
+                                <option>Enhanced Screening Policy</option>
+                                <option>Simplified Policy</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group full">
+                            <label class="field-label">Tags</label>
+                            <div class="tags-wrap" id="tags-wrap">
+                                <input class="tags-input" id="tags-input" type="text" placeholder="Type and press Enter to add tags…">
+                            </div>
+                            <div class="field-hint">Press Enter to add a tag. E.g. Gas &amp; Oil, Supplier, Critical.</div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="footer-left">
+                        <a href="third-parties.html" class="btn btn-ghost">
+                            <span class="material-icons-outlined">close</span>
+                            Cancel
+                        </a>
+                    </div>
+                    <div class="footer-right">
+                        <button class="btn btn-filled" id="btn-step1-continue">
+                            Continue
+                            <span class="material-icons-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════ STEP 2 ═══════════════════════ -->
+            <div class="step-panel" id="panel-2">
+                <div class="card-header">
+                    <div class="card-step-tag">Step 2 of 4</div>
+                    <div class="card-title">Duplicate Check</div>
+                    <div class="card-subtitle">We found potential matches for <strong id="dup-name-display" style="color:var(--text-normal)"></strong>. Review them before continuing.</div>
+                </div>
+                <div class="card-body">
+
+                    <div class="duplicate-banner">
+                        <span class="material-icons-outlined">warning_amber</span>
+                        <div class="duplicate-banner-text">
+                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist in the system. Please review them to avoid creating duplicates.
+                        </div>
+                    </div>
+
+                    <div class="dup-table-wrap">
+                        <table class="dup-table">
+                            <thead>
+                                <tr>
+                                    <th>Third Party Name</th>
+                                    <th>Status</th>
+                                    <th>Internal Reference</th>
+                                    <th>Country</th>
+                                    <th>Owner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="cell-link">Initech Inc</span></td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                    <td>INT-0001</td>
+                                    <td>United States</td>
+                                    <td>Emily Forbes</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">INITECH Ltd</span></td>
+                                    <td><span class="status-badge status-inactive">Inactive</span></td>
+                                    <td>INT-0002</td>
+                                    <td>United Kingdom</td>
+                                    <td>Claudio Merino</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section-heading">How would you like to proceed?</div>
+                    <div class="choice-group" id="dup-choice-group">
+                        <label class="choice-item selected" id="choice-new">
+                            <input type="radio" name="dup-choice" value="new" checked>
+                            <div class="choice-item-text">
+                                <div class="choice-item-label">This is a different third party — continue as new</div>
+                                <div class="choice-item-desc">The matches above are different entities. Proceed with creating a new record.</div>
+                            </div>
+                        </label>
+                        <label class="choice-item" id="choice-existing">
+                            <input type="radio" name="dup-choice" value="existing">
+                            <div class="choice-item-text">
+                                <div class="choice-item-label">One of the matches above is the same third party</div>
+                                <div class="choice-item-desc">Use an existing record instead of creating a new one. Click the name above to view it.</div>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="footer-left">
+                        <button class="btn btn-outline" id="btn-step2-back">
+                            <span class="material-icons-outlined">arrow_back</span>
+                            Back
+                        </button>
+                    </div>
+                    <div class="footer-right">
+                        <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                        <button class="btn btn-filled" id="btn-step2-continue">
+                            Continue
+                            <span class="material-icons-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════ STEP 3 ═══════════════════════ -->
+            <div class="step-panel" id="panel-3">
+                <div class="card-header">
+                    <div class="card-step-tag">Step 3 of 4</div>
+                    <div class="card-title">Entity Verification</div>
+                    <div class="card-subtitle">Search external databases to verify and match <strong id="verify-name-display" style="color:var(--text-normal)"></strong> against a known record.</div>
+                </div>
+                <div class="card-body">
+
+                    <div class="verify-intro">
+                        Search by name, DUNS number, LEI or BVD ID across external sources including <strong>Dun &amp; Bradstreet</strong>, to link this third party to a verified entity record.
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom:24px">
+                        <div class="field-group">
+                            <label class="field-label">Country / Territory</label>
+                            <select class="field-select" id="verify-country">
+                                <option value="">All countries</option>
+                                <option>United States</option>
+                                <option>United Kingdom</option>
+                                <option>Canada</option>
+                                <option>Germany</option>
+                                <option>France</option>
+                                <option>Russian Federation</option>
+                                <option>Republic of Korea</option>
+                                <option>India</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">ID Type</label>
+                            <select class="field-select" id="verify-id-type">
+                                <option>Name search</option>
+                                <option>DUNS Number</option>
+                                <option>LEI</option>
+                                <option>BVD ID</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="search-bar">
+                        <input class="field-input" id="verify-search-input" type="text" placeholder="Search by name or identifier…" style="flex:1">
+                        <button class="btn btn-filled" id="btn-verify-search">
+                            <span class="material-icons-outlined">search</span>
+                            Search
+                        </button>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="verify-results" style="display:none">
+                        <div class="results-header">
+                            <div class="results-count"><strong id="result-count">265</strong> results found</div>
+                            <div style="display:flex;gap:6px;align-items:center">
+                                <span class="source-badge">
+                                    <span class="material-icons-outlined" style="font-size:12px">verified</span>
+                                    Dun &amp; Bradstreet
+                                </span>
+                            </div>
+                        </div>
+                        <div class="verify-table-wrap">
+                            <table class="verify-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>DUNS</th>
+                                        <th>Address</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="verify-tbody">
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="0" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH Co., Ltd.</td>
+                                        <td class="duns">690000463</td>
+                                        <td class="address-cell">61 Digital-ro 26-gil, Guro-gu, Seoul 08389</td>
+                                        <td>Republic of Korea</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="1" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">Initech Systems Ltd</td>
+                                        <td class="duns">204329382</td>
+                                        <td class="address-cell">Suite 3000, 421–7th Ave SW, Calgary, AB T2P 4K9</td>
+                                        <td>Canada</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="2" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">Initech Global, LLC</td>
+                                        <td class="duns">623292385</td>
+                                        <td class="address-cell">—</td>
+                                        <td>United States</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="3" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH Enterprise International LLC</td>
+                                        <td class="duns">067470522</td>
+                                        <td class="address-cell">6807 Emmett F Lowry Expy Ste 105, Texas City, TX 77591</td>
+                                        <td>United States</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="4" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH Consulting Limited</td>
+                                        <td class="duns">808241405</td>
+                                        <td class="address-cell">62 Woodward Street, Featherston 5710</td>
+                                        <td>New Zealand</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Skip option -->
+                    <label class="skip-option" id="skip-option">
+                        <input type="checkbox" id="skip-verify">
+                        Skip entity verification — I'll complete this later
+                    </label>
+
+                </div>
+                <div class="card-footer">
+                    <div class="footer-left">
+                        <button class="btn btn-outline" id="btn-step3-back">
+                            <span class="material-icons-outlined">arrow_back</span>
+                            Back
+                        </button>
+                    </div>
+                    <div class="footer-right">
+                        <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                        <button class="btn btn-filled" id="btn-step3-save">
+                            Continue
+                            <span class="material-icons-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════ STEP 4 ═══════════════════════ -->
+            <div class="step-panel" id="panel-4">
+                <div class="card-header">
+                    <div class="card-step-tag">Step 4 of 4</div>
+                    <div class="card-title">Onboarding Details</div>
+                    <div class="card-subtitle">Provide additional details to complete the onboarding record. Fields marked with <span style="color:var(--alert-500)">*</span> are required.</div>
+                </div>
+                <div class="card-body" style="padding-top:0">
+
+                    <div class="ob-section-label">Entity</div>
+
+                    <div class="ob-blocks">
+
+                        <!-- 1. Legal Name -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">1.</span>
+                                <span class="ob-label">Legal Name of the Third Party</span>
+                                <span class="ob-req">*</span>
+                            </div>
+                            <input class="ob-input" id="ob-legal-name" type="text" readonly tabindex="-1">
+                        </div>
+
+                        <!-- 2. Other Known Name / Alias -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">2.</span>
+                                <span class="ob-label">Other Known Name / Alias</span>
+                                <span class="material-icons-outlined ob-info" title="Alternative names or aliases this third party may be known by">info</span>
+                            </div>
+                            <input class="ob-input" id="ob-alias" type="text" placeholder="e.g. Initech SL">
+                        </div>
+
+                        <!-- 3. Company Number -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">3.</span>
+                                <span class="ob-label">Company Number (or equivalent)</span>
+                                <span class="material-icons-outlined ob-info" title="Official registered company number or equivalent identifier">info</span>
+                            </div>
+                            <input class="ob-input" id="ob-company-num" type="text" placeholder="e.g. 12345678">
+                        </div>
+
+                        <!-- 4. Registered Address -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">4.</span>
+                                <span class="ob-label">Registered Address</span>
+                                <span class="material-icons-outlined ob-info" title="Official registered address of the third party">info</span>
+                            </div>
+                            <textarea class="ob-input ob-textarea" id="ob-address" placeholder="Enter the full registered address"></textarea>
+                        </div>
+
+                        <!-- 5. Registered Country / Territory -->
+                        <div class="ob-block" id="ob-block-country">
+                            <div class="ob-block-head">
+                                <span class="ob-num">5.</span>
+                                <span class="ob-label">Registered Country / Territory</span>
+                                <span class="ob-req">*</span>
+                                <span class="material-icons-outlined ob-info" title="Country or territory where this third party is registered">info</span>
+                            </div>
+                            <select class="ob-input ob-select" id="ob-country">
+                                <option value="">Choose…</option>
+                                <option>Argentina</option>
+                                <option>Australia</option>
+                                <option>Brazil</option>
+                                <option>Canada</option>
+                                <option>China</option>
+                                <option>France</option>
+                                <option>Germany</option>
+                                <option>India</option>
+                                <option>Italy</option>
+                                <option>Japan</option>
+                                <option>Mexico</option>
+                                <option>Netherlands</option>
+                                <option>Republic of Korea</option>
+                                <option>Russian Federation</option>
+                                <option>Singapore</option>
+                                <option>Spain</option>
+                                <option>Sweden</option>
+                                <option>Switzerland</option>
+                                <option>United Kingdom</option>
+                                <option>United States</option>
+                            </select>
+                            <div class="ob-error-msg">Registered country is required.</div>
+                        </div>
+
+                        <!-- 6. Company Website -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">6.</span>
+                                <span class="ob-label">Company Website</span>
+                                <span class="material-icons-outlined ob-info" title="Official website of the third party">info</span>
+                            </div>
+                            <input class="ob-input" id="ob-website" type="url" placeholder="https://www.example.com">
+                        </div>
+
+                        <!-- 7. Industry / Sector -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">7.</span>
+                                <span class="ob-label">Industry / Sector</span>
+                            </div>
+                            <select class="ob-input ob-select" id="ob-industry">
+                                <option value="">Select an industry</option>
+                                <option>Aerospace &amp; Defence</option>
+                                <option>Agriculture</option>
+                                <option>Automotive</option>
+                                <option>Banking &amp; Finance</option>
+                                <option>Chemicals</option>
+                                <option>Construction</option>
+                                <option>Consumer Goods</option>
+                                <option>Education</option>
+                                <option>Energy &amp; Utilities</option>
+                                <option>Gas &amp; Oil</option>
+                                <option>Healthcare &amp; Pharmaceuticals</option>
+                                <option>Hospitality &amp; Tourism</option>
+                                <option>Insurance</option>
+                                <option>Legal Services</option>
+                                <option>Logistics &amp; Transportation</option>
+                                <option>Manufacturing</option>
+                                <option>Media &amp; Entertainment</option>
+                                <option>Mining &amp; Metals</option>
+                                <option>Professional Services</option>
+                                <option>Real Estate</option>
+                                <option>Retail</option>
+                                <option>Technology</option>
+                                <option>Telecommunications</option>
+                            </select>
+                        </div>
+
+                        <!-- 8. Identification -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">8.</span>
+                                <span class="ob-label">Identification</span>
+                            </div>
+                            <div class="ob-sub-grid">
+                                <div>
+                                    <div class="ob-sub-label">ID Type</div>
+                                    <select class="ob-input ob-select" id="ob-id-type">
+                                        <option value="">Select ID type</option>
+                                        <option>DUNS Number</option>
+                                        <option>LEI</option>
+                                        <option>BVD ID</option>
+                                        <option>VAT Number</option>
+                                        <option>Tax Code</option>
+                                        <option>Trade Licence</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="ob-sub-label">ID Value</div>
+                                    <input class="ob-input" id="ob-id-value" type="text" placeholder="Enter identifier value">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Internal Reference or ID -->
+                        <div class="ob-block">
+                            <div class="ob-block-head">
+                                <span class="ob-num">9.</span>
+                                <span class="ob-label">Internal Reference or ID</span>
+                                <span class="material-icons-outlined ob-info" title="Your organisation's internal tracking reference for this third party">info</span>
+                            </div>
+                            <input class="ob-input" id="ob-internal-ref" type="text" placeholder="e.g. SMP-0042">
+                        </div>
+
+                    </div><!-- /.ob-blocks -->
+                </div>
+                <div class="card-footer">
+                    <div class="footer-left">
+                        <button class="btn btn-outline" id="btn-step4-back">
+                            <span class="material-icons-outlined">arrow_back</span>
+                            Back
+                        </button>
+                    </div>
+                    <div class="footer-right">
+                        <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                        <button class="btn btn-filled" id="btn-step4-save">
+                            <span class="material-icons-outlined">check</span>
+                            Save &amp; Finish
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.form-card -->
+    </div><!-- /.wizard-wrap -->
+
+</div><!-- /.page-body -->
+
+<!-- ══ Footer ══ -->
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        <div class="footer-links">
+            <a href="#">Privacy Notice</a>
+            <a href="#">Cookie Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-sep"></div>
+        <div class="footer-copy">
+            <span style="font-weight:700;color:#516267;margin-right:8px">DJ</span>
+            &copy; 2026 Dow Jones &amp; Company, Inc. All Rights Reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ══════════════════════ State ══════════════════════ */
+let currentStep = 1;
+let selectedType = null;
+const tags = [];
+
+/* ══════════════════════ Step navigation ══════════════════════ */
+function goToStep(n) {
+    // Hide current panel
+    document.getElementById('panel-' + currentStep).classList.remove('active');
+
+    // Update stepper nodes
+    document.querySelectorAll('.step-node').forEach(node => {
+        const s = parseInt(node.dataset.step);
+        node.classList.remove('active', 'completed');
+        if (s < n)  node.classList.add('completed');
+        if (s === n) node.classList.add('active');
+    });
+
+    // Update connectors
+    document.querySelectorAll('.step-connector').forEach((conn, i) => {
+        conn.classList.toggle('filled', i + 1 < n);
+    });
+
+    currentStep = n;
+    document.getElementById('panel-' + n).classList.add('active');
+
+    // Scroll to top of card
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ══════════════════════ Step 1 ══════════════════════ */
+
+// Type card selection
+document.querySelectorAll('.type-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedType = card.dataset.type;
+    });
+    card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+});
+
+// Tags input
+const tagsInput = document.getElementById('tags-input');
+const tagsWrap  = document.getElementById('tags-wrap');
+
+tagsInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = tagsInput.value.trim().replace(/,$/, '');
+        if (val && !tags.includes(val)) {
+            tags.push(val);
+            addTagChip(val);
+        }
+        tagsInput.value = '';
+    } else if (e.key === 'Backspace' && tagsInput.value === '' && tags.length) {
+        const last = tags.pop();
+        tagsWrap.querySelector(`[data-tag="${CSS.escape(last)}"]`)?.remove();
+    }
+});
+
+tagsWrap.addEventListener('click', () => tagsInput.focus());
+
+function addTagChip(val) {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    chip.dataset.tag = val;
+    chip.innerHTML = `${val}<button type="button" aria-label="Remove ${val}"><span class="material-icons-outlined" style="font-size:14px">close</span></button>`;
+    chip.querySelector('button').addEventListener('click', e => {
+        e.stopPropagation();
+        tags.splice(tags.indexOf(val), 1);
+        chip.remove();
+    });
+    tagsWrap.insertBefore(chip, tagsInput);
+}
+
+// Step 1 → Continue
+document.getElementById('btn-step1-continue').addEventListener('click', () => {
+    let valid = true;
+
+    // Require type
+    if (!selectedType) {
+        // Flash cards
+        document.querySelectorAll('.type-card').forEach(c => {
+            c.style.borderColor = 'var(--alert-500)';
+            setTimeout(() => c.style.borderColor = '', 1600);
+        });
+        valid = false;
+    }
+
+    // Require name
+    const name = document.getElementById('field-name').value.trim();
+    const fgName = document.getElementById('fg-name');
+    if (!name) {
+        fgName.classList.add('has-error');
+        valid = false;
+    } else {
+        fgName.classList.remove('has-error');
+    }
+
+    // Require business unit
+    const bu = document.getElementById('field-bu').value;
+    const fgBu = document.getElementById('fg-bu');
+    if (!bu) {
+        fgBu.classList.add('has-error');
+        valid = false;
+    } else {
+        fgBu.classList.remove('has-error');
+    }
+
+    // Require owner
+    const owner = document.getElementById('field-owner').value;
+    const fgOwner = document.getElementById('fg-owner');
+    if (!owner) {
+        fgOwner.classList.add('has-error');
+        valid = false;
+    } else {
+        fgOwner.classList.remove('has-error');
+    }
+
+    if (!valid) return;
+
+    // Populate name in subsequent steps
+    document.getElementById('dup-name-display').textContent = '"' + name + '"';
+    document.getElementById('verify-name-display').textContent = '"' + name + '"';
+    document.getElementById('verify-search-input').value = name;
+
+    goToStep(2);
+});
+
+// Clear error on input
+['field-name', 'field-bu', 'field-owner'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('change', () => {
+        el.closest('.field-group')?.classList.remove('has-error');
+    });
+    el.addEventListener('input', () => {
+        el.closest('.field-group')?.classList.remove('has-error');
+    });
+});
+
+/* ══════════════════════ Step 2 ══════════════════════ */
+
+// Choice items
+document.querySelectorAll('.choice-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelectorAll('.choice-item').forEach(c => c.classList.remove('selected'));
+        item.classList.add('selected');
+        item.querySelector('input[type="radio"]').checked = true;
+    });
+});
+
+document.getElementById('btn-step2-back').addEventListener('click', () => goToStep(1));
+document.getElementById('btn-step2-continue').addEventListener('click', () => {
+    const choice = document.querySelector('input[name="dup-choice"]:checked')?.value;
+    if (choice === 'existing') {
+        // Navigate back to TP list (existing record)
+        window.location.href = 'third-parties.html';
+    } else {
+        goToStep(3);
+    }
+});
+
+/* ══════════════════════ Step 3 ══════════════════════ */
+
+// Simulate search
+document.getElementById('btn-verify-search').addEventListener('click', () => {
+    const results = document.getElementById('verify-results');
+    results.style.display = 'block';
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+document.getElementById('verify-search-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-verify-search').click();
+});
+
+// Row selection highlight
+document.getElementById('verify-tbody').addEventListener('change', e => {
+    if (e.target.classList.contains('verify-radio')) {
+        document.querySelectorAll('#verify-tbody tr').forEach(tr => tr.classList.remove('row-selected'));
+        e.target.closest('tr')?.classList.add('row-selected');
+        // Uncheck skip if a row is selected
+        document.getElementById('skip-verify').checked = false;
+    }
+});
+
+// Skip checkbox
+document.getElementById('skip-verify').addEventListener('change', e => {
+    if (e.target.checked) {
+        document.querySelectorAll('.verify-radio').forEach(r => r.checked = false);
+        document.querySelectorAll('#verify-tbody tr').forEach(tr => tr.classList.remove('row-selected'));
+    }
+});
+
+document.getElementById('btn-step3-back').addEventListener('click', () => goToStep(2));
+
+document.getElementById('btn-step3-save').addEventListener('click', () => {
+    // Pre-fill legal name from step 1 into step 4
+    document.getElementById('ob-legal-name').value = document.getElementById('field-name').value.trim();
+    goToStep(4);
+});
+
+/* ══════════════════════ Step 4 ══════════════════════ */
+
+document.getElementById('btn-step4-back').addEventListener('click', () => goToStep(3));
+
+document.getElementById('ob-country').addEventListener('change', () => {
+    document.getElementById('ob-block-country').classList.remove('has-error');
+});
+
+document.getElementById('btn-step4-save').addEventListener('click', () => {
+    const country = document.getElementById('ob-country').value;
+    if (!country) {
+        document.getElementById('ob-block-country').classList.add('has-error');
+        document.getElementById('ob-country').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+    window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>
