@@ -87,14 +87,14 @@
 
         /* ── Breadcrumb ── */
         .breadcrumb-row {
-            display: flex; align-items: center; gap: 6px;
-            padding: 12px 0 8px; font-size: 12px; color: var(--text-light);
+            display: flex; align-items: center; gap: 15px;
+            padding: 8px 0; font-size: 13px;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .breadcrumb-row .material-icons-outlined { font-size: 16px; color: var(--text-light); }
-        .breadcrumb-row a { color: var(--text-light); text-decoration: none; }
-        .breadcrumb-row a:hover { color: var(--primary-500); }
-        .breadcrumb-row .sep { margin: 0 2px; color: var(--neutral-400); }
-        .breadcrumb-row .current { color: var(--text-normal); font-weight: 500; }
+        .breadcrumb-row .material-icons-outlined { font-size: 20px; color: var(--primary-500); cursor: pointer; }
+        .breadcrumb-row .sep { color: var(--text-light); margin: 0; font-size: 14px; text-transform: none; letter-spacing: 0; }
+        .breadcrumb-row > span:not(.sep), .breadcrumb-row a { color: var(--primary-500); text-decoration: none; cursor: pointer; }
+        .breadcrumb-row > span:last-child, .breadcrumb-row .current { color: var(--text-light); cursor: default; }
 
         /* ── Wizard wrapper ── */
         .wizard-wrap {
