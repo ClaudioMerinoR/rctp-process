@@ -580,6 +580,222 @@
         .field-group.has-error .field-input,
         .field-group.has-error .field-select { border-color: var(--alert-500); }
 
+        /* ── Info tooltip ── */
+        .info-tooltip-wrap { position: relative; display: inline-flex; align-items: center; }
+        .info-tooltip-wrap .info-tooltip {
+            display: none; position: absolute; bottom: calc(100% + 6px); left: 50%;
+            transform: translateX(-50%); background: var(--text-normal); color: #fff;
+            font-size: 11px; line-height: 1.5; padding: 6px 10px; border-radius: 4px;
+            white-space: normal; min-width: 160px; max-width: 280px;
+            pointer-events: none; z-index: 400; font-weight: 400;
+            letter-spacing: 0; text-transform: none;
+        }
+        .info-tooltip-wrap .info-tooltip::after {
+            content: ''; position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%); border: 5px solid transparent;
+            border-top-color: var(--text-normal);
+        }
+        .info-tooltip-wrap:hover .info-tooltip { display: block; }
+
+        /* ── Edit-form field components (mirrors TP detail edit form) ── */
+        .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; }
+        .edit-field { display: flex; flex-direction: column; gap: 6px; }
+        .edit-field-full { grid-column: 1 / -1; }
+        .edit-label {
+            font-size: 12px; font-weight: 500; color: var(--primary-500);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .edit-label .req { color: var(--alert-500); }
+        .edit-label .material-icons-outlined { font-size: 16px; color: var(--primary-500); cursor: help; }
+        .edit-input-ef {
+            height: 40px; border: 1px solid var(--neutral-200); border-radius: 2px;
+            padding: 0 9px; font-size: 14px; font-family: inherit;
+            color: var(--text-normal); background: var(--neutral-00);
+            width: 100%; outline: none; transition: border-color 0.15s;
+        }
+        .edit-input-ef:focus { border-color: #8D9CA9; }
+        .edit-input-ef::placeholder { color: var(--text-light-alt); }
+        .edit-input-ef.has-error { border-color: var(--alert-500); }
+        .edit-field .field-error-msg { display: none; font-size: 11px; color: var(--alert-500); margin-top: 2px; }
+        .edit-field.has-error .field-error-msg { display: block; }
+
+        /* Search wrap with selectable tags */
+        .edit-search-wrap-ef {
+            border: 1px solid var(--neutral-200); border-radius: 2px;
+            background: var(--neutral-00); position: relative;
+        }
+        .edit-search-wrap-ef.has-error { border-color: var(--alert-500); }
+        .edit-search-inner-ef {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 7px 0 9px; height: 40px;
+            font-size: 14px; color: var(--text-light-alt); cursor: pointer;
+        }
+        .edit-search-caret-ef {
+            display: inline-block; width: 24px; height: 24px; flex-shrink: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath transform='translate(6.03,8.38)' d='M5.52 7.05L.18 1.74C-.06 1.47-.06 1.06.18.81L.81.18C1.06-.06 1.47-.06 1.74.18L5.98 4.4 10.19.18C10.47-.06 10.88-.06 11.12.18L11.75.81C12 1.06 12 1.47 11.75 1.74L6.42 7.05C6.17 7.29 5.76 7.29 5.52 7.05Z' fill='%230C2A31'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: center; background-size: 24px;
+        }
+        .edit-tags-ef {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            padding: 8px 10px; border-top: 1px solid var(--neutral-50);
+        }
+        .edit-tags-ef:empty { display: none; }
+        .edit-tag-ef {
+            display: inline-flex; align-items: center; background: #516267;
+            border: 1px solid #495158; border-radius: 4px; height: 24px; overflow: hidden;
+        }
+        .edit-tag-inner-ef {
+            display: flex; align-items: center; gap: 8px; padding: 0 4px 0 8px; height: 100%;
+        }
+        .edit-tag-label-ef { font-size: 14px; font-weight: 400; color: #fff; white-space: nowrap; }
+        .edit-tag-remove-ef {
+            cursor: pointer; background: none; border: none;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0; width: 20px; height: 20px; flex-shrink: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z' fill='white'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: center; background-size: 10px; opacity: 0.8;
+        }
+        .edit-tag-remove-ef:hover { opacity: 1; }
+
+        /* Selectable dropdown (used for BU and owner group) */
+        .select-dropdown-ef {
+            display: none; position: absolute; top: 100%; left: 0; right: 0;
+            background: #fff; border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 400;
+            max-height: 240px; overflow-y: auto; padding: 4px 6px;
+        }
+        .select-dropdown-ef.open { display: block; }
+        .select-dropdown-item-ef {
+            min-height: 32px; padding: 8px 8px;
+            font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+            color: #8D9CA9; cursor: pointer; border-radius: 2px;
+            display: flex; align-items: center;
+        }
+        .select-dropdown-item-ef:hover { background: rgba(0,0,0,0.04); color: var(--text-normal); }
+
+        /* Active toggle */
+        .edit-toggle-wrap-ef { display: flex; align-items: center; }
+        .edit-toggle-ef {
+            position: relative; width: 96px; height: 32px; border-radius: 2px; overflow: hidden;
+            border: 1px solid var(--success-500); background: var(--success-500);
+            cursor: pointer; user-select: none; transition: background 0.2s, border-color 0.2s;
+        }
+        .edit-toggle-ef.off { background: var(--alert-500); border-color: var(--alert-500); }
+        .edit-toggle-track-ef {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 500; text-transform: uppercase;
+            color: var(--text-normal); padding-right: 14px;
+        }
+        .edit-toggle-ef.off .edit-toggle-track-ef { color: #fff; padding-right: 0; padding-left: 14px; }
+        .edit-toggle-thumb-ef {
+            position: absolute; top: -2px; bottom: -2px; width: 26px; background: #fff;
+            right: -13px; transition: right 0.15s, left 0.15s;
+        }
+        .edit-toggle-ef.off .edit-toggle-thumb-ef { right: auto; left: -13px; }
+
+        /* Owner Group/User toggle */
+        .edit-owner-toggle-ef { display: inline-flex; }
+        .edit-owner-btn-ef {
+            height: 40px; padding: 0 16px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer;
+            background: var(--neutral-00); color: var(--text-light);
+            border: 1px solid var(--neutral-300); border-right: none;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            font-family: inherit;
+        }
+        .edit-owner-btn-ef:first-child { border-radius: 4px 0 0 4px; }
+        .edit-owner-btn-ef:last-child  { border-right: 1px solid var(--neutral-300); border-radius: 0 4px 4px 0; }
+        .edit-owner-btn-ef.active { background: var(--primary-500); color: var(--neutral-25); border-color: var(--primary-500); }
+
+        /* Owner input wrap */
+        .owner-input-wrap-ef { position: relative; flex: 1; min-width: 0; }
+        .owner-caret-ef {
+            display: none; position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
+            width: 24px; height: 24px; background: none; border: none; padding: 0; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath transform='translate(6.03,8.38)' d='M5.52 7.05L.18 1.74C-.06 1.47-.06 1.06.18.81L.81.18C1.06-.06 1.47-.06 1.74.18L5.98 4.4 10.19.18C10.47-.06 10.88-.06 11.12.18L11.75.81C12 1.06 12 1.47 11.75 1.74L6.42 7.05C6.17 7.29 5.76 7.29 5.52 7.05Z' fill='%230C2A31'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: center; background-size: 24px;
+        }
+        .owner-input-wrap-ef.group-mode .owner-caret-ef { display: block; }
+        .owner-input-wrap-ef.group-mode .owner-ef-input { padding-right: 38px; }
+        .owner-dropdown-ef {
+            display: none; position: absolute; top: 100%; left: 0; right: 0;
+            background: #fff; border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 400;
+            max-height: 240px; overflow-y: auto; padding: 4px 6px;
+        }
+        .owner-dropdown-ef.open { display: block; }
+        .owner-dropdown-item-ef {
+            min-height: 32px; padding: 8px 4px 8px 8px;
+            display: flex; align-items: center;
+            font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+            color: #8D9CA9; cursor: pointer; line-height: 1.4; border-radius: 2px;
+        }
+        .owner-dropdown-item-ef.indent { padding-left: 22px; }
+        .owner-dropdown-item-ef:hover { background: rgba(0,0,0,0.04); }
+        .owner-dropdown-item-ef.hidden { display: none; }
+
+        /* Custom select (Process, Policy) */
+        .edit-csel { position: relative; }
+        .edit-csel-trigger {
+            display: flex; align-items: center; justify-content: space-between;
+            height: 40px; padding: 0 7px 0 9px;
+            border: 1px solid var(--neutral-200); border-radius: 2px;
+            background: var(--neutral-00); font-size: 14px; color: var(--text-normal);
+            cursor: pointer; user-select: none; transition: border-color 0.15s;
+        }
+        .edit-csel.open .edit-csel-trigger,
+        .edit-csel-trigger:hover { border-color: #8D9CA9; }
+        .edit-csel-dropdown {
+            display: none; position: absolute; top: 100%; left: 0; right: 0;
+            background: #fff; border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 400;
+            max-height: 220px; overflow-y: auto; padding: 4px 6px;
+        }
+        .edit-csel.open .edit-csel-dropdown { display: block; }
+        .edit-csel-item {
+            min-height: 32px; padding: 8px;
+            font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+            color: #8D9CA9; cursor: pointer; border-radius: 2px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .edit-csel-item:hover { background: rgba(0,0,0,0.04); }
+        .edit-csel-item.selected { color: var(--text-normal); }
+        .edit-csel-item.selected::before { content: '✓'; font-size: 12px; flex-shrink: 0; }
+        .edit-csel-group {
+            min-height: 28px; padding: 8px 8px 4px;
+            font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--neutral-300); cursor: default; line-height: 1.2;
+        }
+        .edit-csel.disabled .edit-csel-trigger {
+            background: var(--neutral-25); color: var(--text-light);
+            cursor: default; pointer-events: none;
+        }
+        .edit-csel.disabled .edit-search-caret-ef {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath transform='translate(6.03,8.38)' d='M5.52 7.05L.18 1.74C-.06 1.47-.06 1.06.18.81L.81.18C1.06-.06 1.47-.06 1.74.18L5.98 4.4 10.19.18C10.47-.06 10.88-.06 11.12.18L11.75.81C12 1.06 12 1.47 11.75 1.74L6.42 7.05C6.17 7.29 5.76 7.29 5.52 7.05Z' fill='%23A8B2B5'/%3E%3C/svg%3E");
+        }
+
+        /* Tags checkbox dropdown */
+        .tags-field-wrap-ef { position: relative; }
+        .tags-dropdown-ef {
+            display: none; position: absolute; top: 100%; left: 0; right: 0;
+            background: #fff; border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 300;
+            max-height: 220px; overflow-y: auto; padding: 4px 6px;
+        }
+        .tags-dropdown-ef.open { display: block; }
+        .tags-dropdown-item-ef {
+            display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 6px 8px;
+            cursor: pointer; border-radius: 2px; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 1px; color: #8D9CA9; user-select: none;
+        }
+        .tags-dropdown-item-ef:hover { background: rgba(0,0,0,0.04); }
+        .tags-dropdown-item-ef input[type="checkbox"] {
+            width: 16px; height: 16px; flex-shrink: 0; accent-color: var(--primary-500);
+            cursor: pointer; margin: 0;
+        }
+        .edit-helper-ef { font-size: 12px; color: var(--text-light); margin-top: 4px; line-height: 1.4; }
+
         /* ── View toggle bar ── */
         .view-toggle-bar {
             display: flex;
@@ -950,67 +1166,127 @@
                         </div>
                     </div>
 
-                    <!-- Core fields -->
-                    <div class="section-heading">Basic Information</div>
-                    <div class="form-grid">
+                    <div class="section-heading" style="margin-top:28px">Summary</div>
+                    <div class="edit-grid" style="margin-top:16px">
 
-                        <div class="field-group full" id="fg-name">
-                            <label class="field-label">Third Party Legal Name <span class="req">*</span></label>
-                            <input class="field-input" id="field-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
-                            <div class="field-error-msg">Legal name is required.</div>
+                        <!-- Third Party Name -->
+                        <div class="edit-field" id="s1-fg-name">
+                            <label class="edit-label">Third Party Name <span class="req">*</span></label>
+                            <input class="edit-input-ef" id="s1-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
+                            <div class="field-error-msg">Third Party Name is required.</div>
                         </div>
 
-                        <div class="field-group" id="fg-bu">
-                            <label class="field-label">Business Unit <span class="req">*</span></label>
-                            <select class="field-select" id="field-bu">
-                                <option value="">Select a business unit</option>
-                                <option>Europe</option>
-                                <option>Americas</option>
-                                <option>Asia Pacific</option>
-                                <option>Entity Verification</option>
-                                <option>Global Operations</option>
-                            </select>
-                            <div class="field-error-msg">Business unit is required.</div>
+                        <!-- Active -->
+                        <div class="edit-field">
+                            <label class="edit-label">Active <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">Setting a Third Party to Inactive will disable all associated process actions e.g. notifications and monitoring.</span></span></label>
+                            <div class="edit-toggle-wrap-ef">
+                                <div class="edit-toggle-ef" id="s1-active-toggle" role="switch" aria-checked="true">
+                                    <div class="edit-toggle-track-ef">Yes</div>
+                                    <div class="edit-toggle-thumb-ef"></div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="field-group" id="fg-owner">
-                            <label class="field-label">Owner <span class="req">*</span></label>
-                            <select class="field-select" id="field-owner">
-                                <option value="">Assign an owner</option>
-                                <option>Claudio Merino</option>
-                                <option>Emily Forbes</option>
-                                <option>Tamara Knoetschke</option>
-                                <option>James Richardson</option>
-                            </select>
+                        <!-- Third Party Owner -->
+                        <div class="edit-field" id="s1-fg-owner">
+                            <label class="edit-label">Third Party Owner <span class="req">*</span> <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">Each third party requires a group or user owner.</span></span></label>
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                                <div class="edit-owner-toggle-ef" style="flex-shrink:0">
+                                    <button class="edit-owner-btn-ef" id="s1-owner-btn-group" type="button">Group</button>
+                                    <button class="edit-owner-btn-ef active" id="s1-owner-btn-user" type="button">User</button>
+                                </div>
+                                <div class="owner-input-wrap-ef" id="s1-owner-wrap">
+                                    <input class="edit-input-ef owner-ef-input" id="s1-owner-input" type="text" placeholder="Type and select employee name">
+                                    <button class="owner-caret-ef" id="s1-owner-caret" tabindex="-1" type="button"></button>
+                                    <div class="owner-dropdown-ef" id="s1-owner-dropdown">
+                                        <div class="owner-dropdown-item-ef indent">Not Approval Group</div>
+                                        <div class="owner-dropdown-item-ef">Sed Bibendum Felis A Posuere Consectetur</div>
+                                        <div class="owner-dropdown-item-ef indent">Test</div>
+                                        <div class="owner-dropdown-item-ef indent">Test 4</div>
+                                        <div class="owner-dropdown-item-ef">This Is The Name Of My Default Group</div>
+                                        <div class="owner-dropdown-item-ef indent">Ut Condimentum Rutrum Posuere</div>
+                                        <div class="owner-dropdown-item-ef indent">Vivamus Sed Sodales Erat</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:6px" id="s1-owner-tags"></div>
                             <div class="field-error-msg">Owner is required.</div>
                         </div>
 
-                        <div class="field-group">
-                            <label class="field-label">Process</label>
-                            <select class="field-select" id="field-process">
-                                <option value="">Select a process</option>
-                                <option>Standard RCTP</option>
-                                <option>Enhanced RCTP</option>
-                                <option>Simplified RCTP</option>
-                            </select>
-                        </div>
-
-                        <div class="field-group">
-                            <label class="field-label">Screening &amp; Monitoring Policy</label>
-                            <select class="field-select" id="field-policy">
-                                <option value="">Select a policy</option>
-                                <option>Default Standard KYBP Policy</option>
-                                <option>Enhanced Screening Policy</option>
-                                <option>Simplified Policy</option>
-                            </select>
-                        </div>
-
-                        <div class="field-group full">
-                            <label class="field-label">Tags</label>
-                            <div class="tags-wrap" id="tags-wrap">
-                                <input class="tags-input" id="tags-input" type="text" placeholder="Type and press Enter to add tags…">
+                        <!-- Process -->
+                        <div class="edit-field">
+                            <label class="edit-label">Process <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">Third Party Process is not editable once set.</span></span></label>
+                            <div class="edit-csel disabled" id="s1-process-csel">
+                                <div class="edit-csel-trigger">
+                                    <span class="edit-csel-value">Standard RCTP</span>
+                                    <span class="edit-search-caret-ef"></span>
+                                </div>
+                                <div class="edit-csel-dropdown">
+                                    <div class="edit-csel-item selected" data-value="Standard RCTP">Standard RCTP</div>
+                                    <div class="edit-csel-item" data-value="Enhanced RCTP">Enhanced RCTP</div>
+                                </div>
                             </div>
-                            <div class="field-hint">Press Enter to add a tag. E.g. Gas &amp; Oil, Supplier, Critical.</div>
+                        </div>
+
+                        <!-- Business Unit -->
+                        <div class="edit-field" id="s1-fg-bu">
+                            <label class="edit-label">Business Unit <span class="req">*</span></label>
+                            <div class="edit-search-wrap-ef" id="s1-bu-wrap">
+                                <div class="edit-search-inner-ef" id="s1-bu-trigger">
+                                    <span>Search</span>
+                                    <span class="edit-search-caret-ef"></span>
+                                </div>
+                                <div class="edit-tags-ef" id="s1-bu-tags"></div>
+                                <div class="select-dropdown-ef" id="s1-bu-dropdown">
+                                    <div class="select-dropdown-item-ef">Europe</div>
+                                    <div class="select-dropdown-item-ef">Americas</div>
+                                    <div class="select-dropdown-item-ef">Asia Pacific</div>
+                                    <div class="select-dropdown-item-ef">Entity Verification</div>
+                                    <div class="select-dropdown-item-ef">Global Operations</div>
+                                </div>
+                            </div>
+                            <div class="field-error-msg">Business Unit is required.</div>
+                        </div>
+
+                        <!-- Screening & Monitoring Policy -->
+                        <div class="edit-field">
+                            <label class="edit-label">Screening &amp; Monitoring Policy <span class="req">*</span> <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">The Screening &amp; Monitoring Policy determines how the third party will be screened and monitored. Only the process default or ad hoc policies can be selected.</span></span></label>
+                            <div class="edit-csel" id="s1-policy-csel">
+                                <div class="edit-csel-trigger">
+                                    <span class="edit-csel-value">Select a policy…</span>
+                                    <span class="edit-search-caret-ef"></span>
+                                </div>
+                                <div class="edit-csel-dropdown">
+                                    <div class="edit-csel-group">Process Managed Policy</div>
+                                    <div class="edit-csel-item" data-value="Default Standard KYBP Policy">Default Standard KYBP Policy</div>
+                                    <div class="edit-csel-group">Unmanaged Policies</div>
+                                    <div class="edit-csel-item" data-value="Entity Verification Policy 2">Entity Verification Policy 2</div>
+                                    <div class="edit-csel-item" data-value="Test">Test</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="edit-field edit-field-full">
+                            <label class="edit-label">Third Party Tags</label>
+                            <div class="tags-field-wrap-ef">
+                                <div class="edit-search-wrap-ef">
+                                    <div class="edit-search-inner-ef" id="s1-tags-trigger" style="cursor:pointer">
+                                        <span>Search</span>
+                                        <span class="edit-search-caret-ef"></span>
+                                    </div>
+                                    <div class="edit-tags-ef" id="s1-tags-chips"></div>
+                                </div>
+                                <div class="tags-dropdown-ef" id="s1-tags-dropdown">
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Gas &amp; Oil"> Gas &amp; Oil</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Energy"> Energy</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Manufacturing"> Manufacturing</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Financial Services"> Financial Services</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Technology"> Technology</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Healthcare"> Healthcare</label>
+                                </div>
+                            </div>
+                            <p class="edit-helper-ef">Tag your Third Party to allow for faster searching.</p>
                         </div>
 
                     </div>
@@ -1469,56 +1745,122 @@
                             <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
                         </div>
                     </div>
-                    <div class="section-heading" style="margin-top:28px">Basic Information</div>
-                    <div class="form-grid">
-                        <div class="field-group full" id="ac-fg-name">
-                            <label class="field-label">Third Party Legal Name <span class="req">*</span></label>
-                            <input class="field-input" id="ac-field-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
-                            <div class="field-error-msg">Legal name is required.</div>
+                    <div class="section-heading" style="margin-top:28px">Summary</div>
+                    <div class="edit-grid" style="margin-top:16px">
+
+                        <div class="edit-field" id="a1-fg-name">
+                            <label class="edit-label">Third Party Name <span class="req">*</span></label>
+                            <input class="edit-input-ef" id="a1-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
+                            <div class="field-error-msg">Third Party Name is required.</div>
                         </div>
-                        <div class="field-group" id="ac-fg-bu">
-                            <label class="field-label">Business Unit <span class="req">*</span></label>
-                            <select class="field-select" id="ac-field-bu">
-                                <option value="">Select a business unit</option>
-                                <option>Europe</option><option>Americas</option>
-                                <option>Asia Pacific</option><option>Entity Verification</option>
-                                <option>Global Operations</option>
-                            </select>
-                            <div class="field-error-msg">Business unit is required.</div>
+
+                        <div class="edit-field">
+                            <label class="edit-label">Active <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">Setting a Third Party to Inactive will disable all associated process actions e.g. notifications and monitoring.</span></span></label>
+                            <div class="edit-toggle-wrap-ef">
+                                <div class="edit-toggle-ef" id="a1-active-toggle" role="switch" aria-checked="true">
+                                    <div class="edit-toggle-track-ef">Yes</div>
+                                    <div class="edit-toggle-thumb-ef"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="field-group" id="ac-fg-owner">
-                            <label class="field-label">Owner <span class="req">*</span></label>
-                            <select class="field-select" id="ac-field-owner">
-                                <option value="">Assign an owner</option>
-                                <option>Claudio Merino</option><option>Emily Forbes</option>
-                                <option>Tamara Knoetschke</option><option>James Richardson</option>
-                            </select>
+
+                        <div class="edit-field" id="a1-fg-owner">
+                            <label class="edit-label">Third Party Owner <span class="req">*</span> <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">Each third party requires a group or user owner.</span></span></label>
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                                <div class="edit-owner-toggle-ef" style="flex-shrink:0">
+                                    <button class="edit-owner-btn-ef" id="a1-owner-btn-group" type="button">Group</button>
+                                    <button class="edit-owner-btn-ef active" id="a1-owner-btn-user" type="button">User</button>
+                                </div>
+                                <div class="owner-input-wrap-ef" id="a1-owner-wrap">
+                                    <input class="edit-input-ef owner-ef-input" id="a1-owner-input" type="text" placeholder="Type and select employee name">
+                                    <button class="owner-caret-ef" id="a1-owner-caret" tabindex="-1" type="button"></button>
+                                    <div class="owner-dropdown-ef" id="a1-owner-dropdown">
+                                        <div class="owner-dropdown-item-ef indent">Not Approval Group</div>
+                                        <div class="owner-dropdown-item-ef">Sed Bibendum Felis A Posuere Consectetur</div>
+                                        <div class="owner-dropdown-item-ef indent">Test</div>
+                                        <div class="owner-dropdown-item-ef indent">Test 4</div>
+                                        <div class="owner-dropdown-item-ef">This Is The Name Of My Default Group</div>
+                                        <div class="owner-dropdown-item-ef indent">Ut Condimentum Rutrum Posuere</div>
+                                        <div class="owner-dropdown-item-ef indent">Vivamus Sed Sodales Erat</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:6px" id="a1-owner-tags"></div>
                             <div class="field-error-msg">Owner is required.</div>
                         </div>
-                        <div class="field-group">
-                            <label class="field-label">Process</label>
-                            <select class="field-select" id="ac-field-process">
-                                <option value="">Select a process</option>
-                                <option>Standard RCTP</option><option>Enhanced RCTP</option>
-                                <option>Simplified RCTP</option>
-                            </select>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">Screening &amp; Monitoring Policy</label>
-                            <select class="field-select" id="ac-field-policy">
-                                <option value="">Select a policy</option>
-                                <option>Default Standard KYBP Policy</option>
-                                <option>Enhanced Screening Policy</option>
-                                <option>Simplified Policy</option>
-                            </select>
-                        </div>
-                        <div class="field-group full">
-                            <label class="field-label">Tags</label>
-                            <div class="tags-wrap" id="ac-tags-wrap">
-                                <input class="tags-input" id="ac-tags-input" type="text" placeholder="Type and press Enter to add tags…">
+
+                        <div class="edit-field">
+                            <label class="edit-label">Process <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">Third Party Process is not editable once set.</span></span></label>
+                            <div class="edit-csel disabled" id="a1-process-csel">
+                                <div class="edit-csel-trigger">
+                                    <span class="edit-csel-value">Standard RCTP</span>
+                                    <span class="edit-search-caret-ef"></span>
+                                </div>
+                                <div class="edit-csel-dropdown">
+                                    <div class="edit-csel-item selected" data-value="Standard RCTP">Standard RCTP</div>
+                                    <div class="edit-csel-item" data-value="Enhanced RCTP">Enhanced RCTP</div>
+                                </div>
                             </div>
-                            <div class="field-hint">Press Enter to add a tag. E.g. Gas &amp; Oil, Supplier, Critical.</div>
                         </div>
+
+                        <div class="edit-field" id="a1-fg-bu">
+                            <label class="edit-label">Business Unit <span class="req">*</span></label>
+                            <div class="edit-search-wrap-ef" id="a1-bu-wrap">
+                                <div class="edit-search-inner-ef" id="a1-bu-trigger">
+                                    <span>Search</span>
+                                    <span class="edit-search-caret-ef"></span>
+                                </div>
+                                <div class="edit-tags-ef" id="a1-bu-tags"></div>
+                                <div class="select-dropdown-ef" id="a1-bu-dropdown">
+                                    <div class="select-dropdown-item-ef">Europe</div>
+                                    <div class="select-dropdown-item-ef">Americas</div>
+                                    <div class="select-dropdown-item-ef">Asia Pacific</div>
+                                    <div class="select-dropdown-item-ef">Entity Verification</div>
+                                    <div class="select-dropdown-item-ef">Global Operations</div>
+                                </div>
+                            </div>
+                            <div class="field-error-msg">Business Unit is required.</div>
+                        </div>
+
+                        <div class="edit-field">
+                            <label class="edit-label">Screening &amp; Monitoring Policy <span class="req">*</span> <span class="info-tooltip-wrap"><span class="material-icons-outlined">info</span><span class="info-tooltip">The Screening &amp; Monitoring Policy determines how the third party will be screened and monitored.</span></span></label>
+                            <div class="edit-csel" id="a1-policy-csel">
+                                <div class="edit-csel-trigger">
+                                    <span class="edit-csel-value">Select a policy…</span>
+                                    <span class="edit-search-caret-ef"></span>
+                                </div>
+                                <div class="edit-csel-dropdown">
+                                    <div class="edit-csel-group">Process Managed Policy</div>
+                                    <div class="edit-csel-item" data-value="Default Standard KYBP Policy">Default Standard KYBP Policy</div>
+                                    <div class="edit-csel-group">Unmanaged Policies</div>
+                                    <div class="edit-csel-item" data-value="Entity Verification Policy 2">Entity Verification Policy 2</div>
+                                    <div class="edit-csel-item" data-value="Test">Test</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="edit-field edit-field-full">
+                            <label class="edit-label">Third Party Tags</label>
+                            <div class="tags-field-wrap-ef">
+                                <div class="edit-search-wrap-ef">
+                                    <div class="edit-search-inner-ef" id="a1-tags-trigger" style="cursor:pointer">
+                                        <span>Search</span>
+                                        <span class="edit-search-caret-ef"></span>
+                                    </div>
+                                    <div class="edit-tags-ef" id="a1-tags-chips"></div>
+                                </div>
+                                <div class="tags-dropdown-ef" id="a1-tags-dropdown">
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Gas &amp; Oil"> Gas &amp; Oil</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Energy"> Energy</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Manufacturing"> Manufacturing</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Financial Services"> Financial Services</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Technology"> Technology</label>
+                                    <label class="tags-dropdown-item-ef"><input type="checkbox" value="Healthcare"> Healthcare</label>
+                                </div>
+                            </div>
+                            <p class="edit-helper-ef">Tag your Third Party to allow for faster searching.</p>
+                        </div>
+
                     </div>
                     <div class="ac-footer">
                         <a href="third-parties.html" class="btn btn-ghost">
@@ -1735,8 +2077,162 @@
 <script>
 /* ══════════════════════ State ══════════════════════ */
 let currentStep = 1;
-let selectedType = null;
-const tags = [];
+let selectedType = null;   // stepper type-card selection
+let acSelectedType = null; // accordion type-card selection
+
+/* ══════════════════════ Edit-form component factory ══════════════════════
+   Wires up the shared edit-form fields for a given ID prefix ('s1' or 'a1')
+══════════════════════════════════════════════════════════════════════════ */
+function initStep1Components(p) {
+    // ── Active toggle ──
+    const toggle = document.getElementById(p + '-active-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            const off = toggle.classList.toggle('off');
+            toggle.querySelector('.edit-toggle-track-ef').textContent = off ? 'No' : 'Yes';
+            toggle.setAttribute('aria-checked', String(!off));
+        });
+    }
+
+    // ── Owner Group / User toggle ──
+    const btnGroup   = document.getElementById(p + '-owner-btn-group');
+    const btnUser    = document.getElementById(p + '-owner-btn-user');
+    const ownerInput = document.getElementById(p + '-owner-input');
+    const ownerDrop  = document.getElementById(p + '-owner-dropdown');
+    const ownerCaret = document.getElementById(p + '-owner-caret');
+    const ownerWrap  = document.getElementById(p + '-owner-wrap');
+    const ownerTags  = document.getElementById(p + '-owner-tags');
+
+    function setOwnerMode(mode) {
+        btnGroup.classList.toggle('active', mode === 'group');
+        btnUser.classList.toggle('active',  mode === 'user');
+        ownerWrap.classList.toggle('group-mode', mode === 'group');
+        ownerInput.value = '';
+        filterOwner('');
+        ownerDrop.classList.remove('open');
+        ownerInput.placeholder = mode === 'user' ? 'Type and select employee name' : 'Search groups…';
+    }
+    function filterOwner(q) {
+        ownerDrop.querySelectorAll('.owner-dropdown-item-ef').forEach(item =>
+            item.classList.toggle('hidden', q.length > 0 && !item.textContent.toLowerCase().includes(q.toLowerCase()))
+        );
+    }
+    btnGroup.addEventListener('click', () => setOwnerMode('group'));
+    btnUser.addEventListener('click',  () => setOwnerMode('user'));
+    ownerCaret.addEventListener('mousedown', e => {
+        e.preventDefault();
+        ownerDrop.classList.contains('open') ? ownerDrop.classList.remove('open') : (ownerDrop.classList.add('open'), ownerInput.focus());
+    });
+    ownerInput.addEventListener('focus', () => {
+        if (btnGroup.classList.contains('active')) ownerDrop.classList.add('open');
+    });
+    ownerInput.addEventListener('input', () => {
+        if (btnGroup.classList.contains('active')) { ownerDrop.classList.add('open'); filterOwner(ownerInput.value); }
+    });
+    ownerDrop.addEventListener('mousedown', e => {
+        const item = e.target.closest('.owner-dropdown-item-ef');
+        if (!item) return;
+        e.preventDefault();
+        if (btnUser.classList.contains('active')) {
+            // User mode: add as tag
+            addOwnerTag(item.textContent.trim());
+            ownerInput.value = '';
+        } else {
+            ownerInput.value = item.textContent.trim();
+        }
+        ownerDrop.classList.remove('open');
+    });
+    ownerInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && ownerInput.value.trim() && btnUser.classList.contains('active')) {
+            e.preventDefault();
+            addOwnerTag(ownerInput.value.trim());
+            ownerInput.value = '';
+        }
+    });
+    function addOwnerTag(name) {
+        const chip = document.createElement('span');
+        chip.className = 'edit-tag-ef';
+        chip.innerHTML = `<span class="edit-tag-inner-ef"><span class="edit-tag-label-ef">${name}</span><button class="edit-tag-remove-ef" type="button"></button></span>`;
+        chip.querySelector('.edit-tag-remove-ef').addEventListener('click', () => chip.remove());
+        ownerTags.appendChild(chip);
+    }
+    document.addEventListener('click', e => {
+        if (!ownerInput.contains(e.target) && !ownerDrop.contains(e.target) && !ownerCaret.contains(e.target))
+            ownerDrop.classList.remove('open');
+    });
+
+    // ── Business Unit search + tags ──
+    const buTrigger  = document.getElementById(p + '-bu-trigger');
+    const buTags     = document.getElementById(p + '-bu-tags');
+    const buDropdown = document.getElementById(p + '-bu-dropdown');
+    buTrigger.addEventListener('click', () => buDropdown.classList.toggle('open'));
+    buDropdown.addEventListener('mousedown', e => {
+        const item = e.target.closest('.select-dropdown-item-ef');
+        if (!item) return;
+        e.preventDefault();
+        const val = item.textContent.trim();
+        // Replace existing BU tag (only one allowed)
+        buTags.innerHTML = '';
+        const chip = document.createElement('span');
+        chip.className = 'edit-tag-ef';
+        chip.innerHTML = `<span class="edit-tag-inner-ef"><span class="edit-tag-label-ef">${val}</span><button class="edit-tag-remove-ef" type="button"></button></span>`;
+        chip.querySelector('.edit-tag-remove-ef').addEventListener('click', () => chip.remove());
+        buTags.appendChild(chip);
+        buDropdown.classList.remove('open');
+        document.getElementById(p + '-fg-bu')?.classList.remove('has-error');
+    });
+    document.addEventListener('click', e => {
+        if (!buTrigger.contains(e.target) && !buDropdown.contains(e.target))
+            buDropdown.classList.remove('open');
+    });
+
+    // ── Custom selects (Policy) ──
+    document.querySelectorAll(`#${p}-policy-csel`).forEach(sel => {
+        const trigger  = sel.querySelector('.edit-csel-trigger');
+        const dropdown = sel.querySelector('.edit-csel-dropdown');
+        const valueEl  = sel.querySelector('.edit-csel-value');
+        trigger.addEventListener('click', () => {
+            const open = sel.classList.toggle('open');
+            if (open) document.querySelectorAll('.edit-csel.open').forEach(o => { if (o !== sel) o.classList.remove('open'); });
+        });
+        dropdown.addEventListener('click', e => {
+            const item = e.target.closest('.edit-csel-item');
+            if (!item) return;
+            dropdown.querySelectorAll('.edit-csel-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            valueEl.textContent = item.dataset.value;
+            sel.classList.remove('open');
+        });
+    });
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.edit-csel')) document.querySelectorAll('.edit-csel.open').forEach(s => s.classList.remove('open'));
+    });
+
+    // ── Tags checkbox dropdown ──
+    const tagsTrigger  = document.getElementById(p + '-tags-trigger');
+    const tagsDropdown = document.getElementById(p + '-tags-dropdown');
+    const tagsChips    = document.getElementById(p + '-tags-chips');
+    function renderTagChips() {
+        tagsChips.innerHTML = '';
+        tagsDropdown.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+            const val = cb.value;
+            const chip = document.createElement('span');
+            chip.className = 'edit-tag-ef';
+            chip.innerHTML = `<span class="edit-tag-inner-ef"><span class="edit-tag-label-ef">${val}</span><button class="edit-tag-remove-ef" type="button"></button></span>`;
+            chip.querySelector('.edit-tag-remove-ef').addEventListener('click', () => { cb.checked = false; renderTagChips(); });
+            tagsChips.appendChild(chip);
+        });
+    }
+    tagsTrigger.addEventListener('click', () => tagsDropdown.classList.toggle('open'));
+    tagsDropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', renderTagChips));
+    document.addEventListener('click', e => {
+        if (!tagsTrigger.closest('.tags-field-wrap-ef').contains(e.target)) tagsDropdown.classList.remove('open');
+    });
+}
+
+// Initialise for both stepper and accordion
+initStep1Components('s1');
+initStep1Components('a1');
 
 /* ══════════════════════ Step navigation ══════════════════════ */
 function goToStep(n) {
@@ -1811,70 +2307,40 @@ function addTagChip(val) {
     tagsWrap.insertBefore(chip, tagsInput);
 }
 
-// Step 1 → Continue
+// Step 1 → Continue (stepper)
 document.getElementById('btn-step1-continue').addEventListener('click', () => {
     let valid = true;
-
-    // Require type
     if (!selectedType) {
-        // Flash cards
-        document.querySelectorAll('.type-card').forEach(c => {
+        document.querySelectorAll('#panel-1 .type-card').forEach(c => {
             c.style.borderColor = 'var(--alert-500)';
             setTimeout(() => c.style.borderColor = '', 1600);
         });
         valid = false;
     }
+    const name = document.getElementById('s1-name').value.trim();
+    const fgName = document.getElementById('s1-fg-name');
+    if (!name) { fgName.classList.add('has-error'); valid = false; }
+    else fgName.classList.remove('has-error');
 
-    // Require name
-    const name = document.getElementById('field-name').value.trim();
-    const fgName = document.getElementById('fg-name');
-    if (!name) {
-        fgName.classList.add('has-error');
-        valid = false;
-    } else {
-        fgName.classList.remove('has-error');
-    }
+    const buHasTag = document.getElementById('s1-bu-tags').children.length > 0;
+    const fgBu = document.getElementById('s1-fg-bu');
+    if (!buHasTag) { fgBu.classList.add('has-error'); valid = false; }
+    else fgBu.classList.remove('has-error');
 
-    // Require business unit
-    const bu = document.getElementById('field-bu').value;
-    const fgBu = document.getElementById('fg-bu');
-    if (!bu) {
-        fgBu.classList.add('has-error');
-        valid = false;
-    } else {
-        fgBu.classList.remove('has-error');
-    }
-
-    // Require owner
-    const owner = document.getElementById('field-owner').value;
-    const fgOwner = document.getElementById('fg-owner');
-    if (!owner) {
-        fgOwner.classList.add('has-error');
-        valid = false;
-    } else {
-        fgOwner.classList.remove('has-error');
-    }
+    const ownerVal  = document.getElementById('s1-owner-input').value.trim();
+    const ownerChips = document.getElementById('s1-owner-tags').children.length;
+    const fgOwner = document.getElementById('s1-fg-owner');
+    if (!ownerVal && !ownerChips) { fgOwner.classList.add('has-error'); valid = false; }
+    else fgOwner.classList.remove('has-error');
 
     if (!valid) return;
-
-    // Populate name in subsequent steps
-    document.getElementById('dup-name-display').textContent = '"' + name + '"';
+    document.getElementById('dup-name-display').textContent    = '"' + name + '"';
     document.getElementById('verify-name-display').textContent = '"' + name + '"';
-    document.getElementById('verify-search-input').value = name;
-
+    document.getElementById('verify-search-input').value       = name;
     goToStep(2);
 });
-
-// Clear error on input
-['field-name', 'field-bu', 'field-owner'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('change', () => {
-        el.closest('.field-group')?.classList.remove('has-error');
-    });
-    el.addEventListener('input', () => {
-        el.closest('.field-group')?.classList.remove('has-error');
-    });
-});
+document.getElementById('s1-name').addEventListener('input', () =>
+    document.getElementById('s1-fg-name').classList.remove('has-error'));
 
 /* ══════════════════════ Step 2 ══════════════════════ */
 
@@ -1933,7 +2399,7 @@ document.getElementById('btn-step3-back').addEventListener('click', () => goToSt
 
 document.getElementById('btn-step3-save').addEventListener('click', () => {
     // Pre-fill legal name from step 1 into step 4
-    document.getElementById('ob-legal-name').value = document.getElementById('field-name').value.trim();
+    document.getElementById('ob-legal-name').value = document.getElementById('s1-name').value.trim();
     goToStep(4);
 });
 
@@ -1971,9 +2437,6 @@ document.querySelectorAll('.view-toggle-btn').forEach(btn => {
 /* ══════════════════════════════════════════════
    ACCORDION LOGIC
 ══════════════════════════════════════════════ */
-let acSelectedType = null;
-const acTags = [];
-
 // ── Open/close accordion items ──
 function openAc(n) {
     document.querySelectorAll('.ac-item').forEach(item => {
@@ -2034,37 +2497,7 @@ document.querySelectorAll('#ac-type-cards .type-card').forEach(card => {
     });
 });
 
-// ── Tags in accordion ──
-const acTagsInput = document.getElementById('ac-tags-input');
-const acTagsWrap  = document.getElementById('ac-tags-wrap');
-const acTagList   = [];
-
-acTagsInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ',') {
-        e.preventDefault();
-        const val = acTagsInput.value.trim().replace(/,$/, '');
-        if (val && !acTagList.includes(val)) {
-            acTagList.push(val);
-            const chip = document.createElement('span');
-            chip.className = 'tag-chip';
-            chip.dataset.tag = val;
-            chip.innerHTML = `${val}<button type="button"><span class="material-icons-outlined" style="font-size:14px">close</span></button>`;
-            chip.querySelector('button').addEventListener('click', ev => {
-                ev.stopPropagation();
-                acTagList.splice(acTagList.indexOf(val), 1);
-                chip.remove();
-            });
-            acTagsWrap.insertBefore(chip, acTagsInput);
-        }
-        acTagsInput.value = '';
-    } else if (e.key === 'Backspace' && acTagsInput.value === '' && acTagList.length) {
-        const last = acTagList.pop();
-        acTagsWrap.querySelector(`[data-tag="${CSS.escape(last)}"]`)?.remove();
-    }
-});
-acTagsWrap.addEventListener('click', () => acTagsInput.focus());
-
-// ── Step 1 Continue ──
+// ── Step 1 Continue (accordion) ──
 document.getElementById('ac-btn-1').addEventListener('click', () => {
     let valid = true;
     if (!acSelectedType) {
@@ -2074,19 +2507,20 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
         });
         valid = false;
     }
-    const name = document.getElementById('ac-field-name').value.trim();
-    const fgName = document.getElementById('ac-fg-name');
+    const name = document.getElementById('a1-name').value.trim();
+    const fgName = document.getElementById('a1-fg-name');
     if (!name) { fgName.classList.add('has-error'); valid = false; }
     else fgName.classList.remove('has-error');
 
-    const bu = document.getElementById('ac-field-bu').value;
-    const fgBu = document.getElementById('ac-fg-bu');
-    if (!bu) { fgBu.classList.add('has-error'); valid = false; }
+    const buHasTag = document.getElementById('a1-bu-tags').children.length > 0;
+    const fgBu = document.getElementById('a1-fg-bu');
+    if (!buHasTag) { fgBu.classList.add('has-error'); valid = false; }
     else fgBu.classList.remove('has-error');
 
-    const owner = document.getElementById('ac-field-owner').value;
-    const fgOwner = document.getElementById('ac-fg-owner');
-    if (!owner) { fgOwner.classList.add('has-error'); valid = false; }
+    const ownerVal   = document.getElementById('a1-owner-input').value.trim();
+    const ownerChips = document.getElementById('a1-owner-tags').children.length;
+    const fgOwner = document.getElementById('a1-fg-owner');
+    if (!ownerVal && !ownerChips) { fgOwner.classList.add('has-error'); valid = false; }
     else fgOwner.classList.remove('has-error');
 
     if (!valid) return;
@@ -2098,12 +2532,8 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     document.getElementById('ac-ob-legal-name').value = name;
     openAc(2);
 });
-
-['ac-field-name','ac-field-bu','ac-field-owner'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('change', () => el.closest('.field-group')?.classList.remove('has-error'));
-    el.addEventListener('input',  () => el.closest('.field-group')?.classList.remove('has-error'));
-});
+document.getElementById('a1-name').addEventListener('input', () =>
+    document.getElementById('a1-fg-name').classList.remove('has-error'));
 
 // ── Step 2 ──
 document.getElementById('ac-btn-2-back').addEventListener('click', () => openAc(1));
