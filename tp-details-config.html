@@ -446,6 +446,14 @@
 
     /* ── Full field list ── */
     const FIELD_LABELS = [
+        /* ── Core TP profile fields ── */
+        'Legal Name', 'Industry / Sector', 'Third Party Owner', 'Process Name',
+        'Country of Registration', 'Third Party Contact Email', 'Business Unit',
+        'Screening & Monitoring Policy', 'Entity Type', 'Commercial Significance',
+        'Expiry Date', 'Tags', 'Also Known As', 'Company Number',
+        'Identification Type', 'Identification Value', 'Registered Address',
+        'Internal Reference or ID', 'Company Website', 'Company Telephone',
+        /* ── Questionnaire / assessment fields ── */
         'ABC Policy Applies to', 'ABC Risk Assess', 'Active Date', 'Adequate housing',
         'Adverse Impact Awareness on Biodiversity', 'Adverse Impact Awareness on Biodiversity Details',
         'AFTE Policy', 'AFTE Risk Assessment', 'Agreement Documented', 'All Relevant Client Units',
@@ -642,18 +650,18 @@
     /* ── Slot definitions ──
        readonly: columns 3 & 4 (0-indexed positions 2,3,6,7,10,11) in Overview */
     const OVERVIEW_SLOTS = [
-        { value: slugify('Entity Third Party Legal Name'),                readonly: false },
-        { value: slugify('Entity Industry Sector - onboarding'),          readonly: false },
-        { value: slugify('Responsible Client Unit'),                       readonly: true  },
-        { value: slugify('Current Risk Level'),                            readonly: true  },
-        { value: slugify('Entity Registered Country'),                     readonly: false },
-        { value: slugify('Third Party Contact Email Address'),             readonly: false },
-        { value: slugify('All Relevant Client Units'),                     readonly: true  },
-        { value: slugify('Internal Reference or ID'),                      readonly: true  },
-        { value: slugify('Entity ID Type'),                                readonly: false },
-        { value: slugify('Commercial Significance of Product or Service'), readonly: false },
-        { value: slugify('Entity Company Number'),                         readonly: true  },
-        { value: slugify('Third Party Expiry Date'),                       readonly: true  },
+        { value: slugify('Legal Name'),                       readonly: false },  // 1
+        { value: slugify('Industry / Sector'),                readonly: false },  // 2
+        { value: slugify('Third Party Owner'),                readonly: true  },  // 3
+        { value: slugify('Process Name'),                     readonly: true  },  // 4
+        { value: slugify('Country of Registration'),          readonly: false },  // 5
+        { value: slugify('Third Party Contact Email'),        readonly: false },  // 6
+        { value: slugify('Business Unit'),                    readonly: true  },  // 7
+        { value: slugify('Screening & Monitoring Policy'),    readonly: true  },  // 8
+        { value: slugify('Entity Type'),                      readonly: false },  // 9
+        { value: slugify('Commercial Significance'),          readonly: false },  // 10
+        { value: slugify('Expiry Date'),                      readonly: true  },  // 11
+        { value: slugify('Tags'),                             readonly: true  },  // 12
     ];
 
     const ADDITIONAL_SLOTS = [
