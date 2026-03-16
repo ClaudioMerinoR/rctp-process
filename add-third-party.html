@@ -1481,46 +1481,21 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="verify-intro">
-                        Search by name, DUNS number, LEI or BVD ID across external sources including <strong>Dun &amp; Bradstreet</strong>, to link this third party to a verified entity record.
+                    <!-- Country / Territory filter -->
+                    <div class="field-group" style="max-width:320px;margin-bottom:20px">
+                        <label class="field-label">Country / Territory</label>
+                        <select class="field-select" id="verify-country">
+                            <option value="">All countries</option>
+                            <option>Canada</option>
+                            <option>India</option>
+                            <option>New Zealand</option>
+                            <option>Republic Of Korea</option>
+                            <option>United States</option>
+                        </select>
                     </div>
 
-                    <div class="form-grid" style="margin-bottom:24px">
-                        <div class="field-group">
-                            <label class="field-label">Country / Territory</label>
-                            <select class="field-select" id="verify-country">
-                                <option value="">All countries</option>
-                                <option>United States</option>
-                                <option>United Kingdom</option>
-                                <option>Canada</option>
-                                <option>Germany</option>
-                                <option>France</option>
-                                <option>Russian Federation</option>
-                                <option>Republic of Korea</option>
-                                <option>India</option>
-                            </select>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">ID Type</label>
-                            <select class="field-select" id="verify-id-type">
-                                <option>Name search</option>
-                                <option>DUNS Number</option>
-                                <option>LEI</option>
-                                <option>BVD ID</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="search-bar">
-                        <input class="field-input" id="verify-search-input" type="text" placeholder="Search by name or identifier…" style="flex:1">
-                        <button class="btn btn-filled" id="btn-verify-search">
-                            <span class="material-icons-outlined">search</span>
-                            Search
-                        </button>
-                    </div>
-
-                    <!-- Results -->
-                    <div id="verify-results" style="display:none">
+                    <!-- Results (always visible) -->
+                    <div id="verify-results">
                         <div class="results-header">
                             <div class="results-count"><strong id="result-count">265</strong> results found</div>
                             <div style="display:flex;gap:6px;align-items:center">
@@ -2086,34 +2061,19 @@
                     <span class="material-icons-outlined ac-chevron">expand_more</span>
                 </button>
                 <div class="ac-body">
-                    <div class="verify-intro" style="margin-top:20px">
-                        Search external databases to verify <strong id="ac-verify-name"></strong> against a known entity record.
+                    <!-- Country / Territory filter -->
+                    <div class="field-group" style="max-width:320px;margin:20px 0">
+                        <label class="field-label">Country / Territory</label>
+                        <select class="field-select" id="ac-verify-country">
+                            <option value="">All countries</option>
+                            <option>Canada</option>
+                            <option>India</option>
+                            <option>New Zealand</option>
+                            <option>Republic Of Korea</option>
+                            <option>United States</option>
+                        </select>
                     </div>
-                    <div class="form-grid" style="margin:20px 0">
-                        <div class="field-group">
-                            <label class="field-label">Country / Territory</label>
-                            <select class="field-select" id="ac-verify-country">
-                                <option value="">All countries</option>
-                                <option>United States</option><option>United Kingdom</option>
-                                <option>Canada</option><option>Germany</option><option>France</option>
-                                <option>Russian Federation</option><option>Republic of Korea</option><option>India</option>
-                            </select>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">ID Type</label>
-                            <select class="field-select" id="ac-verify-id-type">
-                                <option>Name search</option><option>DUNS Number</option>
-                                <option>LEI</option><option>BVD ID</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="search-bar">
-                        <input class="field-input" id="ac-verify-search" type="text" placeholder="Search by name or identifier…">
-                        <button class="btn btn-filled" id="ac-btn-search">
-                            <span class="material-icons-outlined">search</span>Search
-                        </button>
-                    </div>
-                    <div id="ac-verify-results" style="display:none">
+                    <div id="ac-verify-results">
                         <div class="results-header">
                             <div class="results-count"><strong>265</strong> results found</div>
                             <span class="source-badge"><span class="material-icons-outlined" style="font-size:12px">verified</span> Dun &amp; Bradstreet</span>
@@ -2506,7 +2466,6 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
         () => {
             document.getElementById('dup-name-display').textContent    = '"' + name + '"';
             document.getElementById('verify-name-display').textContent = '"' + name + '"';
-            document.getElementById('verify-search-input').value       = name;
             document.getElementById('ob-legal-name').value             = name;
             goToStep(2);
         },
@@ -2514,7 +2473,6 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
         () => {
             skippedSteps.add(2);
             document.getElementById('verify-name-display').textContent = '"' + name + '"';
-            document.getElementById('verify-search-input').value       = name;
             document.getElementById('ob-legal-name').value             = name;
             goToStep(3);
         }
@@ -2547,15 +2505,13 @@ document.getElementById('btn-step2-continue').addEventListener('click', () => {
 
 /* ══════════════════════ Step 3 ══════════════════════ */
 
-// Simulate search
-document.getElementById('btn-verify-search').addEventListener('click', () => {
-    const results = document.getElementById('verify-results');
-    results.style.display = 'block';
-    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-});
-
-document.getElementById('verify-search-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('btn-verify-search').click();
+// Country/Territory filter — stepper
+document.getElementById('verify-country').addEventListener('change', function () {
+    const val = this.value.toLowerCase();
+    document.querySelectorAll('#verify-tbody tr').forEach(tr => {
+        const country = tr.cells[4]?.textContent.toLowerCase() || '';
+        tr.style.display = (!val || country.includes(val)) ? '' : 'none';
+    });
 });
 
 // Row selection highlight
@@ -2742,11 +2698,13 @@ document.getElementById('ac-btn-2').addEventListener('click', () => {
 });
 
 // ── Step 3 ──
-document.getElementById('ac-btn-search').addEventListener('click', () => {
-    document.getElementById('ac-verify-results').style.display = 'block';
-});
-document.getElementById('ac-verify-search').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('ac-btn-search').click();
+// Country/Territory filter — accordion
+document.getElementById('ac-verify-country').addEventListener('change', function () {
+    const val = this.value.toLowerCase();
+    document.querySelectorAll('#ac-verify-tbody tr').forEach(tr => {
+        const country = tr.cells[4]?.textContent.toLowerCase() || '';
+        tr.style.display = (!val || country.includes(val)) ? '' : 'none';
+    });
 });
 document.getElementById('ac-verify-tbody').addEventListener('change', e => {
     if (e.target.classList.contains('ac-verify-radio')) {
