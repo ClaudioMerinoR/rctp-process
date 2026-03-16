@@ -2670,7 +2670,6 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
         () => {
             completeAc(1, `${typeLabel} · ${name}`);
             document.getElementById('ac-verify-name').textContent = '"' + name + '"';
-            document.getElementById('ac-verify-search').value     = name;
             document.getElementById('ac-ob-legal-name').value     = name;
             openAc(2);
         },
@@ -2679,7 +2678,6 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
             completeAc(1, `${typeLabel} · ${name}`);
             skipAc(2);
             document.getElementById('ac-verify-name').textContent = '"' + name + '"';
-            document.getElementById('ac-verify-search').value     = name;
             document.getElementById('ac-ob-legal-name').value     = name;
             openAc(3);
         }
