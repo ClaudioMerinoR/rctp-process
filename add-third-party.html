@@ -2465,14 +2465,12 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
         // Continue → go to step 2 (Duplicate Check)
         () => {
             document.getElementById('dup-name-display').textContent    = '"' + name + '"';
-            document.getElementById('verify-name-display').textContent = '"' + name + '"';
             document.getElementById('ob-legal-name').value             = name;
             goToStep(2);
         },
         // Skip → mark step 2 as skipped, jump straight to step 3
         () => {
             skippedSteps.add(2);
-            document.getElementById('verify-name-display').textContent = '"' + name + '"';
             document.getElementById('ob-legal-name').value             = name;
             goToStep(3);
         }
@@ -2669,7 +2667,6 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
         // Continue → complete step 1, open step 2 (Duplicate Check)
         () => {
             completeAc(1, `${typeLabel} · ${name}`);
-            document.getElementById('ac-verify-name').textContent = '"' + name + '"';
             document.getElementById('ac-ob-legal-name').value     = name;
             openAc(2);
         },
@@ -2677,7 +2674,6 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
         () => {
             completeAc(1, `${typeLabel} · ${name}`);
             skipAc(2);
-            document.getElementById('ac-verify-name').textContent = '"' + name + '"';
             document.getElementById('ac-ob-legal-name').value     = name;
             openAc(3);
         }
