@@ -892,6 +892,77 @@
         .step-node.skipped .step-circle .material-icons-outlined { display: block; }
         .step-node.skipped .step-label { color: var(--neutral-400); }
 
+        /* ── Duplicate Properties Side Panel ── */
+        .dup-sheet-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4); z-index: 900;
+        }
+        .dup-sheet-overlay.open { display: block; }
+        .dup-sheet {
+            position: fixed; top: 0; right: -660px; width: 640px; height: 100vh;
+            background: var(--neutral-00);
+            box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+            display: flex; flex-direction: column;
+            z-index: 901; transition: right 0.3s ease;
+        }
+        .dup-sheet.open { right: 0; }
+        .dup-sheet-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 20px 0; flex-shrink: 0;
+        }
+        .dup-sheet-title {
+            font-size: 20px; font-weight: 500; color: var(--text-normal);
+        }
+        .dup-sheet-accent { height: 4px; background: var(--primary-500); margin-top: 16px; flex-shrink: 0; }
+        .dup-sheet-filters {
+            padding: 16px 20px; border-bottom: 1px solid var(--neutral-50);
+            flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .dup-sheet-filter-label {
+            font-size: 11px; font-weight: 500; color: var(--primary-500);
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+        }
+        .dup-sheet-input {
+            width: 100%; height: 32px; border: 1px solid var(--neutral-200);
+            border-radius: 2px; padding: 0 9px; font-size: 14px;
+            font-family: inherit; color: var(--text-normal); outline: none;
+        }
+        .dup-sheet-input:focus { border-color: var(--primary-500); }
+        .dup-sheet-select {
+            width: 100%; height: 32px; border: 1px solid var(--neutral-200);
+            border-radius: 2px; padding: 0 9px; font-size: 14px;
+            font-family: inherit; color: var(--text-normal); background: var(--neutral-00);
+            outline: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238D9CA9' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 6px center;
+            padding-right: 28px;
+        }
+        .dup-sheet-content { flex: 1; overflow-y: auto; }
+        .dup-props-table {
+            width: 100%; border-collapse: collapse; font-size: 13px;
+        }
+        .dup-props-table thead th {
+            background: var(--neutral-25); padding: 8px 20px;
+            text-align: left; font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            color: var(--text-light); border-bottom: 2px solid var(--neutral-200);
+            position: sticky; top: 0; white-space: nowrap;
+        }
+        .dup-props-table tbody td {
+            padding: 8px 20px; border-bottom: 1px solid var(--neutral-50);
+            color: var(--text-light); vertical-align: middle; font-size: 13px;
+        }
+        .dup-props-table tr:last-child td { border-bottom: none; }
+        .dup-props-table tr:hover td { background: #fafbfc; }
+        .dup-props-table .prop-name { color: var(--text-normal); font-weight: 500; }
+        .dup-props-table .prop-val { color: var(--text-light); }
+        .prop-dot {
+            width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+            flex-shrink: 0;
+        }
+        .prop-dot.filled { background: var(--primary-500); }
+        .prop-dot.empty  { background: var(--neutral-200); }
+
         /* ── Person type notice ── */
         .person-notice {
             display: none;
@@ -2222,6 +2293,45 @@
     </div>
 </footer>
 
+<!-- ── Duplicate Check: Properties Side Panel ── -->
+<div class="dup-sheet-overlay" id="dup-sheet-overlay"></div>
+<div class="dup-sheet" id="dup-sheet" role="dialog" aria-modal="true">
+    <div class="dup-sheet-header">
+        <span class="dup-sheet-title">Properties — <span id="dup-sheet-name"></span></span>
+        <button class="btn btn-outline" id="dup-sheet-close" type="button">Close</button>
+    </div>
+    <div class="dup-sheet-accent"></div>
+    <div class="dup-sheet-filters">
+        <div>
+            <div class="dup-sheet-filter-label">Search Properties</div>
+            <input class="dup-sheet-input" id="dup-sheet-search" type="text" placeholder="Search properties…" autocomplete="off">
+        </div>
+        <div>
+            <div class="dup-sheet-filter-label">Filter Categories</div>
+            <select class="dup-sheet-select" id="dup-sheet-category">
+                <option value="">All</option>
+                <option value="identity">Identity</option>
+                <option value="risk">Risk</option>
+                <option value="contact">Contact</option>
+                <option value="compliance">Compliance</option>
+                <option value="operational">Operational</option>
+            </select>
+        </div>
+    </div>
+    <div class="dup-sheet-content">
+        <table class="dup-props-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width:40%">Value</th>
+                    <th style="width:32px"></th>
+                </tr>
+            </thead>
+            <tbody id="dup-props-tbody"></tbody>
+        </table>
+    </div>
+</div>
+
 <!-- ── Entity Verification Confirmation Modal ── -->
 <div class="ev-modal-overlay" id="ev-modal-overlay" style="display:none">
     <div class="ev-modal">
@@ -2759,6 +2869,129 @@ document.getElementById('ac-ob-country').addEventListener('change', () => {
     document.getElementById('ac-ob-block-country').classList.remove('has-error');
 });
 document.getElementById('ac-btn-4-back').addEventListener('click', () => openAc(3));
+/* ══════════════════════ Duplicate Properties Side Panel ══════════════════════ */
+const DUP_PROPERTIES = [
+    // identity
+    { name: 'Entity Third Party Legal Name',   value: '',                   cat: 'identity' },
+    { name: 'Entity Registered Country',       value: 'United States',      cat: 'identity' },
+    { name: 'Entity Registered Address',       value: '1033 US Hwy 46 Ste 201, Clifton, NJ 07013', cat: 'identity' },
+    { name: 'Entity Company Number',           value: 'US-12345678',        cat: 'identity' },
+    { name: 'Entity ID Type',                  value: 'DUNS Number',         cat: 'identity' },
+    { name: 'Entity ID Value',                 value: '808241405',           cat: 'identity' },
+    { name: 'Entity Industry Sector - onboarding', value: 'Technology',     cat: 'identity' },
+    { name: 'Entity Other Known Name or Alias',value: '',                   cat: 'identity' },
+    { name: 'Entity Website',                  value: 'www.initech.com',    cat: 'contact'  },
+    // contact
+    { name: 'Third Party Contact First Name',  value: 'John',               cat: 'contact'  },
+    { name: 'Third Party Contact Surname',     value: 'Smith',              cat: 'contact'  },
+    { name: 'Third Party Contact Email Address', value: 'contact@initech.com', cat: 'contact' },
+    { name: 'Third Party Country of Operation', value: 'United States',     cat: 'contact'  },
+    { name: 'Person Business Address',         value: '',                   cat: 'contact'  },
+    { name: 'Person Country of Residence',     value: '',                   cat: 'contact'  },
+    // risk
+    { name: 'Current Risk Level',              value: 'Low',                cat: 'risk'     },
+    { name: 'Current Risk Level - BreakDown',  value: '',                   cat: 'risk'     },
+    { name: 'Current Risk Score',              value: '12',                 cat: 'risk'     },
+    { name: 'Current Risk Status',             value: 'Open',               cat: 'risk'     },
+    { name: 'Monitoring Last Update',          value: '2024-01-15',         cat: 'risk'     },
+    { name: 'Other Red Flag(s)',               value: 'No',                 cat: 'risk'     },
+    { name: 'Other Red Flag(s) Details',       value: '',                   cat: 'risk'     },
+    { name: 'Politically Exposed Person',      value: 'No',                 cat: 'risk'     },
+    { name: 'Politically Exposed Persons Details', value: '',               cat: 'risk'     },
+    // compliance
+    { name: 'Anti-Bribery Policy',             value: 'Yes',                cat: 'compliance' },
+    { name: 'Third Party Code of Conduct',     value: 'Yes',                cat: 'compliance' },
+    { name: 'Compliance Training',             value: 'Yes',                cat: 'compliance' },
+    { name: 'Compliance Training Details',     value: '',                   cat: 'compliance' },
+    { name: 'Modern Slavery Policy Applies To', value: '',                  cat: 'compliance' },
+    { name: 'Fourth Party Due Diligence',      value: '',                   cat: 'compliance' },
+    { name: 'Government Contracts Debarment',  value: 'No',                 cat: 'compliance' },
+    { name: 'World Bank Contracts Debarment',  value: 'No',                 cat: 'compliance' },
+    { name: 'Illegal Activity',                value: 'No',                 cat: 'compliance' },
+    // operational
+    { name: 'Internal Reference or ID',        value: 'INT-0001',           cat: 'operational' },
+    { name: 'Date business established',       value: '2005-03-15',         cat: 'operational' },
+    { name: 'Total number of employees',       value: '250',                cat: 'operational' },
+    { name: 'Average Turnover',                value: '$5M – $10M',         cat: 'operational' },
+    { name: 'Publicly listed company',         value: 'No',                 cat: 'operational' },
+    { name: 'Third Party Legal Structure',     value: 'Limited Liability',  cat: 'operational' },
+    { name: 'Directors',                       value: '',                   cat: 'operational' },
+    { name: 'Shareholders',                    value: '',                   cat: 'operational' },
+    { name: 'Subcontractor legal structure',   value: '',                   cat: 'operational' },
+    { name: 'Subsidiaries',                    value: '',                   cat: 'operational' },
+    { name: 'Third Party Product Type',        value: 'Software',           cat: 'operational' },
+    { name: 'Third Party Service Type',        value: 'IT Services',        cat: 'operational' },
+    { name: 'Payment Method',                  value: '',                   cat: 'operational' },
+    { name: 'Contract Value Known',            value: 'Yes',                cat: 'operational' },
+    { name: 'Contract Value Amount',           value: '$250,000',           cat: 'operational' },
+    { name: 'References 1',                    value: '',                   cat: 'operational' },
+    { name: 'References 2',                    value: '',                   cat: 'operational' },
+];
+
+(function () {
+    const sheet     = document.getElementById('dup-sheet');
+    const overlay   = document.getElementById('dup-sheet-overlay');
+    const nameEl    = document.getElementById('dup-sheet-name');
+    const searchEl  = document.getElementById('dup-sheet-search');
+    const catEl     = document.getElementById('dup-sheet-category');
+    const tbody     = document.getElementById('dup-props-tbody');
+    let currentProps = DUP_PROPERTIES;
+
+    function buildRows(data) {
+        tbody.innerHTML = '';
+        data.forEach(p => {
+            const tr = document.createElement('tr');
+            tr.dataset.cat = p.cat;
+            const filled = !!p.value;
+            tr.innerHTML = `
+                <td class="prop-name">${p.name}</td>
+                <td class="prop-val">${p.value || '—'}</td>
+                <td style="text-align:center"><span class="prop-dot ${filled ? 'filled' : 'empty'}"></span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function applyFilters() {
+        const q   = searchEl.value.toLowerCase();
+        const cat = catEl.value;
+        tbody.querySelectorAll('tr').forEach(tr => {
+            const name    = tr.querySelector('.prop-name').textContent.toLowerCase();
+            const matchQ  = !q   || name.includes(q);
+            const matchC  = !cat || tr.dataset.cat === cat;
+            tr.style.display = (matchQ && matchC) ? '' : 'none';
+        });
+    }
+
+    function openSheet(name) {
+        nameEl.textContent = name;
+        searchEl.value     = '';
+        catEl.value        = '';
+        buildRows(DUP_PROPERTIES);
+        sheet.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeSheet() {
+        sheet.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('dup-sheet-close').addEventListener('click', closeSheet);
+    overlay.addEventListener('click', closeSheet);
+    searchEl.addEventListener('input', applyFilters);
+    catEl.addEventListener('change', applyFilters);
+
+    document.addEventListener('click', e => {
+        const btn = e.target.closest('.more-btn');
+        if (!btn) return;
+        const row  = btn.closest('tr');
+        const name = row.querySelector('.cell-link')?.textContent.trim() || 'Third Party';
+        openSheet(name);
+    });
+})();
+
 document.getElementById('ac-btn-4-save').addEventListener('click', () => {
     const country = document.getElementById('ac-ob-country').value;
     if (!country) {
