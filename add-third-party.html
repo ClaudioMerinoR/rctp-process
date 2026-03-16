@@ -515,7 +515,10 @@
             line-height: 1.4;
         }
         .verify-table .duns { font-family: monospace; font-size: 12px; }
-        .verify-table .address-cell { font-size: 12px; line-height: 1.4; max-width: 200px; }
+        .verify-table .address-cell { font-size: 12px; line-height: 1.4; max-width: 240px; }
+        .verify-table .ubo-cell { text-align: center; vertical-align: middle; }
+        .ubo-ok   { color: var(--success-500); font-size: 22px; display: block; }
+        .ubo-fail { color: var(--alert-500);   font-size: 22px; display: block; }
         .source-badge {
             display: inline-flex; align-items: center; gap: 4px;
             font-size: 10px; font-weight: 600; letter-spacing: 0.4px;
@@ -1474,7 +1477,7 @@
                 <div class="card-header">
                     <div class="card-step-tag">Step 3 of 4</div>
                     <div class="card-title">Entity Verification</div>
-                    <div class="card-subtitle">Search external databases to verify and match <strong id="verify-name-display" style="color:var(--text-normal)"></strong> against a known record.</div>
+                    <div class="card-subtitle">If you select an entity and click Submit, corresponding properties will be prepopulated within the Third Party record and a screening association will be created.</div>
                 </div>
                 <div class="card-body">
 
@@ -1533,46 +1536,92 @@
                                     <tr>
                                         <th></th>
                                         <th>Name</th>
-                                        <th>DUNS</th>
+                                        <th>DUNS Number</th>
                                         <th>Address</th>
-                                        <th>Country</th>
+                                        <th>Country/Territory</th>
+                                        <th>UBO Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="verify-tbody">
                                     <tr>
-                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="0" style="accent-color:var(--primary-500)"></td>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
                                         <td class="company-name">INITECH Co., Ltd.</td>
                                         <td class="duns">690000463</td>
-                                        <td class="address-cell">61 Digital-ro 26-gil, Guro-gu, Seoul 08389</td>
-                                        <td>Republic of Korea</td>
+                                        <td class="address-cell">61 Digital-ro 26-gil, Guro-gu,Seoul,08389,Seoul</td>
+                                        <td>Republic Of Korea</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="1" style="accent-color:var(--primary-500)"></td>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
                                         <td class="company-name">Initech Systems Ltd</td>
                                         <td class="duns">204329382</td>
-                                        <td class="address-cell">Suite 3000, 421–7th Ave SW, Calgary, AB T2P 4K9</td>
+                                        <td class="address-cell">Suite 3000, 421-7th Ave SW,Calgary,T2P 4K9,ALBERTA</td>
                                         <td>Canada</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="2" style="accent-color:var(--primary-500)"></td>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
                                         <td class="company-name">Initech Global, LLC</td>
                                         <td class="duns">623292385</td>
-                                        <td class="address-cell">—</td>
+                                        <td class="address-cell">5075 Cascade Rd SE Ste J,Grand Rapids,49546-3751,Michigan</td>
                                         <td>United States</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="3" style="accent-color:var(--primary-500)"></td>
-                                        <td class="company-name">INITECH Enterprise International LLC</td>
-                                        <td class="duns">067470522</td>
-                                        <td class="address-cell">6807 Emmett F Lowry Expy Ste 105, Texas City, TX 77591</td>
-                                        <td>United States</td>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH SOLUTIONS</td>
+                                        <td class="duns">771297084</td>
+                                        <td class="address-cell">HALIMA APT, A\202, KISMAT COLONY, OLD MUMBAI\PUNE ROAD,AMRUT NAGAR, MUMBRA,Thane,400612,Maharashtra</td>
+                                        <td>India</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="radio" name="verify-pick" class="verify-radio" value="4" style="accent-color:var(--primary-500)"></td>
-                                        <td class="company-name">INITECH Consulting Limited</td>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">Initech Inc</td>
                                         <td class="duns">808241405</td>
-                                        <td class="address-cell">62 Woodward Street, Featherston 5710</td>
+                                        <td class="address-cell">1033 US Highway 46 Ste 201,Clifton,07013-2474,New Jersey</td>
+                                        <td>United States</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH CONSULTING LIMITED</td>
+                                        <td class="duns">591303052</td>
+                                        <td class="address-cell">62 Woodward Street,Featherston,5710</td>
                                         <td>New Zealand</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH SOFTWARE SOLUTIONS PRIVATE LIMITED</td>
+                                        <td class="duns">860258229</td>
+                                        <td class="address-cell">Unit No. 9A, 5th Office Floor, Building,Mindspace, Hi Tech City,Hyderabad,500081,Telangana</td>
+                                        <td>India</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH INFOSOLUTION</td>
+                                        <td class="duns">961530403</td>
+                                        <td class="address-cell">Th 18, Dlf New Town Heights, Gurugram, 18, Sec 86,Gurgaon,Gurugram,122004,Haryana</td>
+                                        <td>India</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH SOLUTIONS</td>
+                                        <td class="duns">856274180</td>
+                                        <td class="address-cell">9-1, KAMARAJAR STREET, NARASIMMAPURAM,KUNIYAMUTHUR,Coimbatore,641008,Tamil Nadu</td>
+                                        <td>India</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="verify-pick" class="verify-radio" style="accent-color:var(--primary-500)"></td>
+                                        <td class="company-name">INITECH ENTERPRISE INTERNATIONAL LLC</td>
+                                        <td class="duns">067470522</td>
+                                        <td class="address-cell">6807 Emmett F Lowry Expy Ste 105,Texas City,77591-2546,Texas</td>
+                                        <td>United States</td>
+                                        <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -2071,12 +2120,18 @@
                         </div>
                         <div class="verify-table-wrap">
                             <table class="verify-table">
-                                <thead><tr><th></th><th>Name</th><th>DUNS</th><th>Address</th><th>Country</th></tr></thead>
+                                <thead><tr><th></th><th>Name</th><th>DUNS Number</th><th>Address</th><th>Country/Territory</th><th>UBO Status</th></tr></thead>
                                 <tbody id="ac-verify-tbody">
-                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH Co., Ltd.</td><td class="duns">690000463</td><td class="address-cell">61 Digital-ro 26-gil, Seoul 08389</td><td>Republic of Korea</td></tr>
-                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Systems Ltd</td><td class="duns">204329382</td><td class="address-cell">Suite 3000, 421–7th Ave SW, Calgary</td><td>Canada</td></tr>
-                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Global, LLC</td><td class="duns">623292385</td><td class="address-cell">—</td><td>United States</td></tr>
-                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH Enterprise International LLC</td><td class="duns">067470522</td><td class="address-cell">6807 Emmett F Lowry Expy, Texas City, TX</td><td>United States</td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH Co., Ltd.</td><td class="duns">690000463</td><td class="address-cell">61 Digital-ro 26-gil, Guro-gu,Seoul,08389,Seoul</td><td>Republic Of Korea</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Systems Ltd</td><td class="duns">204329382</td><td class="address-cell">Suite 3000, 421-7th Ave SW,Calgary,T2P 4K9,ALBERTA</td><td>Canada</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Global, LLC</td><td class="duns">623292385</td><td class="address-cell">5075 Cascade Rd SE Ste J,Grand Rapids,49546-3751,Michigan</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH SOLUTIONS</td><td class="duns">771297084</td><td class="address-cell">HALIMA APT, A\202, KISMAT COLONY, OLD MUMBAI\PUNE ROAD,AMRUT NAGAR, MUMBRA,Thane,400612,Maharashtra</td><td>India</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Inc</td><td class="duns">808241405</td><td class="address-cell">1033 US Highway 46 Ste 201,Clifton,07013-2474,New Jersey</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH CONSULTING LIMITED</td><td class="duns">591303052</td><td class="address-cell">62 Woodward Street,Featherston,5710</td><td>New Zealand</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH SOFTWARE SOLUTIONS PRIVATE LIMITED</td><td class="duns">860258229</td><td class="address-cell">Unit No. 9A, 5th Office Floor, Building,Mindspace, Hi Tech City,Hyderabad,500081,Telangana</td><td>India</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH INFOSOLUTION</td><td class="duns">961530403</td><td class="address-cell">Th 18, Dlf New Town Heights, Gurugram, 18, Sec 86,Gurgaon,Gurugram,122004,Haryana</td><td>India</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH SOLUTIONS</td><td class="duns">856274180</td><td class="address-cell">9-1, KAMARAJAR STREET, NARASIMMAPURAM,KUNIYAMUTHUR,Coimbatore,641008,Tamil Nadu</td><td>India</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH ENTERPRISE INTERNATIONAL LLC</td><td class="duns">067470522</td><td class="address-cell">6807 Emmett F Lowry Expy Ste 105,Texas City,77591-2546,Texas</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td></tr>
                                 </tbody>
                             </table>
                         </div>
