@@ -98,8 +98,6 @@
 
         /* ── Wizard wrapper ── */
         .wizard-wrap {
-            max-width: 780px;
-            margin: 0 auto;
         }
 
         /* ── Stepper ── */
@@ -582,6 +580,146 @@
         .field-group.has-error .field-input,
         .field-group.has-error .field-select { border-color: var(--alert-500); }
 
+        /* ── View toggle bar ── */
+        .view-toggle-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 10px 0 14px;
+        }
+        .view-toggle-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        .view-toggle-group {
+            display: flex;
+            border: 1px solid var(--neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .view-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 32px;
+            padding: 0 14px;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            letter-spacing: 0.4px;
+            background: var(--neutral-00);
+            color: var(--text-light);
+            border: none;
+            border-right: 1px solid var(--neutral-200);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .view-toggle-btn:last-child { border-right: none; }
+        .view-toggle-btn:hover:not(.active) { background: var(--neutral-25); color: var(--text-normal); }
+        .view-toggle-btn.active { background: var(--primary-500); color: #fff; }
+        .view-toggle-btn .material-icons-outlined { font-size: 16px; }
+
+        /* ── Accordion view ── */
+        .accordion { display: flex; flex-direction: column; gap: 8px; }
+
+        .ac-item {
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-50);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .ac-item.open {
+            border-color: var(--primary-200);
+            border-top: 3px solid var(--primary-500);
+            box-shadow: 0 4px 20px rgba(2,163,213,0.1);
+        }
+        .ac-item.completed:not(.open) { border-color: var(--neutral-200); }
+        .ac-item.locked { opacity: 0.5; pointer-events: none; }
+
+        .ac-header-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.15s;
+        }
+        .ac-item.locked .ac-header-btn { cursor: not-allowed; }
+        .ac-item.open .ac-header-btn:hover { background: var(--primary-08); }
+        .ac-item:not(.open) .ac-header-btn:hover { background: var(--neutral-25); }
+
+        .ac-badge {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--neutral-200);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            transition: background 0.25s;
+        }
+        .ac-item.open .ac-badge       { background: var(--primary-500); }
+        .ac-item.completed .ac-badge  { background: var(--success-500); }
+
+        .ac-badge .ac-num     { display: block; }
+        .ac-badge .ac-check-ico { display: none; font-size: 18px; }
+        .ac-item.completed .ac-badge .ac-num      { display: none; }
+        .ac-item.completed .ac-badge .ac-check-ico{ display: block; }
+
+        .ac-header-text { flex: 1; min-width: 0; }
+        .ac-title {
+            font-size: 15px; font-weight: 600;
+            color: var(--text-normal);
+            display: block; line-height: 1.3;
+        }
+        .ac-item.open .ac-title { color: var(--primary-600); }
+        .ac-summary {
+            font-size: 12px; color: var(--text-light);
+            display: block; margin-top: 2px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        .ac-chevron {
+            font-size: 22px; color: var(--neutral-400);
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+        .ac-item.open .ac-chevron { transform: rotate(180deg); }
+
+        .ac-body {
+            padding: 0 24px 28px;
+            border-top: 1px solid var(--neutral-50);
+            animation: acSlide 0.2s ease;
+        }
+        .ac-item:not(.open) .ac-body { display: none; }
+        @keyframes acSlide {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .ac-body .section-heading   { margin-top: 24px; }
+        .ac-body .type-cards        { margin-top: 12px; }
+        .ac-body .form-grid         { margin-top: 0; }
+
+        .ac-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--neutral-50);
+        }
+        .ac-footer-right { display: flex; align-items: center; gap: 8px; }
+
         /* ── Onboarding numbered blocks (Step 4) ── */
         .ob-section-label {
             font-size: 15px;
@@ -723,8 +861,26 @@
         <span class="current">Add New Third Party</span>
     </div>
 
+    <!-- View toggle -->
+    <div class="view-toggle-bar">
+        <span class="view-toggle-label">View</span>
+        <div class="view-toggle-group" id="view-toggle-group">
+            <button class="view-toggle-btn active" data-view="accordion" id="toggle-accordion">
+                <span class="material-icons-outlined">view_agenda</span>
+                Accordion
+            </button>
+            <button class="view-toggle-btn" data-view="stepper" id="toggle-stepper">
+                <span class="material-icons-outlined">linear_scale</span>
+                Step-by-step
+            </button>
+        </div>
+    </div>
+
     <!-- Wizard -->
     <div class="wizard-wrap">
+
+        <!-- ══ STEPPER VIEW ══ -->
+        <div id="stepper-view" style="display:none">
 
         <!-- Stepper -->
         <div class="stepper" id="stepper">
@@ -1278,6 +1434,284 @@
             </div>
 
         </div><!-- /.form-card -->
+        </div><!-- /#stepper-view -->
+
+        <!-- ══ ACCORDION VIEW ══ -->
+        <div id="accordion-view">
+        <div class="accordion" id="accordion">
+
+            <!-- ─── Accordion Item 1: Third Party Details ─── -->
+            <div class="ac-item open" id="ac-1" data-step="1">
+                <button class="ac-header-btn" type="button" aria-expanded="true">
+                    <div class="ac-badge">
+                        <span class="ac-num">1</span>
+                        <span class="material-icons-outlined ac-check-ico">check</span>
+                    </div>
+                    <div class="ac-header-text">
+                        <span class="ac-title">Third Party Details</span>
+                        <span class="ac-summary" id="ac-summary-1"></span>
+                    </div>
+                    <span class="material-icons-outlined ac-chevron">expand_more</span>
+                </button>
+                <div class="ac-body">
+                    <div class="section-heading" style="margin-top:20px">Third Party Type <span style="color:var(--alert-500)">*</span></div>
+                    <div class="type-cards" id="ac-type-cards">
+                        <div class="type-card" data-type="entity" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">business</span></div>
+                            <div class="type-card-title">Entity / Organisation</div>
+                            <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
+                        </div>
+                        <div class="type-card" data-type="person" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">person</span></div>
+                            <div class="type-card-title">Individual / Person</div>
+                            <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
+                        </div>
+                    </div>
+                    <div class="section-heading" style="margin-top:28px">Basic Information</div>
+                    <div class="form-grid">
+                        <div class="field-group full" id="ac-fg-name">
+                            <label class="field-label">Third Party Legal Name <span class="req">*</span></label>
+                            <input class="field-input" id="ac-field-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
+                            <div class="field-error-msg">Legal name is required.</div>
+                        </div>
+                        <div class="field-group" id="ac-fg-bu">
+                            <label class="field-label">Business Unit <span class="req">*</span></label>
+                            <select class="field-select" id="ac-field-bu">
+                                <option value="">Select a business unit</option>
+                                <option>Europe</option><option>Americas</option>
+                                <option>Asia Pacific</option><option>Entity Verification</option>
+                                <option>Global Operations</option>
+                            </select>
+                            <div class="field-error-msg">Business unit is required.</div>
+                        </div>
+                        <div class="field-group" id="ac-fg-owner">
+                            <label class="field-label">Owner <span class="req">*</span></label>
+                            <select class="field-select" id="ac-field-owner">
+                                <option value="">Assign an owner</option>
+                                <option>Claudio Merino</option><option>Emily Forbes</option>
+                                <option>Tamara Knoetschke</option><option>James Richardson</option>
+                            </select>
+                            <div class="field-error-msg">Owner is required.</div>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Process</label>
+                            <select class="field-select" id="ac-field-process">
+                                <option value="">Select a process</option>
+                                <option>Standard RCTP</option><option>Enhanced RCTP</option>
+                                <option>Simplified RCTP</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Screening &amp; Monitoring Policy</label>
+                            <select class="field-select" id="ac-field-policy">
+                                <option value="">Select a policy</option>
+                                <option>Default Standard KYBP Policy</option>
+                                <option>Enhanced Screening Policy</option>
+                                <option>Simplified Policy</option>
+                            </select>
+                        </div>
+                        <div class="field-group full">
+                            <label class="field-label">Tags</label>
+                            <div class="tags-wrap" id="ac-tags-wrap">
+                                <input class="tags-input" id="ac-tags-input" type="text" placeholder="Type and press Enter to add tags…">
+                            </div>
+                            <div class="field-hint">Press Enter to add a tag. E.g. Gas &amp; Oil, Supplier, Critical.</div>
+                        </div>
+                    </div>
+                    <div class="ac-footer">
+                        <a href="third-parties.html" class="btn btn-ghost">
+                            <span class="material-icons-outlined">close</span>Cancel
+                        </a>
+                        <div class="ac-footer-right">
+                            <button class="btn btn-filled" id="ac-btn-1">
+                                Continue <span class="material-icons-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Accordion Item 2: Duplicate Check ─── -->
+            <div class="ac-item locked" id="ac-2" data-step="2">
+                <button class="ac-header-btn" type="button" aria-expanded="false">
+                    <div class="ac-badge">
+                        <span class="ac-num">2</span>
+                        <span class="material-icons-outlined ac-check-ico">check</span>
+                    </div>
+                    <div class="ac-header-text">
+                        <span class="ac-title">Duplicate Check</span>
+                        <span class="ac-summary" id="ac-summary-2"></span>
+                    </div>
+                    <span class="material-icons-outlined ac-chevron">expand_more</span>
+                </button>
+                <div class="ac-body">
+                    <div class="duplicate-banner" style="margin-top:20px">
+                        <span class="material-icons-outlined">warning_amber</span>
+                        <div class="duplicate-banner-text">
+                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist. Review them before continuing.
+                        </div>
+                    </div>
+                    <div class="dup-table-wrap">
+                        <table class="dup-table">
+                            <thead><tr><th>Third Party Name</th><th>Status</th><th>Internal Reference</th><th>Country</th><th>Owner</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="cell-link">Initech Inc</span></td><td><span class="status-badge status-active">Active</span></td><td>INT-0001</td><td>United States</td><td>Emily Forbes</td></tr>
+                                <tr><td><span class="cell-link">INITECH Ltd</span></td><td><span class="status-badge status-inactive">Inactive</span></td><td>INT-0002</td><td>United Kingdom</td><td>Claudio Merino</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="section-heading">How would you like to proceed?</div>
+                    <div class="choice-group" id="ac-choice-group">
+                        <label class="choice-item selected" id="ac-choice-new">
+                            <input type="radio" name="ac-dup-choice" value="new" checked>
+                            <div class="choice-item-text">
+                                <div class="choice-item-label">This is a different third party — continue as new</div>
+                                <div class="choice-item-desc">The matches above are different entities. Proceed with creating a new record.</div>
+                            </div>
+                        </label>
+                        <label class="choice-item" id="ac-choice-existing">
+                            <input type="radio" name="ac-dup-choice" value="existing">
+                            <div class="choice-item-text">
+                                <div class="choice-item-label">One of the matches above is the same third party</div>
+                                <div class="choice-item-desc">Use an existing record instead of creating a new one.</div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="ac-footer">
+                        <button class="btn btn-outline" id="ac-btn-2-back">
+                            <span class="material-icons-outlined">arrow_back</span>Back
+                        </button>
+                        <div class="ac-footer-right">
+                            <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                            <button class="btn btn-filled" id="ac-btn-2">
+                                Continue <span class="material-icons-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Accordion Item 3: Entity Verification ─── -->
+            <div class="ac-item locked" id="ac-3" data-step="3">
+                <button class="ac-header-btn" type="button" aria-expanded="false">
+                    <div class="ac-badge">
+                        <span class="ac-num">3</span>
+                        <span class="material-icons-outlined ac-check-ico">check</span>
+                    </div>
+                    <div class="ac-header-text">
+                        <span class="ac-title">Entity Verification</span>
+                        <span class="ac-summary" id="ac-summary-3"></span>
+                    </div>
+                    <span class="material-icons-outlined ac-chevron">expand_more</span>
+                </button>
+                <div class="ac-body">
+                    <div class="verify-intro" style="margin-top:20px">
+                        Search external databases to verify <strong id="ac-verify-name"></strong> against a known entity record.
+                    </div>
+                    <div class="form-grid" style="margin:20px 0">
+                        <div class="field-group">
+                            <label class="field-label">Country / Territory</label>
+                            <select class="field-select" id="ac-verify-country">
+                                <option value="">All countries</option>
+                                <option>United States</option><option>United Kingdom</option>
+                                <option>Canada</option><option>Germany</option><option>France</option>
+                                <option>Russian Federation</option><option>Republic of Korea</option><option>India</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">ID Type</label>
+                            <select class="field-select" id="ac-verify-id-type">
+                                <option>Name search</option><option>DUNS Number</option>
+                                <option>LEI</option><option>BVD ID</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-bar">
+                        <input class="field-input" id="ac-verify-search" type="text" placeholder="Search by name or identifier…">
+                        <button class="btn btn-filled" id="ac-btn-search">
+                            <span class="material-icons-outlined">search</span>Search
+                        </button>
+                    </div>
+                    <div id="ac-verify-results" style="display:none">
+                        <div class="results-header">
+                            <div class="results-count"><strong>265</strong> results found</div>
+                            <span class="source-badge"><span class="material-icons-outlined" style="font-size:12px">verified</span> Dun &amp; Bradstreet</span>
+                        </div>
+                        <div class="verify-table-wrap">
+                            <table class="verify-table">
+                                <thead><tr><th></th><th>Name</th><th>DUNS</th><th>Address</th><th>Country</th></tr></thead>
+                                <tbody id="ac-verify-tbody">
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH Co., Ltd.</td><td class="duns">690000463</td><td class="address-cell">61 Digital-ro 26-gil, Seoul 08389</td><td>Republic of Korea</td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Systems Ltd</td><td class="duns">204329382</td><td class="address-cell">Suite 3000, 421–7th Ave SW, Calgary</td><td>Canada</td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">Initech Global, LLC</td><td class="duns">623292385</td><td class="address-cell">—</td><td>United States</td></tr>
+                                    <tr><td><input type="radio" name="ac-verify-pick" class="ac-verify-radio" style="accent-color:var(--primary-500)"></td><td class="company-name">INITECH Enterprise International LLC</td><td class="duns">067470522</td><td class="address-cell">6807 Emmett F Lowry Expy, Texas City, TX</td><td>United States</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <label class="skip-option" id="ac-skip-option" style="margin-top:12px">
+                        <input type="checkbox" id="ac-skip-verify">
+                        Skip entity verification — I'll complete this later
+                    </label>
+                    <div class="ac-footer">
+                        <button class="btn btn-outline" id="ac-btn-3-back">
+                            <span class="material-icons-outlined">arrow_back</span>Back
+                        </button>
+                        <div class="ac-footer-right">
+                            <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                            <button class="btn btn-filled" id="ac-btn-3">
+                                Continue <span class="material-icons-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Accordion Item 4: Onboarding Details ─── -->
+            <div class="ac-item locked" id="ac-4" data-step="4">
+                <button class="ac-header-btn" type="button" aria-expanded="false">
+                    <div class="ac-badge">
+                        <span class="ac-num">4</span>
+                        <span class="material-icons-outlined ac-check-ico">check</span>
+                    </div>
+                    <div class="ac-header-text">
+                        <span class="ac-title">Onboarding Details</span>
+                        <span class="ac-summary" id="ac-summary-4"></span>
+                    </div>
+                    <span class="material-icons-outlined ac-chevron">expand_more</span>
+                </button>
+                <div class="ac-body">
+                    <div class="ob-section-label" style="padding-top:20px">Entity</div>
+                    <div class="ob-blocks">
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Legal Name of the Third Party</span><span class="ob-req">*</span></div><input class="ob-input" id="ac-ob-legal-name" type="text" readonly tabindex="-1"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name / Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div><input class="ob-input" id="ac-ob-alias" type="text" placeholder="e.g. Initech SL"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Company Number (or equivalent)</span><span class="material-icons-outlined ob-info" title="Registered company number">info</span></div><input class="ob-input" id="ac-ob-company-num" type="text" placeholder="e.g. 12345678"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Registered Address</span><span class="material-icons-outlined ob-info" title="Official registered address">info</span></div><textarea class="ob-input ob-textarea" id="ac-ob-address" placeholder="Enter the full registered address"></textarea></div>
+                        <div class="ob-block" id="ac-ob-block-country"><div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Registered Country / Territory</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where registered">info</span></div><select class="ob-input ob-select" id="ac-ob-country"><option value="">Choose…</option><option>Argentina</option><option>Australia</option><option>Brazil</option><option>Canada</option><option>China</option><option>France</option><option>Germany</option><option>India</option><option>Italy</option><option>Japan</option><option>Mexico</option><option>Netherlands</option><option>Republic of Korea</option><option>Russian Federation</option><option>Singapore</option><option>Spain</option><option>Sweden</option><option>Switzerland</option><option>United Kingdom</option><option>United States</option></select><div class="ob-error-msg">Registered country is required.</div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Company Website</span><span class="material-icons-outlined ob-info" title="Official website">info</span></div><input class="ob-input" id="ac-ob-website" type="url" placeholder="https://www.example.com"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Industry / Sector</span></div><select class="ob-input ob-select" id="ac-ob-industry"><option value="">Select an industry</option><option>Aerospace &amp; Defence</option><option>Agriculture</option><option>Automotive</option><option>Banking &amp; Finance</option><option>Chemicals</option><option>Construction</option><option>Consumer Goods</option><option>Education</option><option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option><option>Healthcare &amp; Pharmaceuticals</option><option>Logistics &amp; Transportation</option><option>Manufacturing</option><option>Professional Services</option><option>Real Estate</option><option>Retail</option><option>Technology</option><option>Telecommunications</option></select></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Identification</span></div><div class="ob-sub-grid"><div><div class="ob-sub-label">ID Type</div><select class="ob-input ob-select" id="ac-ob-id-type"><option value="">Select ID type</option><option>DUNS Number</option><option>LEI</option><option>BVD ID</option><option>VAT Number</option><option>Tax Code</option><option>Trade Licence</option></select></div><div><div class="ob-sub-label">ID Value</div><input class="ob-input" id="ac-ob-id-value" type="text" placeholder="Enter identifier value"></div></div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">9.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
+                    </div>
+                    <div class="ac-footer">
+                        <button class="btn btn-outline" id="ac-btn-4-back">
+                            <span class="material-icons-outlined">arrow_back</span>Back
+                        </button>
+                        <div class="ac-footer-right">
+                            <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                            <button class="btn btn-filled" id="ac-btn-4-save">
+                                <span class="material-icons-outlined">check</span>Save &amp; Finish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.accordion -->
+        </div><!-- /#accordion-view -->
+
     </div><!-- /.wizard-wrap -->
 
 </div><!-- /.page-body -->
@@ -1516,6 +1950,211 @@ document.getElementById('btn-step4-save').addEventListener('click', () => {
     if (!country) {
         document.getElementById('ob-block-country').classList.add('has-error');
         document.getElementById('ob-country').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+    window.location.href = 'index.html';
+});
+
+/* ══════════════════════════════════════════════
+   VIEW TOGGLE
+══════════════════════════════════════════════ */
+document.querySelectorAll('.view-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        document.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('stepper-view').style.display  = view === 'stepper'  ? '' : 'none';
+        document.getElementById('accordion-view').style.display = view === 'accordion' ? '' : 'none';
+    });
+});
+
+/* ══════════════════════════════════════════════
+   ACCORDION LOGIC
+══════════════════════════════════════════════ */
+let acSelectedType = null;
+const acTags = [];
+
+// ── Open/close accordion items ──
+function openAc(n) {
+    document.querySelectorAll('.ac-item').forEach(item => {
+        item.classList.remove('open');
+        item.querySelector('.ac-header-btn').setAttribute('aria-expanded', 'false');
+    });
+    const item = document.getElementById('ac-' + n);
+    if (!item.classList.contains('locked')) {
+        item.classList.add('open');
+        item.querySelector('.ac-header-btn').setAttribute('aria-expanded', 'true');
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+function completeAc(n, summary) {
+    const item = document.getElementById('ac-' + n);
+    item.classList.add('completed');
+    item.classList.remove('open', 'locked');
+    document.getElementById('ac-summary-' + n).textContent = summary;
+    // Unlock next
+    const next = document.getElementById('ac-' + (n + 1));
+    if (next) next.classList.remove('locked');
+}
+
+// ── Header click: toggle open/close ──
+document.querySelectorAll('.ac-header-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const item = btn.closest('.ac-item');
+        if (item.classList.contains('locked')) return;
+        const step = parseInt(item.dataset.step);
+        if (item.classList.contains('open')) {
+            item.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+        } else {
+            openAc(step);
+        }
+    });
+});
+
+// ── Choice items in step 2 ──
+document.querySelectorAll('#ac-choice-group .choice-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelectorAll('#ac-choice-group .choice-item').forEach(c => c.classList.remove('selected'));
+        item.classList.add('selected');
+        item.querySelector('input[type="radio"]').checked = true;
+    });
+});
+
+// ── Type cards in accordion ──
+document.querySelectorAll('#ac-type-cards .type-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.querySelectorAll('#ac-type-cards .type-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        acSelectedType = card.dataset.type;
+    });
+    card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+});
+
+// ── Tags in accordion ──
+const acTagsInput = document.getElementById('ac-tags-input');
+const acTagsWrap  = document.getElementById('ac-tags-wrap');
+const acTagList   = [];
+
+acTagsInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = acTagsInput.value.trim().replace(/,$/, '');
+        if (val && !acTagList.includes(val)) {
+            acTagList.push(val);
+            const chip = document.createElement('span');
+            chip.className = 'tag-chip';
+            chip.dataset.tag = val;
+            chip.innerHTML = `${val}<button type="button"><span class="material-icons-outlined" style="font-size:14px">close</span></button>`;
+            chip.querySelector('button').addEventListener('click', ev => {
+                ev.stopPropagation();
+                acTagList.splice(acTagList.indexOf(val), 1);
+                chip.remove();
+            });
+            acTagsWrap.insertBefore(chip, acTagsInput);
+        }
+        acTagsInput.value = '';
+    } else if (e.key === 'Backspace' && acTagsInput.value === '' && acTagList.length) {
+        const last = acTagList.pop();
+        acTagsWrap.querySelector(`[data-tag="${CSS.escape(last)}"]`)?.remove();
+    }
+});
+acTagsWrap.addEventListener('click', () => acTagsInput.focus());
+
+// ── Step 1 Continue ──
+document.getElementById('ac-btn-1').addEventListener('click', () => {
+    let valid = true;
+    if (!acSelectedType) {
+        document.querySelectorAll('#ac-type-cards .type-card').forEach(c => {
+            c.style.borderColor = 'var(--alert-500)';
+            setTimeout(() => c.style.borderColor = '', 1600);
+        });
+        valid = false;
+    }
+    const name = document.getElementById('ac-field-name').value.trim();
+    const fgName = document.getElementById('ac-fg-name');
+    if (!name) { fgName.classList.add('has-error'); valid = false; }
+    else fgName.classList.remove('has-error');
+
+    const bu = document.getElementById('ac-field-bu').value;
+    const fgBu = document.getElementById('ac-fg-bu');
+    if (!bu) { fgBu.classList.add('has-error'); valid = false; }
+    else fgBu.classList.remove('has-error');
+
+    const owner = document.getElementById('ac-field-owner').value;
+    const fgOwner = document.getElementById('ac-fg-owner');
+    if (!owner) { fgOwner.classList.add('has-error'); valid = false; }
+    else fgOwner.classList.remove('has-error');
+
+    if (!valid) return;
+
+    const typeLabel = acSelectedType === 'entity' ? 'Entity' : 'Individual';
+    completeAc(1, `${typeLabel} · ${name}`);
+    document.getElementById('ac-verify-name').textContent = '"' + name + '"';
+    document.getElementById('ac-verify-search').value = name;
+    document.getElementById('ac-ob-legal-name').value = name;
+    openAc(2);
+});
+
+['ac-field-name','ac-field-bu','ac-field-owner'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('change', () => el.closest('.field-group')?.classList.remove('has-error'));
+    el.addEventListener('input',  () => el.closest('.field-group')?.classList.remove('has-error'));
+});
+
+// ── Step 2 ──
+document.getElementById('ac-btn-2-back').addEventListener('click', () => openAc(1));
+document.getElementById('ac-btn-2').addEventListener('click', () => {
+    const choice = document.querySelector('input[name="ac-dup-choice"]:checked')?.value;
+    if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
+    completeAc(2, 'Continued as new third party');
+    openAc(3);
+});
+
+// ── Step 3 ──
+document.getElementById('ac-btn-search').addEventListener('click', () => {
+    document.getElementById('ac-verify-results').style.display = 'block';
+});
+document.getElementById('ac-verify-search').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('ac-btn-search').click();
+});
+document.getElementById('ac-verify-tbody').addEventListener('change', e => {
+    if (e.target.classList.contains('ac-verify-radio')) {
+        document.querySelectorAll('#ac-verify-tbody tr').forEach(tr => tr.classList.remove('row-selected'));
+        e.target.closest('tr')?.classList.add('row-selected');
+        document.getElementById('ac-skip-verify').checked = false;
+    }
+});
+document.getElementById('ac-skip-verify').addEventListener('change', e => {
+    if (e.target.checked) {
+        document.querySelectorAll('.ac-verify-radio').forEach(r => r.checked = false);
+        document.querySelectorAll('#ac-verify-tbody tr').forEach(tr => tr.classList.remove('row-selected'));
+    }
+});
+document.getElementById('ac-btn-3-back').addEventListener('click', () => openAc(2));
+document.getElementById('ac-btn-3').addEventListener('click', () => {
+    const picked = document.querySelector('.ac-verify-radio:checked');
+    const skipped = document.getElementById('ac-skip-verify').checked;
+    const summary = picked
+        ? `Verified: ${picked.closest('tr').querySelector('.company-name').textContent.trim()}`
+        : skipped ? 'Skipped — to be completed later' : 'Not verified';
+    completeAc(3, summary);
+    openAc(4);
+});
+
+// ── Step 4 ──
+document.getElementById('ac-ob-country').addEventListener('change', () => {
+    document.getElementById('ac-ob-block-country').classList.remove('has-error');
+});
+document.getElementById('ac-btn-4-back').addEventListener('click', () => openAc(3));
+document.getElementById('ac-btn-4-save').addEventListener('click', () => {
+    const country = document.getElementById('ac-ob-country').value;
+    if (!country) {
+        document.getElementById('ac-ob-block-country').classList.add('has-error');
+        document.getElementById('ac-ob-country').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
     window.location.href = 'index.html';
