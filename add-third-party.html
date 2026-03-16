@@ -2301,40 +2301,6 @@ document.querySelectorAll('#s1-type-cards .type-card').forEach(card => {
     });
 });
 
-// Tags input
-const tagsInput = document.getElementById('tags-input');
-const tagsWrap  = document.getElementById('tags-wrap');
-
-tagsInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ',') {
-        e.preventDefault();
-        const val = tagsInput.value.trim().replace(/,$/, '');
-        if (val && !tags.includes(val)) {
-            tags.push(val);
-            addTagChip(val);
-        }
-        tagsInput.value = '';
-    } else if (e.key === 'Backspace' && tagsInput.value === '' && tags.length) {
-        const last = tags.pop();
-        tagsWrap.querySelector(`[data-tag="${CSS.escape(last)}"]`)?.remove();
-    }
-});
-
-tagsWrap.addEventListener('click', () => tagsInput.focus());
-
-function addTagChip(val) {
-    const chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.dataset.tag = val;
-    chip.innerHTML = `${val}<button type="button" aria-label="Remove ${val}"><span class="material-icons-outlined" style="font-size:14px">close</span></button>`;
-    chip.querySelector('button').addEventListener('click', e => {
-        e.stopPropagation();
-        tags.splice(tags.indexOf(val), 1);
-        chip.remove();
-    });
-    tagsWrap.insertBefore(chip, tagsInput);
-}
-
 // Step 1 → Continue (stepper)
 document.getElementById('btn-step1-continue').addEventListener('click', () => {
     let valid = true;
