@@ -139,6 +139,8 @@
         }
         .btn-filled { background: var(--primary-500); color: var(--neutral-25); }
         .btn-filled:hover { background: var(--primary-600); }
+        .btn-soft { background: var(--primary-200); color: var(--neutral-25); }
+        .btn-soft:hover { background: var(--primary-500); }
         .btn-outline {
             background: var(--neutral-00);
             border: 1px solid var(--neutral-300);
@@ -156,11 +158,15 @@
         /* Standard view dropdown button */
         .btn-view {
             background: var(--neutral-00);
-            border: 1px solid var(--neutral-300);
-            color: var(--text-light);
+            border: 1px solid var(--neutral-200);
+            color: var(--text-light-alt);
             padding: 0 10px;
-            min-width: 160px;
+            width: 204px;
             justify-content: space-between;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
         }
         .btn-view:hover { background: var(--neutral-25); border-color: var(--neutral-400); color: var(--text-normal); }
 
@@ -185,7 +191,7 @@
         }
         .search-input {
             height: 32px;
-            width: 300px;
+            width: 396px;
             border: 1px solid var(--neutral-200);
             border-radius: 2px;
             padding: 0 36px 0 10px;
@@ -401,15 +407,14 @@
                     Standard View
                     <span class="material-icons-outlined" style="font-size:18px">arrow_drop_down</span>
                 </button>
-                <button class="btn btn-icon">
-                    <span class="material-icons-outlined" style="font-size:18px">filter_list</span>
+                <button class="btn btn-icon" title="Filter">
+                    <span class="material-icons-outlined" style="font-size:18px">tune</span>
                 </button>
                 <button class="btn btn-outline">
-                    <span class="material-icons-outlined" style="font-size:16px">upload</span>
                     Bulk Import
+                    <span class="material-icons-outlined" style="font-size:16px">upload</span>
                 </button>
                 <a href="add-third-party.html" class="btn btn-filled">
-                    <span class="material-icons-outlined" style="font-size:16px">add</span>
                     Add New
                 </a>
             </div>
@@ -424,17 +429,17 @@
                     <input class="search-input" type="text" placeholder="Quick search">
                     <span class="material-icons-outlined search-icon">search</span>
                 </div>
-                <button class="btn btn-icon">
-                    <span class="material-icons-outlined" style="font-size:18px">refresh</span>
+                <button class="btn btn-icon" title="Refresh" style="opacity:0.5">
+                    <span class="material-icons-outlined" style="font-size:18px">replay</span>
                 </button>
             </div>
             <div class="tp-toolbar-right">
                 <button class="btn btn-outline">
-                    <span class="material-icons-outlined" style="font-size:16px">download</span>
                     Export
+                    <span class="material-icons-outlined" style="font-size:16px">download</span>
                 </button>
-                <button class="btn btn-outline">Save</button>
-                <button class="btn btn-outline">Save As</button>
+                <button class="btn btn-soft">Save</button>
+                <button class="btn btn-soft">Save As</button>
             </div>
         </div>
 
