@@ -2186,11 +2186,11 @@
             <button class="ev-modal-close" id="ev-modal-close" type="button">&#x2715;</button>
         </div>
         <div class="ev-modal-body">
-            <p class="ev-modal-question">Entity verification will screen the Third Party Name against a company data source, allowing you to verify the legal existence of your Third Party before creating the RCTP record.</p>
-            <p class="ev-modal-desc">Do not proceed if you are onboarding a Person.</p>
+            <p class="ev-modal-question">Entity verification is not available for Individual / Person records.</p>
+            <p class="ev-modal-desc">Step 3 will be automatically skipped.</p>
         </div>
         <div class="ev-modal-footer">
-            <button class="btn btn-outline" id="ev-modal-skip" type="button">Skip</button>
+            <button class="btn btn-outline" id="ev-modal-skip" type="button">Back</button>
             <button class="btn btn-filled" id="ev-modal-continue" type="button">Continue</button>
         </div>
     </div>
@@ -2462,20 +2462,9 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
 
     if (!valid) return;
 
-    showEvModal(
-        // Continue → go to step 2 (Duplicate Check)
-        () => {
-            document.getElementById('dup-name-display').textContent    = '"' + name + '"';
-            document.getElementById('ob-legal-name').value             = name;
-            goToStep(2);
-        },
-        // Skip → mark step 2 as skipped, jump straight to step 3
-        () => {
-            skippedSteps.add(2);
-            document.getElementById('ob-legal-name').value             = name;
-            goToStep(3);
-        }
-    );
+    document.getElementById('dup-name-display').textContent = '"' + name + '"';
+    document.getElementById('ob-legal-name').value          = name;
+    goToStep(2);
 });
 document.getElementById('s1-name').addEventListener('input', () =>
     document.getElementById('s1-fg-name').classList.remove('has-error'));
@@ -2494,9 +2483,12 @@ document.querySelectorAll('.choice-item').forEach(item => {
 document.getElementById('btn-step2-back').addEventListener('click', () => goToStep(1));
 document.getElementById('btn-step2-continue').addEventListener('click', () => {
     const choice = document.querySelector('input[name="dup-choice"]:checked')?.value;
-    if (choice === 'existing') {
-        // Navigate back to TP list (existing record)
-        window.location.href = 'third-parties.html';
+    if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
+    if (selectedType === 'person') {
+        showEvModal(
+            () => { skippedSteps.add(3); goToStep(4); },  // Continue → skip step 3
+            () => {}                                        // Back → stay on step 2
+        );
     } else {
         goToStep(3);
     }
@@ -2663,22 +2655,9 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     if (!valid) return;
 
     const typeLabel = acSelectedType === 'entity' ? 'Entity' : acSelectedType === 'person' ? 'Individual' : 'Unknown';
-
-    showEvModal(
-        // Continue → complete step 1, open step 2 (Duplicate Check)
-        () => {
-            completeAc(1, `${typeLabel} · ${name}`);
-            document.getElementById('ac-ob-legal-name').value     = name;
-            openAc(2);
-        },
-        // Skip → complete step 1, skip step 2 (grey badge), open step 3
-        () => {
-            completeAc(1, `${typeLabel} · ${name}`);
-            skipAc(2);
-            document.getElementById('ac-ob-legal-name').value     = name;
-            openAc(3);
-        }
-    );
+    completeAc(1, `${typeLabel} · ${name}`);
+    document.getElementById('ac-ob-legal-name').value = name;
+    openAc(2);
 });
 document.getElementById('a1-name').addEventListener('input', () =>
     document.getElementById('a1-fg-name').classList.remove('has-error'));
@@ -2689,7 +2668,14 @@ document.getElementById('ac-btn-2').addEventListener('click', () => {
     const choice = document.querySelector('input[name="ac-dup-choice"]:checked')?.value;
     if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
     completeAc(2, 'Continued as new third party');
-    openAc(3);
+    if (acSelectedType === 'person') {
+        showEvModal(
+            () => { skipAc(3); openAc(4); },  // Continue → skip step 3
+            () => {}                            // Back → stay on step 2
+        );
+    } else {
+        openAc(3);
+    }
 });
 
 // ── Step 3 ──
