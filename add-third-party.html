@@ -805,6 +805,68 @@
         }
         .edit-helper-ef { font-size: 12px; color: var(--text-light); margin-top: 4px; line-height: 1.4; }
 
+        /* ── Entity Verification confirmation modal ── */
+        .ev-modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.82);
+            z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ev-modal {
+            background: #fff;
+            width: 480px;
+            max-width: calc(100vw - 32px);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+        }
+        .ev-modal-header {
+            background: #3f8db7;
+            color: #fff;
+            height: 59px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 14px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .ev-modal-title {
+            font-size: 16px; font-weight: 400;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .ev-modal-close {
+            background: none; border: none; color: #fff;
+            font-size: 20px; line-height: 1; cursor: pointer;
+            opacity: 0.8; padding: 0; font-family: inherit;
+        }
+        .ev-modal-close:hover { opacity: 1; }
+        .ev-modal-body { padding: 20px 15px 12px; }
+        .ev-modal-question {
+            font-size: 14px; font-weight: 600;
+            color: var(--text-normal); margin-bottom: 14px;
+        }
+        .ev-modal-desc {
+            font-size: 14px; color: var(--text-normal);
+            line-height: 1.6;
+        }
+        .ev-modal-footer {
+            display: flex; justify-content: flex-end; gap: 8px;
+            padding: 12px 16px 16px;
+        }
+
+        /* ── Skipped step state ── */
+        /* Accordion skipped badge: grey circle + checkmark */
+        .ac-item.skipped .ac-badge { background: var(--neutral-400); }
+        .ac-item.skipped .ac-badge .ac-num      { display: none; }
+        .ac-item.skipped .ac-badge .ac-check-ico { display: block; }
+        .ac-item.skipped .ac-title   { color: var(--neutral-500); }
+        .ac-item.skipped .ac-summary { font-style: italic; }
+        /* Stepper skipped node: grey circle + checkmark */
+        .step-node.skipped .step-circle {
+            background: var(--neutral-400);
+            border-color: var(--neutral-400);
+            color: #fff;
+        }
+        .step-node.skipped .step-circle .num                { display: none; }
+        .step-node.skipped .step-circle .material-icons-outlined { display: block; }
+        .step-node.skipped .step-label { color: var(--neutral-400); }
+
         /* ── View toggle bar ── */
         .view-toggle-bar {
             display: flex;
@@ -2100,11 +2162,64 @@
     </div>
 </footer>
 
+<!-- ── Entity Verification Confirmation Modal ── -->
+<div class="ev-modal-overlay" id="ev-modal-overlay" style="display:none">
+    <div class="ev-modal">
+        <div class="ev-modal-header">
+            <span class="ev-modal-title">Entity Verification</span>
+            <button class="ev-modal-close" id="ev-modal-close" type="button">&#x2715;</button>
+        </div>
+        <div class="ev-modal-body">
+            <p class="ev-modal-question">Do you want to conduct entity verification?</p>
+            <p class="ev-modal-desc">Entity verification will screen the Third Party Name against a company data source, allowing you to verify the legal existence of your Third Party before creating the RCTP record.<br><br>Do not proceed if you are onboarding a Person.</p>
+        </div>
+        <div class="ev-modal-footer">
+            <button class="btn btn-outline" id="ev-modal-skip" type="button">Skip</button>
+            <button class="btn btn-filled" id="ev-modal-continue" type="button">Continue</button>
+        </div>
+    </div>
+</div>
+
 <script>
 /* ══════════════════════ State ══════════════════════ */
 let currentStep = 1;
 let selectedType = null;   // stepper type-card selection
 let acSelectedType = null; // accordion type-card selection
+const skippedSteps = new Set(); // steps skipped in stepper
+
+/* ── Entity Verification modal ── */
+function showEvModal(onContinue, onSkip) {
+    const overlay  = document.getElementById('ev-modal-overlay');
+    const btnCont  = document.getElementById('ev-modal-continue');
+    const btnSkip  = document.getElementById('ev-modal-skip');
+    const btnClose = document.getElementById('ev-modal-close');
+    overlay.style.display = 'flex';
+
+    function cleanup() {
+        overlay.style.display = 'none';
+        btnCont.removeEventListener('click', contHandler);
+        btnSkip.removeEventListener('click', skipHandler);
+        btnClose.removeEventListener('click', skipHandler);
+    }
+    function contHandler() { cleanup(); onContinue(); }
+    function skipHandler() { cleanup(); onSkip(); }
+
+    btnCont.addEventListener('click', contHandler);
+    btnSkip.addEventListener('click', skipHandler);
+    btnClose.addEventListener('click', skipHandler);
+}
+
+/* ── Mark an accordion item as skipped (grey badge) ── */
+function skipAc(n) {
+    const item = document.getElementById('ac-' + n);
+    item.classList.add('skipped');
+    item.classList.remove('open', 'locked');
+    const summaryEl = document.getElementById('ac-summary-' + n);
+    if (summaryEl) summaryEl.textContent = 'Skipped';
+    // Unlock the next step
+    const next = document.getElementById('ac-' + (n + 1));
+    if (next) next.classList.remove('locked');
+}
 
 /* ══════════════════════ Edit-form component factory ══════════════════════
    Wires up the shared edit-form fields for a given ID prefix ('s1' or 'a1')
@@ -2268,8 +2383,11 @@ function goToStep(n) {
     // Update stepper nodes
     document.querySelectorAll('.step-node').forEach(node => {
         const s = parseInt(node.dataset.step);
-        node.classList.remove('active', 'completed');
-        if (s < n)  node.classList.add('completed');
+        node.classList.remove('active', 'completed', 'skipped');
+        if (s < n) {
+            if (skippedSteps.has(s)) node.classList.add('skipped');
+            else node.classList.add('completed');
+        }
         if (s === n) node.classList.add('active');
     });
 
@@ -2327,10 +2445,25 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
     else fgOwner.classList.remove('has-error');
 
     if (!valid) return;
-    document.getElementById('dup-name-display').textContent    = '"' + name + '"';
-    document.getElementById('verify-name-display').textContent = '"' + name + '"';
-    document.getElementById('verify-search-input').value       = name;
-    goToStep(2);
+
+    showEvModal(
+        // Continue → go to step 2 (Duplicate Check)
+        () => {
+            document.getElementById('dup-name-display').textContent    = '"' + name + '"';
+            document.getElementById('verify-name-display').textContent = '"' + name + '"';
+            document.getElementById('verify-search-input').value       = name;
+            document.getElementById('ob-legal-name').value             = name;
+            goToStep(2);
+        },
+        // Skip → mark step 2 as skipped, jump straight to step 3
+        () => {
+            skippedSteps.add(2);
+            document.getElementById('verify-name-display').textContent = '"' + name + '"';
+            document.getElementById('verify-search-input').value       = name;
+            document.getElementById('ob-legal-name').value             = name;
+            goToStep(3);
+        }
+    );
 });
 document.getElementById('s1-name').addEventListener('input', () =>
     document.getElementById('s1-fg-name').classList.remove('has-error'));
@@ -2520,11 +2653,26 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     if (!valid) return;
 
     const typeLabel = acSelectedType === 'entity' ? 'Entity' : acSelectedType === 'person' ? 'Individual' : 'Unknown';
-    completeAc(1, `${typeLabel} · ${name}`);
-    document.getElementById('ac-verify-name').textContent = '"' + name + '"';
-    document.getElementById('ac-verify-search').value = name;
-    document.getElementById('ac-ob-legal-name').value = name;
-    openAc(2);
+
+    showEvModal(
+        // Continue → complete step 1, open step 2 (Duplicate Check)
+        () => {
+            completeAc(1, `${typeLabel} · ${name}`);
+            document.getElementById('ac-verify-name').textContent = '"' + name + '"';
+            document.getElementById('ac-verify-search').value     = name;
+            document.getElementById('ac-ob-legal-name').value     = name;
+            openAc(2);
+        },
+        // Skip → complete step 1, skip step 2 (grey badge), open step 3
+        () => {
+            completeAc(1, `${typeLabel} · ${name}`);
+            skipAc(2);
+            document.getElementById('ac-verify-name').textContent = '"' + name + '"';
+            document.getElementById('ac-verify-search').value     = name;
+            document.getElementById('ac-ob-legal-name').value     = name;
+            openAc(3);
+        }
+    );
 });
 document.getElementById('a1-name').addEventListener('input', () =>
     document.getElementById('a1-fg-name').classList.remove('has-error'));
