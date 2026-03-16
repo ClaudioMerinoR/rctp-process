@@ -880,6 +880,26 @@
         .step-node.skipped .step-circle .material-icons-outlined { display: block; }
         .step-node.skipped .step-label { color: var(--neutral-400); }
 
+        /* ── Person type notice ── */
+        .person-notice {
+            display: none;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--primary-08);
+            border: 1px solid var(--primary-200);
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-top: 12px;
+        }
+        .person-notice.visible { display: flex; }
+        .person-notice .material-icons-outlined {
+            font-size: 16px; color: var(--primary-500);
+            flex-shrink: 0; margin-top: 1px;
+        }
+
         /* ── View toggle bar ── */
         .view-toggle-bar {
             display: flex;
@@ -1249,6 +1269,10 @@
                         </div>
                     </div>
                     <p class="type-error-hint" id="s1-type-error">Please select a third party type.</p>
+                    <div class="person-notice" id="s1-person-notice">
+                        <span class="material-icons-outlined">info</span>
+                        No duplicate check will be performed for individual records. Entity verification is also not applicable for persons — steps 2 and 3 will be automatically skipped.
+                    </div>
 
                     <div class="section-heading" style="margin-top:28px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
@@ -1853,6 +1877,10 @@
                         </div>
                     </div>
                     <p class="type-error-hint" id="a1-type-error">Please select a third party type.</p>
+                    <div class="person-notice" id="a1-person-notice">
+                        <span class="material-icons-outlined">info</span>
+                        No duplicate check will be performed for individual records. Entity verification is also not applicable for persons — steps 2 and 3 will be automatically skipped.
+                    </div>
 
                     <div class="section-heading" style="margin-top:28px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
@@ -2422,8 +2450,8 @@ document.querySelectorAll('#s1-type-cards .type-card').forEach(card => {
         document.querySelectorAll('#s1-type-cards .type-card').forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
         selectedType = card.dataset.type;
-        // Clear error state
         document.getElementById('s1-type-cards').classList.remove('type-error');
+        document.getElementById('s1-person-notice').classList.toggle('visible', selectedType === 'person');
     });
     card.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
@@ -2457,9 +2485,15 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
 
     if (!valid) return;
 
-    document.getElementById('dup-name-display').textContent = '"' + name + '"';
-    document.getElementById('ob-legal-name').value          = name;
-    goToStep(2);
+    document.getElementById('ob-legal-name').value = name;
+    if (selectedType === 'person') {
+        skippedSteps.add(2);
+        skippedSteps.add(3);
+        goToStep(4);
+    } else {
+        document.getElementById('dup-name-display').textContent = '"' + name + '"';
+        goToStep(2);
+    }
 });
 document.getElementById('s1-name').addEventListener('input', () =>
     document.getElementById('s1-fg-name').classList.remove('has-error'));
@@ -2479,14 +2513,7 @@ document.getElementById('btn-step2-back').addEventListener('click', () => goToSt
 document.getElementById('btn-step2-continue').addEventListener('click', () => {
     const choice = document.querySelector('input[name="dup-choice"]:checked')?.value;
     if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
-    if (selectedType === 'person') {
-        showEvModal(
-            () => { skippedSteps.add(3); goToStep(4); },  // Continue → skip step 3
-            () => {}                                        // Back → stay on step 2
-        );
-    } else {
-        goToStep(3);
-    }
+    goToStep(3);
 });
 
 /* ══════════════════════ Step 3 ══════════════════════ */
@@ -2614,8 +2641,8 @@ document.querySelectorAll('#ac-type-cards .type-card').forEach(card => {
         document.querySelectorAll('#ac-type-cards .type-card').forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
         acSelectedType = card.dataset.type;
-        // Clear error state
         document.getElementById('ac-type-cards').classList.remove('type-error');
+        document.getElementById('a1-person-notice').classList.toggle('visible', acSelectedType === 'person');
     });
     card.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
@@ -2652,7 +2679,14 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     const typeLabel = acSelectedType === 'entity' ? 'Entity' : acSelectedType === 'person' ? 'Individual' : 'Unknown';
     completeAc(1, `${typeLabel} · ${name}`);
     document.getElementById('ac-ob-legal-name').value = name;
-    openAc(2);
+    if (acSelectedType === 'person') {
+        skipAc(2);
+        skipAc(3);
+        openAc(4);
+    } else {
+        document.getElementById('dup-name-display').textContent = '"' + name + '"';
+        openAc(2);
+    }
 });
 document.getElementById('a1-name').addEventListener('input', () =>
     document.getElementById('a1-fg-name').classList.remove('has-error'));
@@ -2663,14 +2697,7 @@ document.getElementById('ac-btn-2').addEventListener('click', () => {
     const choice = document.querySelector('input[name="ac-dup-choice"]:checked')?.value;
     if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
     completeAc(2, 'Continued as new third party');
-    if (acSelectedType === 'person') {
-        showEvModal(
-            () => { skipAc(3); openAc(4); },  // Continue → skip step 3
-            () => {}                            // Back → stay on step 2
-        );
-    } else {
-        openAc(3);
-    }
+    openAc(3);
 });
 
 // ── Step 3 ──
