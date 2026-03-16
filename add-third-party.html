@@ -428,6 +428,18 @@
         }
         .status-active { background: var(--success-50); color: var(--success-900); }
         .status-inactive { background: var(--neutral-25); color: var(--neutral-500); }
+        .status-pending {
+            background: var(--neutral-50); color: var(--text-normal);
+            border-radius: 2px; padding: 4px 8px;
+        }
+        .dup-table tbody tr:nth-child(odd) td { background: var(--primary-08); }
+        .dup-table tbody tr:hover td { background: #d5f2fb !important; }
+        .dup-table .more-btn {
+            background: none; border: none; cursor: pointer;
+            color: var(--neutral-500); display: flex; align-items: center;
+            padding: 2px;
+        }
+        .dup-table .more-btn:hover { color: var(--text-normal); }
 
         .choice-group { display: flex; flex-direction: column; gap: 10px; }
         .choice-item {
@@ -1431,27 +1443,36 @@
                         <table class="dup-table">
                             <thead>
                                 <tr>
-                                    <th>Third Party Name</th>
-                                    <th>Status</th>
-                                    <th>Internal Reference</th>
-                                    <th>Country</th>
+                                    <th>Name</th>
                                     <th>Owner</th>
+                                    <th>Business Unit</th>
+                                    <th>Process</th>
+                                    <th>Current Status</th>
+                                    <th>Internal Reference</th>
+                                    <th>Active/Inactive</th>
+                                    <th style="width:40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td><span class="cell-link">Initech Inc</span></td>
-                                    <td><span class="status-badge status-active">Active</span></td>
-                                    <td>INT-0001</td>
-                                    <td>United States</td>
                                     <td>Emily Forbes</td>
+                                    <td>Europe</td>
+                                    <td>Standard RCTP</td>
+                                    <td><span class="status-badge status-pending">Pending Approval</span></td>
+                                    <td>INT-0001</td>
+                                    <td>Active</td>
+                                    <td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td>
                                 </tr>
                                 <tr>
                                     <td><span class="cell-link">INITECH Ltd</span></td>
-                                    <td><span class="status-badge status-inactive">Inactive</span></td>
-                                    <td>INT-0002</td>
-                                    <td>United Kingdom</td>
                                     <td>Claudio Merino</td>
+                                    <td>Americas</td>
+                                    <td>Standard RCTP</td>
+                                    <td><span class="status-badge status-pending">Pending Approval</span></td>
+                                    <td>INT-0002</td>
+                                    <td>Inactive</td>
+                                    <td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2033,10 +2054,10 @@
                     </div>
                     <div class="dup-table-wrap">
                         <table class="dup-table">
-                            <thead><tr><th>Third Party Name</th><th>Status</th><th>Internal Reference</th><th>Country</th><th>Owner</th></tr></thead>
+                            <thead><tr><th>Name</th><th>Owner</th><th>Business Unit</th><th>Process</th><th>Current Status</th><th>Internal Reference</th><th>Active/Inactive</th><th style="width:40px"></th></tr></thead>
                             <tbody>
-                                <tr><td><span class="cell-link">Initech Inc</span></td><td><span class="status-badge status-active">Active</span></td><td>INT-0001</td><td>United States</td><td>Emily Forbes</td></tr>
-                                <tr><td><span class="cell-link">INITECH Ltd</span></td><td><span class="status-badge status-inactive">Inactive</span></td><td>INT-0002</td><td>United Kingdom</td><td>Claudio Merino</td></tr>
+                                <tr><td><span class="cell-link">Initech Inc</span></td><td>Emily Forbes</td><td>Europe</td><td>Standard RCTP</td><td><span class="status-badge status-pending">Pending Approval</span></td><td>INT-0001</td><td>Active</td><td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td></tr>
+                                <tr><td><span class="cell-link">INITECH Ltd</span></td><td>Claudio Merino</td><td>Americas</td><td>Standard RCTP</td><td><span class="status-badge status-pending">Pending Approval</span></td><td>INT-0002</td><td>Inactive</td><td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td></tr>
                             </tbody>
                         </table>
                     </div>
