@@ -1355,6 +1355,17 @@
             margin-bottom: 6px;
         }
         .ob-block.has-error .ob-input { border-color: var(--alert-500); }
+        /* Checkbox group for Unknown TP description */
+        .ob-checkbox-group { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+        .ob-checkbox-item {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 14px; color: var(--text-light); cursor: pointer; user-select: none;
+        }
+        .ob-checkbox-item input[type="checkbox"] {
+            width: 16px; height: 16px; accent-color: var(--primary-500);
+            cursor: pointer; flex-shrink: 0; margin: 0;
+        }
+        .ob-checkbox-item:hover { color: var(--text-normal); }
         .ob-error-msg {
             font-size: 11px; color: var(--alert-500);
             margin-top: 4px; display: none;
@@ -2188,6 +2199,100 @@
                     </div><!-- /.ob-blocks person -->
                     </div><!-- /#p4-person-form -->
 
+                    <!-- ── Unknown form ── -->
+                    <div id="p4-unknown-form" style="display:none">
+                    <div class="ob-section-label">Unknown</div>
+                    <div class="ob-blocks">
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Legal Name of the Third Party</span><span class="ob-req">*</span></div>
+                            <input class="ob-input" id="ob-u-legal-name" type="text" readonly tabindex="-1">
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name/Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div>
+                            <input class="ob-input" id="ob-u-alias" type="text" placeholder="Please select">
+                        </div>
+
+                        <div class="ob-block" id="ob-u-block-type">
+                            <div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">As you have selected Unknown as the Third Party type, please provide a description of the Third Party</span><span class="ob-req">*</span></div>
+                            <div class="ob-checkbox-group" id="ob-u-type-group">
+                                <label class="ob-checkbox-item"><input type="checkbox" value="For Profit Commercial Organisation"> For Profit Commercial Organisation</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Registered Charity"> Registered Charity</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Not For Profit Organisation"> Not For Profit Organisation</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Sole Trader"> Sole Trader</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Freelancer"> Freelancer</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Self employed"> Self employed</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Government Entity"> Government Entity</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Other"> Other</label>
+                            </div>
+                            <div class="ob-error-msg">Please select at least one option.</div>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Registered Address</span><span class="material-icons-outlined ob-info" title="Official registered address">info</span></div>
+                            <textarea class="ob-input ob-textarea" id="ob-u-address" placeholder="Enter address"></textarea>
+                        </div>
+
+                        <div class="ob-block" id="ob-u-block-country">
+                            <div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Registered Country/Territory</span><span class="ob-req">*</span></div>
+                            <select class="ob-input ob-select" id="ob-u-country">
+                                <option value="">Please select</option>
+                                <option>Argentina</option><option>Australia</option><option>Brazil</option>
+                                <option>Canada</option><option>China</option><option>France</option>
+                                <option>Germany</option><option>India</option><option>Italy</option>
+                                <option>Japan</option><option>Mexico</option><option>Netherlands</option>
+                                <option>Republic of Korea</option><option>Russian Federation</option>
+                                <option>Singapore</option><option>Spain</option><option>Sweden</option>
+                                <option>Switzerland</option><option>United Kingdom</option><option>United States</option>
+                            </select>
+                            <div class="ob-error-msg">Registered Country/Territory is required.</div>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Industry/Sector</span></div>
+                            <select class="ob-input ob-select" id="ob-u-industry">
+                                <option value="">Please select</option>
+                                <option>Aerospace &amp; Defence</option><option>Agriculture</option>
+                                <option>Automotive</option><option>Banking &amp; Finance</option>
+                                <option>Chemicals</option><option>Construction</option>
+                                <option>Consumer Goods</option><option>Education</option>
+                                <option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option>
+                                <option>Healthcare &amp; Pharmaceuticals</option>
+                                <option>Legal Services</option><option>Logistics &amp; Transportation</option>
+                                <option>Manufacturing</option><option>Professional Services</option>
+                                <option>Real Estate</option><option>Retail</option>
+                                <option>Technology</option><option>Telecommunications</option>
+                            </select>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Identification</span></div>
+                            <div class="ob-sub-grid">
+                                <div>
+                                    <div class="ob-sub-label">ID Type</div>
+                                    <select class="ob-input ob-select" id="ob-u-id-type">
+                                        <option value="">Please select</option>
+                                        <option>DUNS Number</option><option>LEI</option>
+                                        <option>BVD ID</option><option>VAT Number</option>
+                                        <option>Tax Code</option><option>Trade Licence</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="ob-sub-label">ID Value</div>
+                                    <input class="ob-input" id="ob-u-id-value" type="text" placeholder="Enter identifier value">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Your organisation's internal tracking reference">info</span></div>
+                            <input class="ob-input" id="ob-u-internal-ref" type="text" placeholder="e.g. SMP-0042">
+                        </div>
+
+                    </div><!-- /.ob-blocks unknown -->
+                    </div><!-- /#p4-unknown-form -->
+
                 </div>
                 <div class="card-footer">
                     <div class="footer-left">
@@ -2581,6 +2686,34 @@
                         <div class="ob-block"><div class="ob-block-head"><span class="ob-num">9.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-p-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
                     </div>
                     </div><!-- /#ac4-person-form -->
+
+                    <!-- Unknown form -->
+                    <div id="ac4-unknown-form" style="display:none">
+                    <div class="ob-section-label" style="padding-top:20px">Unknown</div>
+                    <div class="ob-blocks">
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Legal Name of the Third Party</span><span class="ob-req">*</span></div><input class="ob-input" id="ac-ob-u-legal-name" type="text" readonly tabindex="-1"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name/Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div><input class="ob-input" id="ac-ob-u-alias" type="text" placeholder="Please select"></div>
+                        <div class="ob-block" id="ac-ob-u-block-type">
+                            <div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">As you have selected Unknown as the Third Party type, please provide a description of the Third Party</span><span class="ob-req">*</span></div>
+                            <div class="ob-checkbox-group" id="ac-ob-u-type-group">
+                                <label class="ob-checkbox-item"><input type="checkbox" value="For Profit Commercial Organisation"> For Profit Commercial Organisation</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Registered Charity"> Registered Charity</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Not For Profit Organisation"> Not For Profit Organisation</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Sole Trader"> Sole Trader</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Freelancer"> Freelancer</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Self employed"> Self employed</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Government Entity"> Government Entity</label>
+                                <label class="ob-checkbox-item"><input type="checkbox" value="Other"> Other</label>
+                            </div>
+                            <div class="ob-error-msg">Please select at least one option.</div>
+                        </div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Registered Address</span><span class="material-icons-outlined ob-info" title="Official registered address">info</span></div><textarea class="ob-input ob-textarea" id="ac-ob-u-address" placeholder="Enter address"></textarea></div>
+                        <div class="ob-block" id="ac-ob-u-block-country"><div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Registered Country/Territory</span><span class="ob-req">*</span></div><select class="ob-input ob-select" id="ac-ob-u-country"><option value="">Please select</option><option>Argentina</option><option>Australia</option><option>Brazil</option><option>Canada</option><option>China</option><option>France</option><option>Germany</option><option>India</option><option>Italy</option><option>Japan</option><option>Mexico</option><option>Netherlands</option><option>Republic of Korea</option><option>Russian Federation</option><option>Singapore</option><option>Spain</option><option>Sweden</option><option>Switzerland</option><option>United Kingdom</option><option>United States</option></select><div class="ob-error-msg">Registered Country/Territory is required.</div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Industry/Sector</span></div><select class="ob-input ob-select" id="ac-ob-u-industry"><option value="">Please select</option><option>Aerospace &amp; Defence</option><option>Agriculture</option><option>Automotive</option><option>Banking &amp; Finance</option><option>Chemicals</option><option>Construction</option><option>Consumer Goods</option><option>Education</option><option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option><option>Healthcare &amp; Pharmaceuticals</option><option>Legal Services</option><option>Logistics &amp; Transportation</option><option>Manufacturing</option><option>Professional Services</option><option>Real Estate</option><option>Retail</option><option>Technology</option><option>Telecommunications</option></select></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Identification</span></div><div class="ob-sub-grid"><div><div class="ob-sub-label">ID Type</div><select class="ob-input ob-select" id="ac-ob-u-id-type"><option value="">Please select</option><option>DUNS Number</option><option>LEI</option><option>BVD ID</option><option>VAT Number</option><option>Tax Code</option><option>Trade Licence</option></select></div><div><div class="ob-sub-label">ID Value</div><input class="ob-input" id="ac-ob-u-id-value" type="text" placeholder="Enter identifier value"></div></div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-u-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
+                    </div>
+                    </div><!-- /#ac4-unknown-form -->
 
                     <div class="ac-footer">
                         <button class="btn btn-outline" id="ac-btn-4-back">
@@ -3139,13 +3272,17 @@ function configureWizard(type) {
     const acNum = document.querySelector('#ac-4 .ac-badge .ac-num');
     if (acNum) acNum.textContent = is3step ? '3' : '4';
 
-    // Switch onboarding details form: person vs entity/unknown
-    const isPersonForm = (type === 'person');
-    ['p4-entity-form','ac4-entity-form'].forEach(id => {
-        const el = document.getElementById(id); if (el) el.style.display = isPersonForm ? 'none' : '';
-    });
-    ['p4-person-form','ac4-person-form'].forEach(id => {
-        const el = document.getElementById(id); if (el) el.style.display = isPersonForm ? '' : 'none';
+    // Switch onboarding details form per type
+    const formMap = {
+        entity:  ['p4-entity-form','ac4-entity-form'],
+        person:  ['p4-person-form','ac4-person-form'],
+        unknown: ['p4-unknown-form','ac4-unknown-form']
+    };
+    Object.entries(formMap).forEach(([t, ids]) => {
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = (t === type) ? '' : 'none';
+        });
     });
 
     // Remove the no-type class to reveal steps
@@ -3234,6 +3371,7 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
     const displayName = getDisplayName('s1');
     document.getElementById('ob-legal-name').value   = displayName;
     document.getElementById('ob-p-legal-name').value = displayName;
+    document.getElementById('ob-u-legal-name').value = displayName;
     document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
     goToStep(2);
 });
@@ -3301,15 +3439,24 @@ document.getElementById('ob-country').addEventListener('change', () => {
 });
 
 document.getElementById('btn-step4-save').addEventListener('click', () => {
-    const isPerson = selectedType === 'person';
-    const countryId   = isPerson ? 'ob-p-country'       : 'ob-country';
-    const blockId     = isPerson ? 'ob-p-block-country'  : 'ob-block-country';
+    const t = selectedType;
+    const countryId = t === 'person' ? 'ob-p-country' : t === 'unknown' ? 'ob-u-country' : 'ob-country';
+    const blockId   = t === 'person' ? 'ob-p-block-country' : t === 'unknown' ? 'ob-u-block-country' : 'ob-block-country';
+    let valid = true;
     const country = document.getElementById(countryId)?.value;
     if (!country) {
         document.getElementById(blockId)?.classList.add('has-error');
         document.getElementById(countryId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
+        valid = false;
     }
+    if (t === 'unknown') {
+        const anyChecked = document.querySelector('#ob-u-type-group input:checked');
+        if (!anyChecked) {
+            document.getElementById('ob-u-block-type')?.classList.add('has-error');
+            valid = false;
+        }
+    }
+    if (!valid) return;
     window.location.href = 'index.html';
 });
 
@@ -3410,6 +3557,7 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     completeAc(1, `${typeLabel} · ${displayName}`);
     document.getElementById('ac-ob-legal-name').value   = displayName;
     document.getElementById('ac-ob-p-legal-name').value = displayName;
+    document.getElementById('ac-ob-u-legal-name').value = displayName;
     document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
     openAc(2);
 });
@@ -3670,15 +3818,21 @@ const DUP_PROPERTIES = [
 })();
 
 document.getElementById('ac-btn-4-save').addEventListener('click', () => {
-    const isPerson  = acSelectedType === 'person';
-    const countryId = isPerson ? 'ac-ob-p-country'      : 'ac-ob-country';
-    const blockId   = isPerson ? 'ac-ob-p-block-country' : 'ac-ob-block-country';
+    const t2 = acSelectedType;
+    const countryId = t2 === 'person' ? 'ac-ob-p-country' : t2 === 'unknown' ? 'ac-ob-u-country' : 'ac-ob-country';
+    const blockId   = t2 === 'person' ? 'ac-ob-p-block-country' : t2 === 'unknown' ? 'ac-ob-u-block-country' : 'ac-ob-block-country';
+    let acValid = true;
     const country = document.getElementById(countryId)?.value;
     if (!country) {
         document.getElementById(blockId)?.classList.add('has-error');
         document.getElementById(countryId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
+        acValid = false;
     }
+    if (t2 === 'unknown') {
+        const anyChecked = document.querySelector('#ac-ob-u-type-group input:checked');
+        if (!anyChecked) { document.getElementById('ac-ob-u-block-type')?.classList.add('has-error'); acValid = false; }
+    }
+    if (!acValid) return;
     window.location.href = 'index.html';
 });
 </script>
