@@ -2812,6 +2812,7 @@ function initStep1Components(p) {
     const buTrigger  = document.getElementById(p + '-bu-trigger');
     const buTags     = document.getElementById(p + '-bu-tags');
     const buDropdown = document.getElementById(p + '-bu-dropdown');
+    if (!buTrigger || !buTags || !buDropdown) return;
     buTrigger.addEventListener('click', () => buDropdown.classList.toggle('open'));
     buDropdown.addEventListener('mousedown', e => {
         const item = e.target.closest('.select-dropdown-item-ef');
@@ -2940,14 +2941,18 @@ function configureWizard(type) {
     const is3step = (type === 'person' || type === 'unknown');
 
     // Stepper: hide step-3 node and connector-2 for 3-step types
-    document.getElementById('stepper').classList.toggle('hide-step3', is3step);
+    const stepper = document.getElementById('stepper');
+    if (stepper) stepper.classList.toggle('hide-step3', is3step);
 
     // Accordion: hide ac-3 for 3-step types
-    document.getElementById('ac-3').style.display = is3step ? 'none' : '';
+    const ac3 = document.getElementById('ac-3');
+    if (ac3) ac3.style.display = is3step ? 'none' : '';
 
     // Update step tags and badge numbers for 3-step mode
-    document.querySelector('#panel-4 .card-step-tag').textContent = is3step ? 'Step 3 of 3' : 'Step 4 of 4';
-    document.querySelector('#ac-4 .ac-badge .ac-num').textContent = is3step ? '3' : '4';
+    const stepTag = document.querySelector('#panel-4 .card-step-tag');
+    if (stepTag) stepTag.textContent = is3step ? 'Step 3 of 3' : 'Step 4 of 4';
+    const acNum = document.querySelector('#ac-4 .ac-badge .ac-num');
+    if (acNum) acNum.textContent = is3step ? '3' : '4';
 
     // Show appropriate name fields in both views
     showNameFields(type, 's1');
