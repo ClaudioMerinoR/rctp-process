@@ -1486,6 +1486,7 @@
                     </div>
                     <p class="type-error-hint" id="s1-type-error">Please select a third party type.</p>
 
+                    <div id="s1-form-body" style="display:none">
                     <div class="section-heading" style="margin-top:24px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
 
@@ -1495,7 +1496,6 @@
                             <input class="edit-input-ef" id="s1-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
                             <div class="field-error-msg">Third Party Name is required.</div>
                         </div>
-                        <div id="s1-spacer-entity"></div>
 
                         <!-- PERSON name fields (hidden by default) -->
                         <div class="edit-field" id="s1-fg-firstname" style="display:none">
@@ -1654,6 +1654,7 @@
                         </div>
 
                     </div>
+                    </div><!-- /#s1-form-body -->
                 </div>
                 <div class="card-footer">
                     <div class="footer-left"></div>
@@ -2127,6 +2128,7 @@
                     </div>
                     <p class="type-error-hint" id="a1-type-error">Please select a third party type.</p>
 
+                    <div id="a1-form-body" style="display:none">
                     <div class="section-heading" style="margin-top:24px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
 
@@ -2136,7 +2138,6 @@
                             <input class="edit-input-ef" id="a1-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
                             <div class="field-error-msg">Third Party Name is required.</div>
                         </div>
-                        <div id="a1-spacer-entity"></div>
 
                         <!-- PERSON name fields (hidden by default) -->
                         <div class="edit-field" id="a1-fg-firstname" style="display:none">
@@ -2289,6 +2290,7 @@
                         </div>
 
                     </div>
+                    </div><!-- /#a1-form-body -->
                     <div class="ac-footer">
                         <div></div>
                         <div class="ac-footer-right">
@@ -2956,6 +2958,12 @@ function configureWizard(type) {
     const acNum = document.querySelector('#ac-4 .ac-badge .ac-num');
     if (acNum) acNum.textContent = is3step ? '3' : '4';
 
+    // Show the form body (hidden until first type selection)
+    const s1fb = document.getElementById('s1-form-body');
+    const a1fb = document.getElementById('a1-form-body');
+    if (s1fb) s1fb.style.display = '';
+    if (a1fb) a1fb.style.display = '';
+
     // Show appropriate name fields in both views
     showNameFields(type, 's1');
     showNameFields(type, 'a1');
@@ -2967,7 +2975,6 @@ function showNameFields(type, p) {
         if (el) el.style.display = visible ? '' : 'none';
     };
     show(p + '-fg-name',         type === 'entity');
-    show(p + '-spacer-entity',   type === 'entity');
     show(p + '-fg-firstname',    type === 'person');
     show(p + '-fg-lastname',     type === 'person');
     show(p + '-fg-yob',          type === 'person');
