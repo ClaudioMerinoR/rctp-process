@@ -1118,8 +1118,9 @@
         .type-cards-sel { grid-template-columns: 1fr 1fr 1fr; }
 
         /* ── Hide steps until type is selected ── */
-        .wizard-wrap.type-not-selected .stepper,
-        .wizard-wrap.type-not-selected .form-card,
+        /* Stepper: only hide the step-indicator bar (panels handled by step-panel CSS) */
+        .wizard-wrap.type-not-selected .stepper { display: none; }
+        /* Accordion: hide items 2–4 (ac-1 stays visible for type card selection) */
         .wizard-wrap.type-not-selected #ac-2,
         .wizard-wrap.type-not-selected #ac-3,
         .wizard-wrap.type-not-selected #ac-4 { display: none; }
