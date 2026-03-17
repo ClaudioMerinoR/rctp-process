@@ -585,7 +585,7 @@
         .btn-filled {
             background: var(--primary-500); color: #fff;
         }
-        .btn-filled:hover { background: var(--primary-600); }
+        .btn-filled:hover:not(:disabled) { background: var(--primary-600); }
         .btn-filled:disabled { opacity: 0.45; cursor: not-allowed; }
 
         /* ── Validation state ── */
@@ -1116,6 +1116,11 @@
         #type-selection-screen .section-heading { margin-bottom: 16px; }
         .type-cards-sel { grid-template-columns: 1fr 1fr 1fr; }
 
+        /* ── Hide steps until type is selected ── */
+        .wizard-wrap.type-not-selected .stepper,
+        .wizard-wrap.type-not-selected .form-card,
+        .wizard-wrap.type-not-selected .accordion { display: none; }
+
         /* ── Step-3 hide for person/unknown ── */
         .hide-step3 .step-node[data-step="3"],
         .hide-step3 #connector-2 { display: none; }
@@ -1410,7 +1415,7 @@
     </div>
 
     <!-- Wizard -->
-    <div class="wizard-wrap">
+    <div class="wizard-wrap type-not-selected">
 
         <!-- ══ STEPPER VIEW ══ -->
         <div id="stepper-view" style="display:none">
@@ -2887,6 +2892,23 @@ function initStep1Components(p) {
 initStep1Components('s1');
 initStep1Components('a1');
 
+// Disable Continue buttons initially and watch for field changes
+['btn-step1-continue','ac-btn-1'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = true;
+});
+['s1-name','s1-firstname','s1-lastname','a1-name','a1-firstname','a1-lastname',
+ 's1-owner-input','a1-owner-input'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updateContinueBtns);
+});
+// BU tag changes trigger update via the existing buDropdown mousedown handler
+// — hook via MutationObserver on bu-tags
+['s1-bu-tags','a1-bu-tags','s1-owner-tags','a1-owner-tags'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    new MutationObserver(updateContinueBtns).observe(el, { childList: true });
+});
+
 /* ══════════════════════ Step navigation ══════════════════════ */
 function goToStep(n) {
     // Hide current panel
@@ -2917,10 +2939,27 @@ function goToStep(n) {
 
 /* ══════════════════════ Type Selection Screen ══════════════════════ */
 
+// ── Continue button state ──
+function updateContinueBtns() {
+    const type = selectedType;
+    let nameOk = false;
+    if (type === 'entity')  nameOk = !!(document.getElementById('s1-name')?.value.trim());
+    else if (type === 'person') nameOk = !!(document.getElementById('s1-firstname')?.value.trim() && document.getElementById('s1-lastname')?.value.trim());
+    else if (type === 'unknown') nameOk = true; // name optional
+    const buOk    = (document.getElementById('s1-bu-tags')?.children.length > 0) || (document.getElementById('a1-bu-tags')?.children.length > 0);
+    const ownerOk = !!(document.getElementById('s1-owner-input')?.value.trim() || document.getElementById('s1-owner-tags')?.children.length || document.getElementById('a1-owner-input')?.value.trim() || document.getElementById('a1-owner-tags')?.children.length);
+    const ok = !!(type && nameOk && buOk && ownerOk);
+    ['btn-step1-continue', 'ac-btn-1'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.disabled = !ok;
+    });
+}
+
 // Shared handler — syncs both card sets when any type is selected
 function selectType(type) {
     selectedType   = type;
     acSelectedType = type;
+    updateContinueBtns();
     // Sync both stepper and accordion cards
     ['#s1-type-cards .type-card', '#ac-type-cards .type-card'].forEach(sel => {
         document.querySelectorAll(sel).forEach(c =>
@@ -2957,6 +2996,9 @@ function configureWizard(type) {
     if (stepTag) stepTag.textContent = is3step ? 'Step 3 of 3' : 'Step 4 of 4';
     const acNum = document.querySelector('#ac-4 .ac-badge .ac-num');
     if (acNum) acNum.textContent = is3step ? '3' : '4';
+
+    // Remove the no-type class to reveal steps
+    document.querySelector('.wizard-wrap')?.classList.remove('type-not-selected');
 
     // Show the form body (hidden until first type selection)
     const s1fb = document.getElementById('s1-form-body');
