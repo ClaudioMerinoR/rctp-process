@@ -1392,49 +1392,7 @@
 <!-- ══ Page Body ══ -->
 <div class="page-body">
 
-    <!-- ══ Type Selection Screen ══ -->
-    <div id="type-selection-screen" style="margin-top:16px">
-        <div class="form-card">
-            <div class="card-header">
-                <div class="card-title">Add New Third Party</div>
-                <div class="card-subtitle">Select the type of third party you want to add to begin the onboarding process.</div>
-            </div>
-            <div class="content-divider"></div>
-            <div class="card-body">
-                <div class="section-heading">Third Party Type <span style="color:var(--alert-500)">*</span></div>
-                <div class="type-cards" id="sel-type-cards">
-                    <div class="type-card" data-type="entity" tabindex="0">
-                        <span class="material-icons-outlined type-card-check">check_circle</span>
-                        <div class="type-card-icon-wrap"><span class="material-icons-outlined">business</span></div>
-                        <div class="type-card-title">Entity / Organisation</div>
-                        <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
-                    </div>
-                    <div class="type-card" data-type="person" tabindex="0">
-                        <span class="material-icons-outlined type-card-check">check_circle</span>
-                        <div class="type-card-icon-wrap"><span class="material-icons-outlined">person</span></div>
-                        <div class="type-card-title">Individual / Person</div>
-                        <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
-                    </div>
-                    <div class="type-card" data-type="unknown" tabindex="0">
-                        <span class="material-icons-outlined type-card-check">check_circle</span>
-                        <div class="type-card-icon-wrap"><span class="material-icons-outlined">help_outline</span></div>
-                        <div class="type-card-title">Unknown</div>
-                        <div class="type-card-desc">The type of third party is not yet known or cannot be determined.</div>
-                    </div>
-                </div>
-                <p class="type-error-hint" id="sel-type-error">Please select a third party type.</p>
-            </div>
-            <div class="card-footer">
-                <div class="footer-left"></div>
-                <div class="footer-right">
-                    <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ══ Wizard (hidden until type selected) ══ -->
-    <div id="wizard-area" style="display:none">
+    <div id="wizard-area">
 
     <!-- View toggle -->
     <div class="view-toggle-bar">
@@ -1504,7 +1462,31 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="section-heading">Summary</div>
+                    <!-- Type selection -->
+                    <div class="section-heading">Third Party Type <span style="color:var(--alert-500)">*</span></div>
+                    <div class="type-cards" id="s1-type-cards">
+                        <div class="type-card" data-type="entity" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">business</span></div>
+                            <div class="type-card-title">Entity / Organisation</div>
+                            <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
+                        </div>
+                        <div class="type-card" data-type="person" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">person</span></div>
+                            <div class="type-card-title">Individual / Person</div>
+                            <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
+                        </div>
+                        <div class="type-card" data-type="unknown" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">help_outline</span></div>
+                            <div class="type-card-title">Unknown</div>
+                            <div class="type-card-desc">The type of third party is not yet known or cannot be determined.</div>
+                        </div>
+                    </div>
+                    <p class="type-error-hint" id="s1-type-error">Please select a third party type.</p>
+
+                    <div class="section-heading" style="margin-top:24px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
 
                         <!-- ENTITY name (shown for entity) -->
@@ -2121,7 +2103,31 @@
                     <span class="material-icons-outlined ac-chevron">expand_more</span>
                 </button>
                 <div class="ac-body">
-                    <div class="section-heading" style="margin-top:20px">Summary</div>
+                    <!-- Type selection -->
+                    <div class="section-heading" style="margin-top:20px">Third Party Type <span style="color:var(--alert-500)">*</span></div>
+                    <div class="type-cards" id="ac-type-cards">
+                        <div class="type-card" data-type="entity" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">business</span></div>
+                            <div class="type-card-title">Entity / Organisation</div>
+                            <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
+                        </div>
+                        <div class="type-card" data-type="person" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">person</span></div>
+                            <div class="type-card-title">Individual / Person</div>
+                            <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
+                        </div>
+                        <div class="type-card" data-type="unknown" tabindex="0">
+                            <span class="material-icons-outlined type-card-check">check_circle</span>
+                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">help_outline</span></div>
+                            <div class="type-card-title">Unknown</div>
+                            <div class="type-card-desc">The type of third party is not yet known or cannot be determined.</div>
+                        </div>
+                    </div>
+                    <p class="type-error-hint" id="a1-type-error">Please select a third party type.</p>
+
+                    <div class="section-heading" style="margin-top:24px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
 
                         <!-- ENTITY name -->
@@ -2909,19 +2915,27 @@ function goToStep(n) {
 
 /* ══════════════════════ Type Selection Screen ══════════════════════ */
 
-document.querySelectorAll('#sel-type-cards .type-card').forEach(card => {
-    card.addEventListener('click', () => {
-        document.querySelectorAll('#sel-type-cards .type-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        const type = card.dataset.type;
-        selectedType   = type;
-        acSelectedType = type;
-        configureWizard(type);
-        document.getElementById('type-selection-screen').style.display = 'none';
-        document.getElementById('wizard-area').style.display = '';
+// Shared handler — syncs both card sets when any type is selected
+function selectType(type) {
+    selectedType   = type;
+    acSelectedType = type;
+    // Sync both stepper and accordion cards
+    ['#s1-type-cards .type-card', '#ac-type-cards .type-card'].forEach(sel => {
+        document.querySelectorAll(sel).forEach(c =>
+            c.classList.toggle('selected', c.dataset.type === type)
+        );
     });
-    card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    document.getElementById('s1-type-cards')?.classList.remove('type-error');
+    document.getElementById('ac-type-cards')?.classList.remove('type-error');
+    configureWizard(type);
+}
+
+['#s1-type-cards .type-card', '#ac-type-cards .type-card'].forEach(sel => {
+    document.querySelectorAll(sel).forEach(card => {
+        card.addEventListener('click', () => selectType(card.dataset.type));
+        card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+        });
     });
 });
 
@@ -2977,6 +2991,11 @@ function getDisplayName(p) {
 // Step 1 → Continue (stepper) — type-aware validation
 document.getElementById('btn-step1-continue').addEventListener('click', () => {
     let valid = true;
+
+    if (!selectedType) {
+        document.getElementById('s1-type-cards').classList.add('type-error');
+        valid = false;
+    }
 
     if (selectedType === 'entity') {
         const name = document.getElementById('s1-name').value.trim();
@@ -3143,6 +3162,11 @@ document.querySelectorAll('.ac-header-btn').forEach(btn => {
 // ── Step 1 Continue (accordion) ──
 document.getElementById('ac-btn-1').addEventListener('click', () => {
     let valid = true;
+
+    if (!acSelectedType) {
+        document.getElementById('ac-type-cards').classList.add('type-error');
+        valid = false;
+    }
 
     if (acSelectedType === 'entity') {
         const name = document.getElementById('a1-name').value.trim();
