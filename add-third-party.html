@@ -1923,8 +1923,9 @@
                 </div>
                 <div class="card-body" style="padding-top:0">
 
-                    <div class="ob-section-label">Entity</div>
-
+                    <!-- ── Entity / Unknown form ── -->
+                    <div id="p4-entity-form">
+                    <div class="ob-section-label" id="p4-entity-label">Entity</div>
                     <div class="ob-blocks">
 
                         <!-- 1. Legal Name -->
@@ -2081,7 +2082,96 @@
                             <input class="ob-input" id="ob-internal-ref" type="text" placeholder="e.g. SMP-0042">
                         </div>
 
-                    </div><!-- /.ob-blocks -->
+                    </div><!-- /.ob-blocks entity -->
+                    </div><!-- /#p4-entity-form -->
+
+                    <!-- ── Person / Individual form ── -->
+                    <div id="p4-person-form" style="display:none">
+                    <div class="ob-section-label">Individual / Person</div>
+                    <div class="ob-blocks">
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Person Third Party Legal Name</span><span class="ob-req">*</span></div>
+                            <input class="ob-input" id="ob-p-legal-name" type="text" readonly tabindex="-1">
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name / Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div>
+                            <input class="ob-input" id="ob-p-alias" type="text" placeholder="e.g. J. Smith">
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Year of Birth</span><span class="material-icons-outlined ob-info" title="Year the individual was born">info</span></div>
+                            <input class="ob-input" id="ob-p-yob" type="text" placeholder="e.g. 1980">
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Business Address</span><span class="material-icons-outlined ob-info" title="Primary business or residential address">info</span></div>
+                            <textarea class="ob-input ob-textarea" id="ob-p-address" placeholder="Enter address"></textarea>
+                        </div>
+
+                        <div class="ob-block" id="ob-p-block-country">
+                            <div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Country of Residence</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where the individual primarily resides">info</span></div>
+                            <select class="ob-input ob-select" id="ob-p-country">
+                                <option value="">Choose…</option>
+                                <option>Argentina</option><option>Australia</option><option>Brazil</option>
+                                <option>Canada</option><option>China</option><option>France</option>
+                                <option>Germany</option><option>India</option><option>Italy</option>
+                                <option>Japan</option><option>Mexico</option><option>Netherlands</option>
+                                <option>Republic of Korea</option><option>Russian Federation</option>
+                                <option>Singapore</option><option>Spain</option><option>Sweden</option>
+                                <option>Switzerland</option><option>United Kingdom</option><option>United States</option>
+                            </select>
+                            <div class="ob-error-msg">Country of residence is required.</div>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Industry / Sector</span></div>
+                            <select class="ob-input ob-select" id="ob-p-industry">
+                                <option value="">Select an industry</option>
+                                <option>Aerospace &amp; Defence</option><option>Agriculture</option>
+                                <option>Automotive</option><option>Banking &amp; Finance</option>
+                                <option>Chemicals</option><option>Construction</option>
+                                <option>Consumer Goods</option><option>Education</option>
+                                <option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option>
+                                <option>Healthcare &amp; Pharmaceuticals</option>
+                                <option>Legal Services</option><option>Logistics &amp; Transportation</option>
+                                <option>Manufacturing</option><option>Professional Services</option>
+                                <option>Real Estate</option><option>Retail</option>
+                                <option>Technology</option><option>Telecommunications</option>
+                            </select>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Identification</span></div>
+                            <div class="ob-sub-grid">
+                                <div>
+                                    <div class="ob-sub-label">ID Type</div>
+                                    <select class="ob-input ob-select" id="ob-p-id-type">
+                                        <option value="">Select ID type</option>
+                                        <option>Passport</option>
+                                        <option>National ID</option>
+                                        <option>Driver's Licence</option>
+                                        <option>Tax Code</option>
+                                        <option>VAT Number</option>
+                                        <option>Social Security Number</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="ob-sub-label">ID Value</div>
+                                    <input class="ob-input" id="ob-p-id-value" type="text" placeholder="Enter identifier value">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Your organisation's internal tracking reference">info</span></div>
+                            <input class="ob-input" id="ob-p-internal-ref" type="text" placeholder="e.g. SMP-0042">
+                        </div>
+
+                    </div><!-- /.ob-blocks person -->
+                    </div><!-- /#p4-person-form -->
+
                 </div>
                 <div class="card-footer">
                     <div class="footer-left">
@@ -2444,6 +2534,8 @@
                     <span class="material-icons-outlined ac-chevron">expand_more</span>
                 </button>
                 <div class="ac-body">
+                    <!-- Entity / Unknown form -->
+                    <div id="ac4-entity-form">
                     <div class="ob-section-label" style="padding-top:20px">Entity</div>
                     <div class="ob-blocks">
                         <div class="ob-block"><div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Legal Name of the Third Party</span><span class="ob-req">*</span></div><input class="ob-input" id="ac-ob-legal-name" type="text" readonly tabindex="-1"></div>
@@ -2456,6 +2548,23 @@
                         <div class="ob-block"><div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Identification</span></div><div class="ob-sub-grid"><div><div class="ob-sub-label">ID Type</div><select class="ob-input ob-select" id="ac-ob-id-type"><option value="">Select ID type</option><option>DUNS Number</option><option>LEI</option><option>BVD ID</option><option>VAT Number</option><option>Tax Code</option><option>Trade Licence</option></select></div><div><div class="ob-sub-label">ID Value</div><input class="ob-input" id="ac-ob-id-value" type="text" placeholder="Enter identifier value"></div></div></div>
                         <div class="ob-block"><div class="ob-block-head"><span class="ob-num">9.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
                     </div>
+                    </div><!-- /#ac4-entity-form -->
+
+                    <!-- Person / Individual form -->
+                    <div id="ac4-person-form" style="display:none">
+                    <div class="ob-section-label" style="padding-top:20px">Individual / Person</div>
+                    <div class="ob-blocks">
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Person Third Party Legal Name</span><span class="ob-req">*</span></div><input class="ob-input" id="ac-ob-p-legal-name" type="text" readonly tabindex="-1"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name / Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div><input class="ob-input" id="ac-ob-p-alias" type="text" placeholder="e.g. J. Smith"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Year of Birth</span><span class="material-icons-outlined ob-info" title="Year the individual was born">info</span></div><input class="ob-input" id="ac-ob-p-yob" type="text" placeholder="e.g. 1980"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Business Address</span><span class="material-icons-outlined ob-info" title="Primary business or residential address">info</span></div><textarea class="ob-input ob-textarea" id="ac-ob-p-address" placeholder="Enter address"></textarea></div>
+                        <div class="ob-block" id="ac-ob-p-block-country"><div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Country of Residence</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where the individual primarily resides">info</span></div><select class="ob-input ob-select" id="ac-ob-p-country"><option value="">Choose…</option><option>Argentina</option><option>Australia</option><option>Brazil</option><option>Canada</option><option>China</option><option>France</option><option>Germany</option><option>India</option><option>Italy</option><option>Japan</option><option>Mexico</option><option>Netherlands</option><option>Republic of Korea</option><option>Russian Federation</option><option>Singapore</option><option>Spain</option><option>Sweden</option><option>Switzerland</option><option>United Kingdom</option><option>United States</option></select><div class="ob-error-msg">Country of residence is required.</div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Industry / Sector</span></div><select class="ob-input ob-select" id="ac-ob-p-industry"><option value="">Select an industry</option><option>Aerospace &amp; Defence</option><option>Agriculture</option><option>Automotive</option><option>Banking &amp; Finance</option><option>Chemicals</option><option>Construction</option><option>Consumer Goods</option><option>Education</option><option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option><option>Healthcare &amp; Pharmaceuticals</option><option>Legal Services</option><option>Logistics &amp; Transportation</option><option>Manufacturing</option><option>Professional Services</option><option>Real Estate</option><option>Retail</option><option>Technology</option><option>Telecommunications</option></select></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Identification</span></div><div class="ob-sub-grid"><div><div class="ob-sub-label">ID Type</div><select class="ob-input ob-select" id="ac-ob-p-id-type"><option value="">Select ID type</option><option>Passport</option><option>National ID</option><option>Driver's Licence</option><option>Tax Code</option><option>VAT Number</option><option>Social Security Number</option></select></div><div><div class="ob-sub-label">ID Value</div><input class="ob-input" id="ac-ob-p-id-value" type="text" placeholder="Enter identifier value"></div></div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-p-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
+                    </div>
+                    </div><!-- /#ac4-person-form -->
+
                     <div class="ac-footer">
                         <button class="btn btn-outline" id="ac-btn-4-back">
                             <span class="material-icons-outlined">arrow_back</span>Back
@@ -3013,6 +3122,15 @@ function configureWizard(type) {
     const acNum = document.querySelector('#ac-4 .ac-badge .ac-num');
     if (acNum) acNum.textContent = is3step ? '3' : '4';
 
+    // Switch onboarding details form: person vs entity/unknown
+    const isPersonForm = (type === 'person');
+    ['p4-entity-form','ac4-entity-form'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.style.display = isPersonForm ? 'none' : '';
+    });
+    ['p4-person-form','ac4-person-form'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.style.display = isPersonForm ? '' : 'none';
+    });
+
     // Remove the no-type class to reveal steps
     document.querySelector('.wizard-wrap')?.classList.remove('type-not-selected');
 
@@ -3097,7 +3215,8 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
     if (!valid) return;
 
     const displayName = getDisplayName('s1');
-    document.getElementById('ob-legal-name').value = displayName;
+    document.getElementById('ob-legal-name').value   = displayName;
+    document.getElementById('ob-p-legal-name').value = displayName;
     document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
     goToStep(2);
 });
@@ -3165,10 +3284,13 @@ document.getElementById('ob-country').addEventListener('change', () => {
 });
 
 document.getElementById('btn-step4-save').addEventListener('click', () => {
-    const country = document.getElementById('ob-country').value;
+    const isPerson = selectedType === 'person';
+    const countryId   = isPerson ? 'ob-p-country'       : 'ob-country';
+    const blockId     = isPerson ? 'ob-p-block-country'  : 'ob-block-country';
+    const country = document.getElementById(countryId)?.value;
     if (!country) {
-        document.getElementById('ob-block-country').classList.add('has-error');
-        document.getElementById('ob-country').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById(blockId)?.classList.add('has-error');
+        document.getElementById(countryId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
     window.location.href = 'index.html';
@@ -3269,7 +3391,8 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     const displayName = getDisplayName('a1');
     const typeLabel = acSelectedType === 'entity' ? 'Entity' : acSelectedType === 'person' ? 'Individual' : 'Unknown';
     completeAc(1, `${typeLabel} · ${displayName}`);
-    document.getElementById('ac-ob-legal-name').value = displayName;
+    document.getElementById('ac-ob-legal-name').value   = displayName;
+    document.getElementById('ac-ob-p-legal-name').value = displayName;
     document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
     openAc(2);
 });
@@ -3530,10 +3653,13 @@ const DUP_PROPERTIES = [
 })();
 
 document.getElementById('ac-btn-4-save').addEventListener('click', () => {
-    const country = document.getElementById('ac-ob-country').value;
+    const isPerson  = acSelectedType === 'person';
+    const countryId = isPerson ? 'ac-ob-p-country'      : 'ac-ob-country';
+    const blockId   = isPerson ? 'ac-ob-p-block-country' : 'ac-ob-block-country';
+    const country = document.getElementById(countryId)?.value;
     if (!country) {
-        document.getElementById('ac-ob-block-country').classList.add('has-error');
-        document.getElementById('ac-ob-country').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById(blockId)?.classList.add('has-error');
+        document.getElementById(countryId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
     window.location.href = 'index.html';
