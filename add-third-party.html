@@ -436,10 +436,10 @@
         .dup-table tbody tr:hover td { background: #d5f2fb !important; }
         .dup-table .more-btn {
             background: none; border: none; cursor: pointer;
-            color: var(--neutral-500); display: flex; align-items: center;
-            padding: 2px;
+            color: var(--primary-600); font-size: 13px; font-weight: 500;
+            font-family: inherit; padding: 0; white-space: nowrap;
         }
-        .dup-table .more-btn:hover { color: var(--text-normal); }
+        .dup-table .more-btn:hover { text-decoration: underline; }
 
         .choice-group { display: flex; flex-direction: column; gap: 10px; }
         .choice-item {
@@ -1533,7 +1533,7 @@
                                     <td><span class="status-badge status-pending">Pending Approval</span></td>
                                     <td>INT-0001</td>
                                     <td>Active</td>
-                                    <td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td>
+                                    <td><button class="more-btn">View properties</button></td>
                                 </tr>
                                 <tr>
                                     <td><span class="cell-link">INITECH Ltd</span></td>
@@ -1543,7 +1543,7 @@
                                     <td><span class="status-badge status-pending">Pending Approval</span></td>
                                     <td>INT-0002</td>
                                     <td>Inactive</td>
-                                    <td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td>
+                                    <td><button class="more-btn">View properties</button></td>
                                 </tr>
                             </tbody>
                         </table>
