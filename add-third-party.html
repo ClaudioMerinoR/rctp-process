@@ -893,201 +893,202 @@
         .step-node.skipped .step-label { color: var(--neutral-400); }
 
         /* ── Record Profile Side Panel (1200px) ── */
+        /* ══════════ Profile side panel (1200px) ══════════ */
         .rec-sheet-overlay {
             display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.5); z-index: 1100;
+            background: rgba(0,0,0,0.45); z-index: 1100;
         }
         .rec-sheet-overlay.open { display: block; }
         .rec-sheet {
             position: fixed; top: 0; right: -1210px; width: 1200px; height: 100vh;
-            background: var(--neutral-00); box-shadow: -4px 0 24px rgba(0,0,0,0.2);
+            background: var(--neutral-00);
+            border-top: 4px solid var(--primary-500);
+            border-left: 1px solid var(--neutral-50);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
             display: flex; flex-direction: column; z-index: 1101;
             transition: right 0.3s ease; overflow: hidden;
         }
         .rec-sheet.open { right: 0; }
 
-        /* Topbar */
+        /* Header */
         .rec-topbar {
-            background: var(--text-normal); color: #fff; padding: 8px 16px;
-            display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+            background: var(--neutral-00); border-bottom: 1px solid var(--neutral-50);
+            padding: 12px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
         }
         .rec-back-btn {
             display: inline-flex; align-items: center; gap: 4px;
-            background: none; border: none; color: #fff; cursor: pointer;
+            background: none; border: none; color: var(--text-light); cursor: pointer;
             font-size: 12px; font-weight: 500; text-transform: uppercase;
-            letter-spacing: 0.5px; padding: 4px 0; font-family: inherit; flex-shrink: 0;
+            letter-spacing: 0.5px; padding: 0; font-family: inherit; flex-shrink: 0;
+            transition: color 0.15s;
         }
-        .rec-back-btn:hover { opacity: 0.7; }
+        .rec-back-btn:hover { color: var(--text-normal); }
         .rec-back-btn .material-icons-outlined { font-size: 16px; }
         .rec-topbar-title-area { flex: 1; min-width: 0; }
         .rec-topbar-title {
-            font-size: 15px; font-weight: 500; color: #fff;
+            font-size: 20px; font-weight: 500; color: var(--text-normal);
             display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
         }
-        .rec-topbar-sub { font-size: 11px; color: var(--neutral-400); margin-top: 2px; }
+        .rec-topbar-sub { font-size: 11px; color: var(--neutral-500); margin-top: 2px; }
         .rec-match-badge {
             display: inline-flex; align-items: center;
-            background: rgba(240,192,67,0.2); border: 1px solid var(--warning-500);
-            color: var(--warning-500); font-size: 10px; font-weight: 700;
+            background: var(--warning-50); border: 1px solid var(--warning-500);
+            color: var(--warning-900); font-size: 10px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.5px;
             padding: 2px 8px; border-radius: 2px; white-space: nowrap; flex-shrink: 0;
         }
         .rec-topbar-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
         .rec-act-btn {
-            height: 28px; padding: 0 10px; border: 1px solid rgba(255,255,255,0.35);
-            border-radius: 2px; background: none; color: #fff;
-            font-size: 11px; font-weight: 500; text-transform: uppercase;
-            letter-spacing: 0.4px; cursor: pointer; font-family: inherit; white-space: nowrap;
+            display: inline-flex; align-items: center; height: 32px; padding: 0 10px;
+            border: 1px solid var(--neutral-300); border-radius: 4px;
+            background: var(--neutral-00); color: var(--text-light);
+            font-size: 12px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.5px; cursor: pointer; font-family: inherit; white-space: nowrap;
+            transition: border-color 0.15s, color 0.15s;
         }
-        .rec-act-btn:hover { background: rgba(255,255,255,0.1); }
-        .rec-act-btn.primary-btn { background: var(--primary-500); border-color: var(--primary-500); }
+        .rec-act-btn:hover { border-color: var(--neutral-400); color: var(--text-normal); }
+        .rec-act-btn.primary-btn {
+            background: var(--primary-500); color: var(--neutral-25); border-color: var(--primary-500);
+        }
         .rec-act-btn.primary-btn:hover { background: var(--primary-600); }
 
-        /* Name / country bar */
+        /* Name/country bar */
         .rec-namebar {
             background: var(--neutral-25); border-bottom: 1px solid var(--neutral-50);
-            padding: 8px 20px; display: flex; gap: 48px; flex-shrink: 0;
+            padding: 10px 20px; display: flex; gap: 48px; flex-shrink: 0;
         }
-        .rec-namebar-item { display: flex; flex-direction: column; gap: 2px; }
+        .rec-namebar-item { display: flex; flex-direction: column; gap: 3px; }
         .rec-namebar-label {
-            font-size: 10px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.6px; color: var(--text-light);
+            font-size: 11px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--primary-500);
         }
         .rec-namebar-val { font-size: 14px; font-weight: 500; color: var(--text-normal); }
 
         /* Tabs */
         .rec-tabs {
-            display: flex; border-bottom: 2px solid var(--neutral-50);
-            padding: 0 16px; flex-shrink: 0; overflow-x: auto;
+            display: flex; border-bottom: 1px solid var(--neutral-50);
+            padding: 0 20px; flex-shrink: 0; overflow-x: auto; background: var(--neutral-00);
         }
         .rec-tab {
             display: inline-flex; align-items: center; gap: 5px; padding: 10px 14px;
             font-size: 13px; font-weight: 500; color: var(--text-light);
             cursor: pointer; border: none; background: none; font-family: inherit;
-            border-bottom: 3px solid transparent; margin-bottom: -2px;
+            border-bottom: 2px solid transparent; margin-bottom: -1px;
             white-space: nowrap; transition: color 0.15s;
         }
         .rec-tab:hover { color: var(--text-normal); }
         .rec-tab.active { color: var(--primary-500); border-bottom-color: var(--primary-500); }
-        .rec-tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .rec-tab-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
         .rec-tab-dot.amber { background: var(--warning-500); }
         .rec-tab-dot.red   { background: var(--alert-500); }
 
-        /* Scrollable content */
+        /* Content */
         .rec-content { flex: 1; overflow-y: auto; padding: 20px; }
-
-        /* Sections */
         .rec-section { margin-bottom: 28px; }
         .rec-section-title {
-            font-size: 15px; font-weight: 600; color: var(--text-normal);
-            margin-bottom: 12px; padding-bottom: 6px;
-            border-bottom: 2px solid var(--primary-500); display: inline-block;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--text-light);
+            margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid var(--neutral-50); display: block;
         }
-        .rec-meta-row { display: flex; gap: 40px; margin-bottom: 20px; }
+        .rec-meta-row { display: flex; gap: 40px; margin-bottom: 16px; }
         .rec-meta-item { display: flex; flex-direction: column; gap: 3px; }
         .rec-meta-label {
-            font-size: 10px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.6px; color: var(--text-light);
+            font-size: 11px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--primary-500);
         }
         .rec-meta-val { font-size: 14px; font-weight: 500; color: var(--text-normal); }
-
-        /* Two-column section layout */
-        .rec-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+        .rec-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .rec-sub-heading {
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-light); padding: 10px 0 6px; display: block;
+        }
 
         /* Tables */
         .rec-table-wrap { overflow-x: auto; }
         .rec-table {
-            width: 100%; border-collapse: collapse; font-size: 13px;
-            border: 1px solid var(--neutral-50); margin-bottom: 16px;
+            width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px;
         }
         .rec-table thead th {
-            background: var(--neutral-25); padding: 7px 10px; text-align: left;
-            font-size: 10px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.7px; color: var(--text-normal);
-            border-bottom: 2px solid var(--neutral-200); white-space: nowrap;
+            background: var(--neutral-25); padding: 8px 12px; text-align: left;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-light);
+            border-top: 1px solid var(--neutral-50); border-bottom: 1px solid var(--neutral-50);
+            white-space: nowrap;
         }
         .rec-table tbody td {
-            padding: 8px 10px; border-bottom: 1px solid var(--neutral-50);
-            color: var(--text-light); font-size: 13px; vertical-align: top;
+            padding: 9px 12px; border-bottom: 1px solid var(--neutral-50);
+            color: var(--text-light); font-size: 13px; vertical-align: middle;
         }
+        .rec-table tbody tr:nth-child(odd) td { background: var(--primary-08); }
         .rec-table tbody tr:last-child td { border-bottom: none; }
-        .rec-table tbody tr:hover td { background: #fafbfc; }
-        .rec-link { color: var(--primary-600); cursor: pointer; }
+        .rec-table tbody tr:hover td { background: #d5f2fb !important; }
+        .rec-link { color: var(--primary-600); font-weight: 500; cursor: pointer; }
         .rec-link:hover { text-decoration: underline; }
-        .rec-sub-heading {
-            font-size: 10px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.7px; color: var(--text-light);
-            padding: 12px 0 6px; display: block;
-        }
 
-        /* ── Duplicate Properties Side Panel ── */
+        /* ══════════ Properties side panel (640px) ══════════ */
         .dup-sheet-overlay {
             display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4); z-index: 900;
+            background: rgba(0,0,0,0.45); z-index: 900;
         }
         .dup-sheet-overlay.open { display: block; }
         .dup-sheet {
             position: fixed; top: 0; right: -660px; width: 640px; height: 100vh;
             background: var(--neutral-00);
-            box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+            border-top: 4px solid var(--primary-500);
+            border-left: 1px solid var(--neutral-50);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
             display: flex; flex-direction: column;
             z-index: 901; transition: right 0.3s ease;
         }
         .dup-sheet.open { right: 0; }
         .dup-sheet-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 20px 20px 0; flex-shrink: 0;
+            padding: 16px 20px; flex-shrink: 0; border-bottom: 1px solid var(--neutral-50);
         }
-        .dup-sheet-title {
-            font-size: 20px; font-weight: 500; color: var(--text-normal);
-        }
-        .dup-sheet-accent { height: 4px; background: var(--primary-500); margin-top: 16px; flex-shrink: 0; }
+        .dup-sheet-title { font-size: 20px; font-weight: 500; color: var(--text-normal); }
+        .dup-sheet-accent { display: none; }
         .dup-sheet-filters {
-            padding: 16px 20px; border-bottom: 1px solid var(--neutral-50);
+            padding: 14px 20px; border-bottom: 1px solid var(--neutral-50);
             flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
         }
         .dup-sheet-filter-label {
-            font-size: 11px; font-weight: 500; color: var(--primary-500);
-            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+            font-size: 11px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--primary-500); margin-bottom: 6px;
         }
         .dup-sheet-input {
-            width: 100%; height: 32px; border: 1px solid var(--neutral-200);
-            border-radius: 2px; padding: 0 9px; font-size: 14px;
-            font-family: inherit; color: var(--text-normal); outline: none;
+            width: 100%; height: 32px; border: 1px solid var(--neutral-200); border-radius: 2px;
+            padding: 0 9px; font-size: 14px; font-family: inherit;
+            color: var(--text-normal); background: var(--neutral-00); outline: none;
+            transition: border-color 0.15s;
         }
         .dup-sheet-input:focus { border-color: var(--primary-500); }
         .dup-sheet-select {
-            width: 100%; height: 32px; border: 1px solid var(--neutral-200);
-            border-radius: 2px; padding: 0 9px; font-size: 14px;
-            font-family: inherit; color: var(--text-normal); background: var(--neutral-00);
-            outline: none; appearance: none;
+            width: 100%; height: 32px; border: 1px solid var(--neutral-200); border-radius: 2px;
+            padding: 0 9px; font-size: 14px; font-family: inherit;
+            color: var(--text-normal); background: var(--neutral-00); outline: none;
+            appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238D9CA9' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 6px center;
-            padding-right: 28px;
+            background-repeat: no-repeat; background-position: right 6px center; padding-right: 28px;
         }
         .dup-sheet-content { flex: 1; overflow-y: auto; }
-        .dup-props-table {
-            width: 100%; border-collapse: collapse; font-size: 13px;
-        }
+        .dup-props-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .dup-props-table thead th {
-            background: var(--neutral-25); padding: 8px 20px;
-            text-align: left; font-size: 11px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.6px;
-            color: var(--text-light); border-bottom: 2px solid var(--neutral-200);
-            position: sticky; top: 0; white-space: nowrap;
+            background: var(--neutral-25); padding: 8px 20px; text-align: left;
+            font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text-light); border-top: 1px solid var(--neutral-50);
+            border-bottom: 1px solid var(--neutral-50); position: sticky; top: 0; white-space: nowrap;
         }
         .dup-props-table tbody td {
-            padding: 8px 20px; border-bottom: 1px solid var(--neutral-50);
+            padding: 9px 20px; border-bottom: 1px solid var(--neutral-50);
             color: var(--text-light); vertical-align: middle; font-size: 13px;
         }
-        .dup-props-table tr:last-child td { border-bottom: none; }
-        .dup-props-table tr:hover td { background: #fafbfc; }
+        .dup-props-table tbody tr:nth-child(odd) td { background: var(--primary-08); }
+        .dup-props-table tbody tr:last-child td { border-bottom: none; }
+        .dup-props-table tbody tr:hover td { background: #d5f2fb !important; }
         .dup-props-table .prop-name { color: var(--text-normal); font-weight: 500; }
         .dup-props-table .prop-val { color: var(--text-light); }
-        .prop-dot {
-            width: 8px; height: 8px; border-radius: 50%; display: inline-block;
-            flex-shrink: 0;
-        }
+        .prop-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
         .prop-dot.filled { background: var(--primary-500); }
         .prop-dot.empty  { background: var(--neutral-200); }
 
