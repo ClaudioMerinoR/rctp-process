@@ -2306,11 +2306,11 @@
             <button class="ev-modal-close" id="ev-modal-close" type="button">&#x2715;</button>
         </div>
         <div class="ev-modal-body">
-            <p class="ev-modal-question">Entity verification is not available for Individual / Person records.</p>
-            <p class="ev-modal-desc">Step 3 will be automatically skipped.</p>
+            <p class="ev-modal-question">Entity verification will screen the Third Party Name against a company data source, allowing you to verify the legal existence of your Third Party before creating the RCTP record.</p>
+            <p class="ev-modal-desc">Do you want to conduct entity verification?</p>
         </div>
         <div class="ev-modal-footer">
-            <button class="btn btn-outline" id="ev-modal-skip" type="button">Back</button>
+            <button class="btn btn-outline" id="ev-modal-skip" type="button">Skip</button>
             <button class="btn btn-filled" id="ev-modal-continue" type="button">Continue</button>
         </div>
     </div>
@@ -2600,7 +2600,10 @@ document.getElementById('s1-name').addEventListener('input', () =>
 
 document.getElementById('btn-step2-back').addEventListener('click', () => goToStep(1));
 document.getElementById('btn-step2-continue').addEventListener('click', () => {
-    goToStep(3);
+    showEvModal(
+        () => { goToStep(3); },                          // Continue → entity verification
+        () => { skippedSteps.add(3); goToStep(4); }     // Skip → skip step 3
+    );
 });
 
 /* ══════════════════════ Step 3 ══════════════════════ */
@@ -2774,7 +2777,10 @@ document.getElementById('a1-name').addEventListener('input', () =>
 document.getElementById('ac-btn-2-back').addEventListener('click', () => openAc(1));
 document.getElementById('ac-btn-2').addEventListener('click', () => {
     completeAc(2, 'Continued as new third party');
-    openAc(3);
+    showEvModal(
+        () => { openAc(3); },               // Continue → entity verification
+        () => { skipAc(3); openAc(4); }     // Skip → skip step 3
+    );
 });
 
 // ── Step 3 ──
