@@ -2953,10 +2953,14 @@ function goToStep(n) {
 // ── Continue button state ──
 function updateContinueBtns() {
     const type = selectedType;
+    const val = id => document.getElementById(id)?.value.trim() || '';
     let nameOk = false;
-    if (type === 'entity')  nameOk = !!(document.getElementById('s1-name')?.value.trim());
-    else if (type === 'person') nameOk = !!(document.getElementById('s1-firstname')?.value.trim() && document.getElementById('s1-lastname')?.value.trim());
-    else if (type === 'unknown') nameOk = true; // name optional
+    if (type === 'entity')
+        nameOk = !!(val('s1-name') || val('a1-name'));
+    else if (type === 'person')
+        nameOk = !!((val('s1-firstname') || val('a1-firstname')) && (val('s1-lastname') || val('a1-lastname')));
+    else if (type === 'unknown')
+        nameOk = true;
     const buOk    = (document.getElementById('s1-bu-tags')?.children.length > 0) || (document.getElementById('a1-bu-tags')?.children.length > 0);
     const ownerOk = !!(document.getElementById('s1-owner-input')?.value.trim() || document.getElementById('s1-owner-tags')?.children.length || document.getElementById('a1-owner-input')?.value.trim() || document.getElementById('a1-owner-tags')?.children.length);
     const ok = !!(type && nameOk && buOk && ownerOk);
