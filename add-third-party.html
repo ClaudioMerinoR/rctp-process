@@ -892,6 +892,134 @@
         .step-node.skipped .step-circle .material-icons-outlined { display: block; }
         .step-node.skipped .step-label { color: var(--neutral-400); }
 
+        /* ── Record Profile Side Panel (1200px) ── */
+        .rec-sheet-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.5); z-index: 1100;
+        }
+        .rec-sheet-overlay.open { display: block; }
+        .rec-sheet {
+            position: fixed; top: 0; right: -1210px; width: 1200px; height: 100vh;
+            background: var(--neutral-00); box-shadow: -4px 0 24px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; z-index: 1101;
+            transition: right 0.3s ease; overflow: hidden;
+        }
+        .rec-sheet.open { right: 0; }
+
+        /* Topbar */
+        .rec-topbar {
+            background: var(--text-normal); color: #fff; padding: 8px 16px;
+            display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+        }
+        .rec-back-btn {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: none; border: none; color: #fff; cursor: pointer;
+            font-size: 12px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 4px 0; font-family: inherit; flex-shrink: 0;
+        }
+        .rec-back-btn:hover { opacity: 0.7; }
+        .rec-back-btn .material-icons-outlined { font-size: 16px; }
+        .rec-topbar-title-area { flex: 1; min-width: 0; }
+        .rec-topbar-title {
+            font-size: 15px; font-weight: 500; color: #fff;
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        }
+        .rec-topbar-sub { font-size: 11px; color: var(--neutral-400); margin-top: 2px; }
+        .rec-match-badge {
+            display: inline-flex; align-items: center;
+            background: rgba(240,192,67,0.2); border: 1px solid var(--warning-500);
+            color: var(--warning-500); font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 2px 8px; border-radius: 2px; white-space: nowrap; flex-shrink: 0;
+        }
+        .rec-topbar-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+        .rec-act-btn {
+            height: 28px; padding: 0 10px; border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 2px; background: none; color: #fff;
+            font-size: 11px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.4px; cursor: pointer; font-family: inherit; white-space: nowrap;
+        }
+        .rec-act-btn:hover { background: rgba(255,255,255,0.1); }
+        .rec-act-btn.primary-btn { background: var(--primary-500); border-color: var(--primary-500); }
+        .rec-act-btn.primary-btn:hover { background: var(--primary-600); }
+
+        /* Name / country bar */
+        .rec-namebar {
+            background: var(--neutral-25); border-bottom: 1px solid var(--neutral-50);
+            padding: 8px 20px; display: flex; gap: 48px; flex-shrink: 0;
+        }
+        .rec-namebar-item { display: flex; flex-direction: column; gap: 2px; }
+        .rec-namebar-label {
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.6px; color: var(--text-light);
+        }
+        .rec-namebar-val { font-size: 14px; font-weight: 500; color: var(--text-normal); }
+
+        /* Tabs */
+        .rec-tabs {
+            display: flex; border-bottom: 2px solid var(--neutral-50);
+            padding: 0 16px; flex-shrink: 0; overflow-x: auto;
+        }
+        .rec-tab {
+            display: inline-flex; align-items: center; gap: 5px; padding: 10px 14px;
+            font-size: 13px; font-weight: 500; color: var(--text-light);
+            cursor: pointer; border: none; background: none; font-family: inherit;
+            border-bottom: 3px solid transparent; margin-bottom: -2px;
+            white-space: nowrap; transition: color 0.15s;
+        }
+        .rec-tab:hover { color: var(--text-normal); }
+        .rec-tab.active { color: var(--primary-500); border-bottom-color: var(--primary-500); }
+        .rec-tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .rec-tab-dot.amber { background: var(--warning-500); }
+        .rec-tab-dot.red   { background: var(--alert-500); }
+
+        /* Scrollable content */
+        .rec-content { flex: 1; overflow-y: auto; padding: 20px; }
+
+        /* Sections */
+        .rec-section { margin-bottom: 28px; }
+        .rec-section-title {
+            font-size: 15px; font-weight: 600; color: var(--text-normal);
+            margin-bottom: 12px; padding-bottom: 6px;
+            border-bottom: 2px solid var(--primary-500); display: inline-block;
+        }
+        .rec-meta-row { display: flex; gap: 40px; margin-bottom: 20px; }
+        .rec-meta-item { display: flex; flex-direction: column; gap: 3px; }
+        .rec-meta-label {
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.6px; color: var(--text-light);
+        }
+        .rec-meta-val { font-size: 14px; font-weight: 500; color: var(--text-normal); }
+
+        /* Two-column section layout */
+        .rec-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+
+        /* Tables */
+        .rec-table-wrap { overflow-x: auto; }
+        .rec-table {
+            width: 100%; border-collapse: collapse; font-size: 13px;
+            border: 1px solid var(--neutral-50); margin-bottom: 16px;
+        }
+        .rec-table thead th {
+            background: var(--neutral-25); padding: 7px 10px; text-align: left;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.7px; color: var(--text-normal);
+            border-bottom: 2px solid var(--neutral-200); white-space: nowrap;
+        }
+        .rec-table tbody td {
+            padding: 8px 10px; border-bottom: 1px solid var(--neutral-50);
+            color: var(--text-light); font-size: 13px; vertical-align: top;
+        }
+        .rec-table tbody tr:last-child td { border-bottom: none; }
+        .rec-table tbody tr:hover td { background: #fafbfc; }
+        .rec-link { color: var(--primary-600); cursor: pointer; }
+        .rec-link:hover { text-decoration: underline; }
+        .rec-sub-heading {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.7px; color: var(--text-light);
+            padding: 12px 0 6px; display: block;
+        }
+
         /* ── Duplicate Properties Side Panel ── */
         .dup-sheet-overlay {
             display: none; position: fixed; inset: 0;
@@ -2259,6 +2387,163 @@
     </div>
 </footer>
 
+<!-- ── Record Profile Side Panel ── -->
+<div class="rec-sheet-overlay" id="rec-sheet-overlay"></div>
+<div class="rec-sheet" id="rec-sheet" role="dialog" aria-modal="true">
+
+    <!-- Topbar -->
+    <div class="rec-topbar">
+        <button class="rec-back-btn" id="rec-sheet-back" type="button">
+            <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <div class="rec-topbar-title-area">
+            <div class="rec-topbar-title">
+                Profile Details for <span id="rec-title-name" style="font-weight:600"></span>
+                <span class="rec-match-badge">Confirmed Match</span>
+            </div>
+            <div class="rec-topbar-sub">Snapshot created on 03/17/2026</div>
+        </div>
+        <div class="rec-topbar-actions">
+            <button class="rec-act-btn" type="button">Profile Audit</button>
+            <button class="rec-act-btn" type="button">Download</button>
+            <button class="rec-act-btn" type="button">Alert Bell</button>
+            <button class="rec-act-btn primary-btn" type="button">Navigate</button>
+        </div>
+    </div>
+
+    <!-- Name / country bar -->
+    <div class="rec-namebar">
+        <div class="rec-namebar-item">
+            <span class="rec-namebar-label">Name</span>
+            <span class="rec-namebar-val" id="rec-bar-name"></span>
+        </div>
+        <div class="rec-namebar-item">
+            <span class="rec-namebar-label">Country / Territory</span>
+            <span class="rec-namebar-val" id="rec-bar-country"></span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="rec-tabs">
+        <button class="rec-tab active" type="button">Summary</button>
+        <button class="rec-tab" type="button">Close Associated / Related Entities <span class="rec-tab-dot amber"></span></button>
+        <button class="rec-tab" type="button">Watchlist <span class="rec-tab-dot amber"></span></button>
+        <button class="rec-tab" type="button">AM <span class="rec-tab-dot amber"></span></button>
+        <button class="rec-tab" type="button">SOC <span class="rec-tab-dot red"></span></button>
+    </div>
+
+    <!-- Content -->
+    <div class="rec-content">
+
+        <!-- Primary Name + Profile ID -->
+        <div class="rec-meta-row">
+            <div class="rec-meta-item">
+                <span class="rec-meta-label">Primary Name</span>
+                <span class="rec-meta-val" id="rec-primary-name"></span>
+            </div>
+            <div class="rec-meta-item">
+                <span class="rec-meta-label">Profile ID</span>
+                <span class="rec-meta-val" id="rec-profile-id"></span>
+            </div>
+        </div>
+
+        <!-- Country/Territory Details + Dates -->
+        <div class="rec-two-col">
+            <div class="rec-section">
+                <div class="rec-section-title">Country / Territory details</div>
+                <div class="rec-table-wrap">
+                    <table class="rec-table">
+                        <thead><tr><th>Type</th><th>Country / Territory</th></tr></thead>
+                        <tbody id="rec-country-tbody">
+                            <tr><td>Affiliation</td><td>United States</td></tr>
+                            <tr><td>Ownership</td><td>United States</td></tr>
+                            <tr><td>Country of Registration</td><td>United States</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="rec-section">
+                <div class="rec-section-title">Dates</div>
+                <div class="rec-table-wrap">
+                    <table class="rec-table">
+                        <thead><tr><th>Type</th><th>Date</th></tr></thead>
+                        <tbody id="rec-dates-tbody">
+                            <tr><td>Date of Registration</td><td>12 Mar 2005</td></tr>
+                            <tr><td>Date business established</td><td>2005</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Names -->
+        <div class="rec-section">
+            <div class="rec-section-title">Names</div>
+            <span class="rec-sub-heading">Primary Name</span>
+            <div class="rec-table-wrap">
+                <table class="rec-table">
+                    <thead><tr><th>Prefix</th><th>Name</th><th>Suffix</th><th>Original Script Name</th><th>Language</th></tr></thead>
+                    <tbody>
+                        <tr><td>—</td><td id="rec-names-primary" style="font-weight:500;color:var(--text-normal)"></td><td>—</td><td>—</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <span class="rec-sub-heading">Also Known As</span>
+            <div class="rec-table-wrap">
+                <table class="rec-table">
+                    <thead><tr><th>Prefix</th><th>Name</th><th>Suffix</th><th>Original Script Name</th><th>Language</th></tr></thead>
+                    <tbody id="rec-aka-tbody">
+                        <tr><td>—</td><td>Inc.</td><td>—</td><td>—</td><td>—</td></tr>
+                        <tr><td>—</td><td id="rec-names-short"></td><td>—</td><td>—</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <span class="rec-sub-heading">Formerly Known As</span>
+            <div class="rec-table-wrap">
+                <table class="rec-table">
+                    <thead><tr><th>Prefix</th><th>Name</th><th>Suffix</th><th>Original Script Name</th><th>Language</th></tr></thead>
+                    <tbody>
+                        <tr><td colspan="5" style="color:var(--neutral-400);font-style:italic">No records found</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Addresses -->
+        <div class="rec-section">
+            <div class="rec-section-title">Addresses</div>
+            <div class="rec-table-wrap">
+                <table class="rec-table">
+                    <thead><tr><th>Address</th><th>City</th><th>Zip Code</th><th>Country / Territory</th><th>URL</th></tr></thead>
+                    <tbody id="rec-addr-tbody">
+                        <tr><td id="rec-addr-street"></td><td id="rec-addr-city"></td><td id="rec-addr-zip"></td><td id="rec-addr-country2"></td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ID Numbers -->
+        <div class="rec-section">
+            <div class="rec-section-title">ID Numbers</div>
+            <div class="rec-table-wrap">
+                <table class="rec-table">
+                    <thead><tr><th>Type</th><th>Number</th><th>Notes</th></tr></thead>
+                    <tbody id="rec-ids-tbody">
+                        <tr><td>Company Identification No.</td><td id="rec-id-company"></td><td>—</td></tr>
+                        <tr><td>DUNS Number</td><td id="rec-id-duns"></td><td>—</td></tr>
+                        <tr><td>NACE (European Union Economic Activity Classification Code)</td><td>28.22</td><td>—</td></tr>
+                        <tr><td>National Tax No.</td><td id="rec-id-tax"></td><td>—</td></tr>
+                        <tr><td>North American Industry Classification System (NAICS)</td><td>3324</td><td>—</td></tr>
+                        <tr><td>Internal Reference or ID</td><td id="rec-id-internal"></td><td>—</td></tr>
+                        <tr><td>Trade Licence or Commercial Licence Number</td><td>—</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /.rec-content -->
+</div><!-- /.rec-sheet -->
+
 <!-- ── Duplicate Check: Properties Side Panel ── -->
 <div class="dup-sheet-overlay" id="dup-sheet-overlay"></div>
 <div class="dup-sheet" id="dup-sheet" role="dialog" aria-modal="true">
@@ -2821,6 +3106,83 @@ document.getElementById('ac-ob-country').addEventListener('change', () => {
     document.getElementById('ac-ob-block-country').classList.remove('has-error');
 });
 document.getElementById('ac-btn-4-back').addEventListener('click', () => openAc(3));
+/* ══════════════════════ Record Profile Side Panel ══════════════════════ */
+const REC_DATA = {
+    'Initech Inc': {
+        country: 'United States', primaryName: 'Initech Inc',
+        profileId: '8024130', nameShort: 'Initech',
+        addr: { street: '1033 US Highway 46 Ste 201', city: 'Clifton', zip: '07013-2474', country: 'United States' },
+        ids: { company: '1027703008200', duns: '808241405', tax: '7709614944', internal: 'INT-0001' }
+    },
+    'INITECH Ltd': {
+        country: 'United Kingdom', primaryName: 'INITECH Ltd',
+        profileId: '9318742', nameShort: 'Initech',
+        addr: { street: '14 Berkeley Street', city: 'London', zip: 'W1J 8DX', country: 'United Kingdom' },
+        ids: { company: '0482919200', duns: '204329382', tax: 'GB123456789', internal: 'INT-0002' }
+    }
+};
+
+(function () {
+    const sheet   = document.getElementById('rec-sheet');
+    const overlay = document.getElementById('rec-sheet-overlay');
+
+    function setEl(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val || '—';
+    }
+
+    function openRecSheet(name) {
+        const d = REC_DATA[name] || {
+            country: '—', primaryName: name, profileId: '—',
+            nameShort: name, addr: { street: '—', city: '—', zip: '—', country: '—' },
+            ids: { company: '—', duns: '—', tax: '—', internal: '—' }
+        };
+        setEl('rec-title-name',    name);
+        setEl('rec-bar-name',      d.primaryName);
+        setEl('rec-bar-country',   d.country);
+        setEl('rec-primary-name',  d.primaryName);
+        setEl('rec-profile-id',    d.profileId);
+        setEl('rec-names-primary', d.primaryName);
+        setEl('rec-names-short',   d.nameShort);
+        setEl('rec-addr-street',   d.addr.street);
+        setEl('rec-addr-city',     d.addr.city);
+        setEl('rec-addr-zip',      d.addr.zip);
+        setEl('rec-addr-country2', d.addr.country);
+        setEl('rec-id-company',    d.ids.company);
+        setEl('rec-id-duns',       d.ids.duns);
+        setEl('rec-id-tax',        d.ids.tax);
+        setEl('rec-id-internal',   d.ids.internal);
+
+        sheet.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeRecSheet() {
+        sheet.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('rec-sheet-back').addEventListener('click', closeRecSheet);
+    overlay.addEventListener('click', closeRecSheet);
+
+    // Tab switching (visual only)
+    document.querySelectorAll('.rec-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.rec-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+
+    // Trigger: clicking a cell-link in the dup table
+    document.addEventListener('click', e => {
+        const link = e.target.closest('.dup-table .cell-link');
+        if (!link) return;
+        e.preventDefault();
+        openRecSheet(link.textContent.trim());
+    });
+})();
+
 /* ══════════════════════ Duplicate Properties Side Panel ══════════════════════ */
 const DUP_PROPERTIES = [
     // identity
