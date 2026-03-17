@@ -1117,9 +1117,16 @@
         .type-cards-sel { grid-template-columns: 1fr 1fr 1fr; }
 
         /* ── Hide steps until type is selected ── */
+        /* Stepper: hide the step bar and card */
         .wizard-wrap.type-not-selected .stepper,
-        .wizard-wrap.type-not-selected .form-card,
-        .wizard-wrap.type-not-selected .accordion { display: none; }
+        .wizard-wrap.type-not-selected .form-card { display: none; }
+        /* Accordion: hide items 2-4, and hide the step-1 header (show only body) */
+        .wizard-wrap.type-not-selected #ac-2,
+        .wizard-wrap.type-not-selected #ac-3,
+        .wizard-wrap.type-not-selected #ac-4 { display: none; }
+        .wizard-wrap.type-not-selected #ac-1 { border: none; box-shadow: none; }
+        .wizard-wrap.type-not-selected #ac-1 .ac-header-btn { display: none; }
+        .wizard-wrap.type-not-selected #ac-1 .ac-body { border-top: none; padding: 0; }
 
         /* ── Step-3 hide for person/unknown ── */
         .hide-step3 .step-node[data-step="3"],
