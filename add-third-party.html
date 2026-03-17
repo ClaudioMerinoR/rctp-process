@@ -2091,29 +2091,24 @@
                     <div class="ob-blocks">
 
                         <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Person Third Party Legal Name</span><span class="ob-req">*</span></div>
+                            <div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Legal Name of the Third Party</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Full legal name of the individual">info</span></div>
                             <input class="ob-input" id="ob-p-legal-name" type="text" readonly tabindex="-1">
                         </div>
 
                         <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name / Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div>
-                            <input class="ob-input" id="ob-p-alias" type="text" placeholder="e.g. J. Smith">
+                            <div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name/Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div>
+                            <input class="ob-input" id="ob-p-alias" type="text" placeholder="Please select">
                         </div>
 
                         <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Year of Birth</span><span class="material-icons-outlined ob-info" title="Year the individual was born">info</span></div>
-                            <input class="ob-input" id="ob-p-yob" type="text" placeholder="e.g. 1980">
-                        </div>
-
-                        <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Business Address</span><span class="material-icons-outlined ob-info" title="Primary business or residential address">info</span></div>
+                            <div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Business Address</span><span class="material-icons-outlined ob-info" title="Primary business or residential address">info</span></div>
                             <textarea class="ob-input ob-textarea" id="ob-p-address" placeholder="Enter address"></textarea>
                         </div>
 
                         <div class="ob-block" id="ob-p-block-country">
-                            <div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Country of Residence</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where the individual primarily resides">info</span></div>
+                            <div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Country/Territory of Residence</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where the individual primarily resides">info</span></div>
                             <select class="ob-input ob-select" id="ob-p-country">
-                                <option value="">Choose…</option>
+                                <option value="">Please select</option>
                                 <option>Argentina</option><option>Australia</option><option>Brazil</option>
                                 <option>Canada</option><option>China</option><option>France</option>
                                 <option>Germany</option><option>India</option><option>Italy</option>
@@ -2122,13 +2117,34 @@
                                 <option>Singapore</option><option>Spain</option><option>Sweden</option>
                                 <option>Switzerland</option><option>United Kingdom</option><option>United States</option>
                             </select>
-                            <div class="ob-error-msg">Country of residence is required.</div>
+                            <div class="ob-error-msg">Country/Territory of Residence is required.</div>
                         </div>
 
                         <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Industry / Sector</span></div>
+                            <div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Year of Birth</span></div>
+                            <select class="ob-input ob-select" id="ob-p-yob">
+                                <option value="">Please select</option>
+                                <option>2005</option><option>2000</option><option>1995</option><option>1990</option>
+                                <option>1985</option><option>1980</option><option>1975</option><option>1970</option>
+                                <option>1965</option><option>1960</option><option>1955</option><option>1950</option>
+                                <option>1945</option><option>1940</option><option>1935</option><option>1930</option>
+                                <option>1925</option><option>1920</option>
+                            </select>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Gender</span></div>
+                            <select class="ob-input ob-select" id="ob-p-gender">
+                                <option value="">Please select</option>
+                                <option>Female</option><option>Male</option>
+                                <option>Non-binary</option><option>Prefer not to say</option><option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="ob-block">
+                            <div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Industry/Sector</span></div>
                             <select class="ob-input ob-select" id="ob-p-industry">
-                                <option value="">Select an industry</option>
+                                <option value="">Please select</option>
                                 <option>Aerospace &amp; Defence</option><option>Agriculture</option>
                                 <option>Automotive</option><option>Banking &amp; Finance</option>
                                 <option>Chemicals</option><option>Construction</option>
@@ -2143,12 +2159,12 @@
                         </div>
 
                         <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Identification</span></div>
+                            <div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Identification</span></div>
                             <div class="ob-sub-grid">
                                 <div>
                                     <div class="ob-sub-label">ID Type</div>
                                     <select class="ob-input ob-select" id="ob-p-id-type">
-                                        <option value="">Select ID type</option>
+                                        <option value="">Please select</option>
                                         <option>Passport</option>
                                         <option>National ID</option>
                                         <option>Driver's Licence</option>
@@ -2165,7 +2181,7 @@
                         </div>
 
                         <div class="ob-block">
-                            <div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Your organisation's internal tracking reference">info</span></div>
+                            <div class="ob-block-head"><span class="ob-num">9.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Your organisation's internal tracking reference">info</span></div>
                             <input class="ob-input" id="ob-p-internal-ref" type="text" placeholder="e.g. SMP-0042">
                         </div>
 
@@ -2554,14 +2570,15 @@
                     <div id="ac4-person-form" style="display:none">
                     <div class="ob-section-label" style="padding-top:20px">Individual / Person</div>
                     <div class="ob-blocks">
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Person Third Party Legal Name</span><span class="ob-req">*</span></div><input class="ob-input" id="ac-ob-p-legal-name" type="text" readonly tabindex="-1"></div>
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name / Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div><input class="ob-input" id="ac-ob-p-alias" type="text" placeholder="e.g. J. Smith"></div>
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Year of Birth</span><span class="material-icons-outlined ob-info" title="Year the individual was born">info</span></div><input class="ob-input" id="ac-ob-p-yob" type="text" placeholder="e.g. 1980"></div>
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Business Address</span><span class="material-icons-outlined ob-info" title="Primary business or residential address">info</span></div><textarea class="ob-input ob-textarea" id="ac-ob-p-address" placeholder="Enter address"></textarea></div>
-                        <div class="ob-block" id="ac-ob-p-block-country"><div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Country of Residence</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where the individual primarily resides">info</span></div><select class="ob-input ob-select" id="ac-ob-p-country"><option value="">Choose…</option><option>Argentina</option><option>Australia</option><option>Brazil</option><option>Canada</option><option>China</option><option>France</option><option>Germany</option><option>India</option><option>Italy</option><option>Japan</option><option>Mexico</option><option>Netherlands</option><option>Republic of Korea</option><option>Russian Federation</option><option>Singapore</option><option>Spain</option><option>Sweden</option><option>Switzerland</option><option>United Kingdom</option><option>United States</option></select><div class="ob-error-msg">Country of residence is required.</div></div>
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Industry / Sector</span></div><select class="ob-input ob-select" id="ac-ob-p-industry"><option value="">Select an industry</option><option>Aerospace &amp; Defence</option><option>Agriculture</option><option>Automotive</option><option>Banking &amp; Finance</option><option>Chemicals</option><option>Construction</option><option>Consumer Goods</option><option>Education</option><option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option><option>Healthcare &amp; Pharmaceuticals</option><option>Legal Services</option><option>Logistics &amp; Transportation</option><option>Manufacturing</option><option>Professional Services</option><option>Real Estate</option><option>Retail</option><option>Technology</option><option>Telecommunications</option></select></div>
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Identification</span></div><div class="ob-sub-grid"><div><div class="ob-sub-label">ID Type</div><select class="ob-input ob-select" id="ac-ob-p-id-type"><option value="">Select ID type</option><option>Passport</option><option>National ID</option><option>Driver's Licence</option><option>Tax Code</option><option>VAT Number</option><option>Social Security Number</option></select></div><div><div class="ob-sub-label">ID Value</div><input class="ob-input" id="ac-ob-p-id-value" type="text" placeholder="Enter identifier value"></div></div></div>
-                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-p-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">1.</span><span class="ob-label">Legal Name of the Third Party</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Full legal name of the individual">info</span></div><input class="ob-input" id="ac-ob-p-legal-name" type="text" readonly tabindex="-1"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">2.</span><span class="ob-label">Other Known Name/Alias</span><span class="material-icons-outlined ob-info" title="Alternative names or aliases">info</span></div><input class="ob-input" id="ac-ob-p-alias" type="text" placeholder="Please select"></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">3.</span><span class="ob-label">Business Address</span><span class="material-icons-outlined ob-info" title="Primary business or residential address">info</span></div><textarea class="ob-input ob-textarea" id="ac-ob-p-address" placeholder="Enter address"></textarea></div>
+                        <div class="ob-block" id="ac-ob-p-block-country"><div class="ob-block-head"><span class="ob-num">4.</span><span class="ob-label">Country/Territory of Residence</span><span class="ob-req">*</span><span class="material-icons-outlined ob-info" title="Country where the individual primarily resides">info</span></div><select class="ob-input ob-select" id="ac-ob-p-country"><option value="">Please select</option><option>Argentina</option><option>Australia</option><option>Brazil</option><option>Canada</option><option>China</option><option>France</option><option>Germany</option><option>India</option><option>Italy</option><option>Japan</option><option>Mexico</option><option>Netherlands</option><option>Republic of Korea</option><option>Russian Federation</option><option>Singapore</option><option>Spain</option><option>Sweden</option><option>Switzerland</option><option>United Kingdom</option><option>United States</option></select><div class="ob-error-msg">Country/Territory of Residence is required.</div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">5.</span><span class="ob-label">Year of Birth</span></div><select class="ob-input ob-select" id="ac-ob-p-yob"><option value="">Please select</option><option>2005</option><option>2000</option><option>1995</option><option>1990</option><option>1985</option><option>1980</option><option>1975</option><option>1970</option><option>1965</option><option>1960</option><option>1955</option><option>1950</option><option>1945</option><option>1940</option><option>1935</option><option>1930</option><option>1925</option><option>1920</option></select></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">6.</span><span class="ob-label">Gender</span></div><select class="ob-input ob-select" id="ac-ob-p-gender"><option value="">Please select</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option><option>Other</option></select></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">7.</span><span class="ob-label">Industry/Sector</span></div><select class="ob-input ob-select" id="ac-ob-p-industry"><option value="">Please select</option><option>Aerospace &amp; Defence</option><option>Agriculture</option><option>Automotive</option><option>Banking &amp; Finance</option><option>Chemicals</option><option>Construction</option><option>Consumer Goods</option><option>Education</option><option>Energy &amp; Utilities</option><option>Gas &amp; Oil</option><option>Healthcare &amp; Pharmaceuticals</option><option>Legal Services</option><option>Logistics &amp; Transportation</option><option>Manufacturing</option><option>Professional Services</option><option>Real Estate</option><option>Retail</option><option>Technology</option><option>Telecommunications</option></select></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">8.</span><span class="ob-label">Identification</span></div><div class="ob-sub-grid"><div><div class="ob-sub-label">ID Type</div><select class="ob-input ob-select" id="ac-ob-p-id-type"><option value="">Please select</option><option>Passport</option><option>National ID</option><option>Driver's Licence</option><option>Tax Code</option><option>Social Security Number</option><option>VAT Number</option></select></div><div><div class="ob-sub-label">ID Value</div><input class="ob-input" id="ac-ob-p-id-value" type="text" placeholder="Enter identifier value"></div></div></div>
+                        <div class="ob-block"><div class="ob-block-head"><span class="ob-num">9.</span><span class="ob-label">Internal Reference or ID</span><span class="material-icons-outlined ob-info" title="Internal tracking reference">info</span></div><input class="ob-input" id="ac-ob-p-internal-ref" type="text" placeholder="e.g. SMP-0042"></div>
                     </div>
                     </div><!-- /#ac4-person-form -->
 
