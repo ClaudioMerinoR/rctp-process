@@ -1117,16 +1117,20 @@
         .type-cards-sel { grid-template-columns: 1fr 1fr 1fr; }
 
         /* ── Hide steps until type is selected ── */
-        /* Stepper: hide the step bar and card */
         .wizard-wrap.type-not-selected .stepper,
-        .wizard-wrap.type-not-selected .form-card { display: none; }
-        /* Accordion: hide items 2-4, and hide the step-1 header (show only body) */
+        .wizard-wrap.type-not-selected .form-card,
         .wizard-wrap.type-not-selected #ac-2,
         .wizard-wrap.type-not-selected #ac-3,
         .wizard-wrap.type-not-selected #ac-4 { display: none; }
-        .wizard-wrap.type-not-selected #ac-1 { border: none; box-shadow: none; }
-        .wizard-wrap.type-not-selected #ac-1 .ac-header-btn { display: none; }
-        .wizard-wrap.type-not-selected #ac-1 .ac-body { border-top: none; padding: 0; }
+
+        /* ── Form body slide-in animation ── */
+        @keyframes formSlideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .form-body-open {
+            animation: formSlideIn 0.3s ease forwards;
+        }
 
         /* ── Step-3 hide for person/unknown ── */
         .hide-step3 .step-node[data-step="3"],
@@ -3007,11 +3011,17 @@ function configureWizard(type) {
     // Remove the no-type class to reveal steps
     document.querySelector('.wizard-wrap')?.classList.remove('type-not-selected');
 
-    // Show the form body (hidden until first type selection)
-    const s1fb = document.getElementById('s1-form-body');
-    const a1fb = document.getElementById('a1-form-body');
-    if (s1fb) s1fb.style.display = '';
-    if (a1fb) a1fb.style.display = '';
+    // Show and animate the form body
+    ['s1-form-body', 'a1-form-body'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const wasHidden = el.style.display === 'none' || el.style.display === '';
+        el.style.display = '';
+        // Re-trigger animation on each type change
+        el.classList.remove('form-body-open');
+        void el.offsetWidth; // force reflow
+        el.classList.add('form-body-open');
+    });
 
     // Show appropriate name fields in both views
     showNameFields(type, 's1');
