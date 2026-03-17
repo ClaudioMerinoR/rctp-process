@@ -1506,7 +1506,7 @@
                     <div class="duplicate-banner">
                         <span class="material-icons-outlined">warning_amber</span>
                         <div class="duplicate-banner-text">
-                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist in the system. Please review them to avoid creating duplicates.
+                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist in the system. If one of the matches above is the same third party, use an existing record instead of creating a new one.
                         </div>
                     </div>
 
@@ -1549,23 +1549,6 @@
                         </table>
                     </div>
 
-                    <div class="section-heading">How would you like to proceed?</div>
-                    <div class="choice-group" id="dup-choice-group">
-                        <label class="choice-item selected" id="choice-new">
-                            <input type="radio" name="dup-choice" value="new" checked>
-                            <div class="choice-item-text">
-                                <div class="choice-item-label">This is a different third party — continue as new</div>
-                                <div class="choice-item-desc">The matches above are different entities. Proceed with creating a new record.</div>
-                            </div>
-                        </label>
-                        <label class="choice-item" id="choice-existing">
-                            <input type="radio" name="dup-choice" value="existing">
-                            <div class="choice-item-text">
-                                <div class="choice-item-label">One of the matches above is the same third party</div>
-                                <div class="choice-item-desc">Use an existing record instead of creating a new one. Click the name above to view it.</div>
-                            </div>
-                        </label>
-                    </div>
 
                 </div>
                 <div class="card-footer">
@@ -2120,7 +2103,7 @@
                     <div class="duplicate-banner" style="margin-top:20px">
                         <span class="material-icons-outlined">warning_amber</span>
                         <div class="duplicate-banner-text">
-                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist. Review them before continuing.
+                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist in the system. If one of the matches above is the same third party, use an existing record instead of creating a new one.
                         </div>
                     </div>
                     <div class="dup-table-wrap">
@@ -2131,23 +2114,6 @@
                                 <tr><td><span class="cell-link">INITECH Ltd</span></td><td>Claudio Merino</td><td>Americas</td><td>Standard RCTP</td><td><span class="status-badge status-pending">Pending Approval</span></td><td>INT-0002</td><td>Inactive</td><td><button class="more-btn"><span class="material-icons-outlined" style="font-size:18px">more_horiz</span></button></td></tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="section-heading">How would you like to proceed?</div>
-                    <div class="choice-group" id="ac-choice-group">
-                        <label class="choice-item selected" id="ac-choice-new">
-                            <input type="radio" name="ac-dup-choice" value="new" checked>
-                            <div class="choice-item-text">
-                                <div class="choice-item-label">This is a different third party — continue as new</div>
-                                <div class="choice-item-desc">The matches above are different entities. Proceed with creating a new record.</div>
-                            </div>
-                        </label>
-                        <label class="choice-item" id="ac-choice-existing">
-                            <input type="radio" name="ac-dup-choice" value="existing">
-                            <div class="choice-item-text">
-                                <div class="choice-item-label">One of the matches above is the same third party</div>
-                                <div class="choice-item-desc">Use an existing record instead of creating a new one.</div>
-                            </div>
-                        </label>
                     </div>
                     <div class="ac-footer">
                         <button class="btn btn-outline" id="ac-btn-2-back">
@@ -2631,19 +2597,9 @@ document.getElementById('s1-name').addEventListener('input', () =>
 
 /* ══════════════════════ Step 2 ══════════════════════ */
 
-// Choice items
-document.querySelectorAll('.choice-item').forEach(item => {
-    item.addEventListener('click', () => {
-        document.querySelectorAll('.choice-item').forEach(c => c.classList.remove('selected'));
-        item.classList.add('selected');
-        item.querySelector('input[type="radio"]').checked = true;
-    });
-});
 
 document.getElementById('btn-step2-back').addEventListener('click', () => goToStep(1));
 document.getElementById('btn-step2-continue').addEventListener('click', () => {
-    const choice = document.querySelector('input[name="dup-choice"]:checked')?.value;
-    if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
     goToStep(3);
 });
 
@@ -2757,14 +2713,6 @@ document.querySelectorAll('.ac-header-btn').forEach(btn => {
     });
 });
 
-// ── Choice items in step 2 ──
-document.querySelectorAll('#ac-choice-group .choice-item').forEach(item => {
-    item.addEventListener('click', () => {
-        document.querySelectorAll('#ac-choice-group .choice-item').forEach(c => c.classList.remove('selected'));
-        item.classList.add('selected');
-        item.querySelector('input[type="radio"]').checked = true;
-    });
-});
 
 // ── Type cards in accordion ──
 document.querySelectorAll('#ac-type-cards .type-card').forEach(card => {
@@ -2825,8 +2773,6 @@ document.getElementById('a1-name').addEventListener('input', () =>
 // ── Step 2 ──
 document.getElementById('ac-btn-2-back').addEventListener('click', () => openAc(1));
 document.getElementById('ac-btn-2').addEventListener('click', () => {
-    const choice = document.querySelector('input[name="ac-dup-choice"]:checked')?.value;
-    if (choice === 'existing') { window.location.href = 'third-parties.html'; return; }
     completeAc(2, 'Continued as new third party');
     openAc(3);
 });
