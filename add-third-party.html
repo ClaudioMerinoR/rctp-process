@@ -1111,6 +1111,15 @@
             flex-shrink: 0; margin-top: 1px;
         }
 
+        /* ── Type Selection Screen ── */
+        #type-selection-screen { margin-top: 16px; }
+        #type-selection-screen .section-heading { margin-bottom: 16px; }
+        .type-cards-sel { grid-template-columns: 1fr 1fr 1fr; }
+
+        /* ── Step-3 hide for person/unknown ── */
+        .hide-step3 .step-node[data-step="3"],
+        .hide-step3 #connector-2 { display: none; }
+
         /* ── View toggle bar ── */
         .view-toggle-bar {
             display: flex;
@@ -1383,6 +1392,53 @@
 <!-- ══ Page Body ══ -->
 <div class="page-body">
 
+    <!-- ══ Type Selection Screen ══ -->
+    <div id="type-selection-screen" style="margin-top:16px">
+        <div class="form-card">
+            <div class="card-header">
+                <div class="card-title">Add New Third Party</div>
+                <div class="card-subtitle">Select the type of third party you want to add to begin the onboarding process.</div>
+            </div>
+            <div class="content-divider"></div>
+            <div class="card-body">
+                <div class="section-heading">Third Party Type <span style="color:var(--alert-500)">*</span></div>
+                <div class="type-cards" id="sel-type-cards">
+                    <div class="type-card" data-type="entity" tabindex="0">
+                        <span class="material-icons-outlined type-card-check">check_circle</span>
+                        <div class="type-card-icon-wrap"><span class="material-icons-outlined">business</span></div>
+                        <div class="type-card-title">Entity / Organisation</div>
+                        <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
+                    </div>
+                    <div class="type-card" data-type="person" tabindex="0">
+                        <span class="material-icons-outlined type-card-check">check_circle</span>
+                        <div class="type-card-icon-wrap"><span class="material-icons-outlined">person</span></div>
+                        <div class="type-card-title">Individual / Person</div>
+                        <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
+                    </div>
+                    <div class="type-card" data-type="unknown" tabindex="0">
+                        <span class="material-icons-outlined type-card-check">check_circle</span>
+                        <div class="type-card-icon-wrap"><span class="material-icons-outlined">help_outline</span></div>
+                        <div class="type-card-title">Unknown</div>
+                        <div class="type-card-desc">The type of third party is not yet known or cannot be determined.</div>
+                    </div>
+                </div>
+                <p class="type-error-hint" id="sel-type-error">Please select a third party type.</p>
+            </div>
+            <div class="card-footer">
+                <div class="footer-left"></div>
+                <div class="footer-right">
+                    <a href="third-parties.html" class="btn btn-ghost">Cancel</a>
+                    <button class="btn btn-filled" id="btn-sel-continue" type="button">
+                        Continue <span class="material-icons-outlined">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Wizard (hidden until type selected) ══ -->
+    <div id="wizard-area" style="display:none">
+
     <!-- View toggle -->
     <div class="view-toggle-bar">
         <span class="view-toggle-label">View</span>
@@ -1451,48 +1507,58 @@
                 </div>
                 <div class="card-body">
 
-                    <!-- Type selection -->
-                    <div class="section-heading">Third Party Type <span style="color:var(--alert-500)">*</span></div>
-                    <div class="type-cards" id="s1-type-cards">
-                        <div class="type-card" data-type="entity" tabindex="0">
-                            <span class="material-icons-outlined type-card-check">check_circle</span>
-                            <div class="type-card-icon-wrap">
-                                <span class="material-icons-outlined">business</span>
-                            </div>
-                            <div class="type-card-title">Entity / Organisation</div>
-                            <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
-                        </div>
-                        <div class="type-card" data-type="person" tabindex="0">
-                            <span class="material-icons-outlined type-card-check">check_circle</span>
-                            <div class="type-card-icon-wrap">
-                                <span class="material-icons-outlined">person</span>
-                            </div>
-                            <div class="type-card-title">Individual / Person</div>
-                            <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
-                        </div>
-                        <div class="type-card" data-type="unknown" tabindex="0">
-                            <span class="material-icons-outlined type-card-check">check_circle</span>
-                            <div class="type-card-icon-wrap">
-                                <span class="material-icons-outlined">help_outline</span>
-                            </div>
-                            <div class="type-card-title">Unknown</div>
-                            <div class="type-card-desc">The type of third party is not yet known or cannot be determined.</div>
-                        </div>
-                    </div>
-                    <p class="type-error-hint" id="s1-type-error">Please select a third party type.</p>
-                    <div class="person-notice" id="s1-person-notice">
-                        <span class="material-icons-outlined">info</span>
-                        No duplicate check will be performed for individual records. Entity verification is also not applicable for persons — steps 2 and 3 will be automatically skipped.
-                    </div>
-
-                    <div class="section-heading" style="margin-top:28px">Summary</div>
+                    <div class="section-heading">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
 
-                        <!-- Third Party Name -->
+                        <!-- ENTITY name (shown for entity) -->
                         <div class="edit-field" id="s1-fg-name">
                             <label class="edit-label">Third Party Name <span class="req">*</span></label>
                             <input class="edit-input-ef" id="s1-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
                             <div class="field-error-msg">Third Party Name is required.</div>
+                        </div>
+                        <div id="s1-spacer-entity"></div>
+
+                        <!-- PERSON name fields (hidden by default) -->
+                        <div class="edit-field" id="s1-fg-firstname" style="display:none">
+                            <label class="edit-label">First Name <span class="req">*</span></label>
+                            <input class="edit-input-ef" id="s1-firstname" type="text" placeholder="Enter first name" autocomplete="off">
+                            <div class="field-error-msg">First name is required.</div>
+                        </div>
+                        <div class="edit-field" id="s1-fg-lastname" style="display:none">
+                            <label class="edit-label">Last Name <span class="req">*</span></label>
+                            <input class="edit-input-ef" id="s1-lastname" type="text" placeholder="Enter last name" autocomplete="off">
+                            <div class="field-error-msg">Last name is required.</div>
+                        </div>
+                        <div class="edit-field" id="s1-fg-yob" style="display:none">
+                            <label class="edit-label">Year of Birth</label>
+                            <input class="edit-input-ef" id="s1-yob" type="text" placeholder="e.g. 1985">
+                        </div>
+                        <div class="edit-field" id="s1-fg-country-res" style="display:none">
+                            <label class="edit-label">Country of Residence</label>
+                            <select class="edit-input-ef" id="s1-country-res" style="appearance:auto;-webkit-appearance:auto">
+                                <option value="">Select country</option>
+                                <option>Argentina</option><option>Australia</option><option>Brazil</option>
+                                <option>Canada</option><option>China</option><option>France</option>
+                                <option>Germany</option><option>India</option><option>Italy</option>
+                                <option>Mexico</option><option>Netherlands</option><option>Singapore</option>
+                                <option>Spain</option><option>United Kingdom</option><option>United States</option>
+                            </select>
+                        </div>
+
+                        <!-- UNKNOWN name fields (hidden by default) -->
+                        <div class="edit-field" id="s1-fg-unknown-name" style="display:none">
+                            <label class="edit-label">Known Name / Alias</label>
+                            <input class="edit-input-ef" id="s1-unknown-name" type="text" placeholder="Enter known name if available" autocomplete="off">
+                        </div>
+                        <div class="edit-field" id="s1-fg-unknown-type" style="display:none">
+                            <label class="edit-label">Unknown Third Party Type</label>
+                            <select class="edit-input-ef" id="s1-unknown-type" style="appearance:auto;-webkit-appearance:auto">
+                                <option value="">Select type</option>
+                                <option>Unknown Individual</option>
+                                <option>Unknown Entity</option>
+                                <option>Unknown Organisation</option>
+                                <option>Other</option>
+                            </select>
                         </div>
 
                         <!-- Active -->
@@ -2058,40 +2124,58 @@
                     <span class="material-icons-outlined ac-chevron">expand_more</span>
                 </button>
                 <div class="ac-body">
-                    <div class="section-heading" style="margin-top:20px">Third Party Type <span style="color:var(--alert-500)">*</span></div>
-                    <div class="type-cards" id="ac-type-cards">
-                        <div class="type-card" data-type="entity" tabindex="0">
-                            <span class="material-icons-outlined type-card-check">check_circle</span>
-                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">business</span></div>
-                            <div class="type-card-title">Entity / Organisation</div>
-                            <div class="type-card-desc">A company, firm, partnership or other registered legal entity.</div>
-                        </div>
-                        <div class="type-card" data-type="person" tabindex="0">
-                            <span class="material-icons-outlined type-card-check">check_circle</span>
-                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">person</span></div>
-                            <div class="type-card-title">Individual / Person</div>
-                            <div class="type-card-desc">A natural person acting as a sole trader, contractor or individual.</div>
-                        </div>
-                        <div class="type-card" data-type="unknown" tabindex="0">
-                            <span class="material-icons-outlined type-card-check">check_circle</span>
-                            <div class="type-card-icon-wrap"><span class="material-icons-outlined">help_outline</span></div>
-                            <div class="type-card-title">Unknown</div>
-                            <div class="type-card-desc">The type of third party is not yet known or cannot be determined.</div>
-                        </div>
-                    </div>
-                    <p class="type-error-hint" id="a1-type-error">Please select a third party type.</p>
-                    <div class="person-notice" id="a1-person-notice">
-                        <span class="material-icons-outlined">info</span>
-                        No duplicate check will be performed for individual records. Entity verification is also not applicable for persons — steps 2 and 3 will be automatically skipped.
-                    </div>
-
-                    <div class="section-heading" style="margin-top:28px">Summary</div>
+                    <div class="section-heading" style="margin-top:20px">Summary</div>
                     <div class="edit-grid" style="margin-top:16px">
 
+                        <!-- ENTITY name -->
                         <div class="edit-field" id="a1-fg-name">
                             <label class="edit-label">Third Party Name <span class="req">*</span></label>
                             <input class="edit-input-ef" id="a1-name" type="text" placeholder="Enter the full legal name" autocomplete="off">
                             <div class="field-error-msg">Third Party Name is required.</div>
+                        </div>
+                        <div id="a1-spacer-entity"></div>
+
+                        <!-- PERSON name fields (hidden by default) -->
+                        <div class="edit-field" id="a1-fg-firstname" style="display:none">
+                            <label class="edit-label">First Name <span class="req">*</span></label>
+                            <input class="edit-input-ef" id="a1-firstname" type="text" placeholder="Enter first name" autocomplete="off">
+                            <div class="field-error-msg">First name is required.</div>
+                        </div>
+                        <div class="edit-field" id="a1-fg-lastname" style="display:none">
+                            <label class="edit-label">Last Name <span class="req">*</span></label>
+                            <input class="edit-input-ef" id="a1-lastname" type="text" placeholder="Enter last name" autocomplete="off">
+                            <div class="field-error-msg">Last name is required.</div>
+                        </div>
+                        <div class="edit-field" id="a1-fg-yob" style="display:none">
+                            <label class="edit-label">Year of Birth</label>
+                            <input class="edit-input-ef" id="a1-yob" type="text" placeholder="e.g. 1985">
+                        </div>
+                        <div class="edit-field" id="a1-fg-country-res" style="display:none">
+                            <label class="edit-label">Country of Residence</label>
+                            <select class="edit-input-ef" id="a1-country-res" style="appearance:auto;-webkit-appearance:auto">
+                                <option value="">Select country</option>
+                                <option>Argentina</option><option>Australia</option><option>Brazil</option>
+                                <option>Canada</option><option>China</option><option>France</option>
+                                <option>Germany</option><option>India</option><option>Italy</option>
+                                <option>Mexico</option><option>Netherlands</option><option>Singapore</option>
+                                <option>Spain</option><option>United Kingdom</option><option>United States</option>
+                            </select>
+                        </div>
+
+                        <!-- UNKNOWN name fields (hidden by default) -->
+                        <div class="edit-field" id="a1-fg-unknown-name" style="display:none">
+                            <label class="edit-label">Known Name / Alias</label>
+                            <input class="edit-input-ef" id="a1-unknown-name" type="text" placeholder="Enter known name if available" autocomplete="off">
+                        </div>
+                        <div class="edit-field" id="a1-fg-unknown-type" style="display:none">
+                            <label class="edit-label">Unknown Third Party Type</label>
+                            <select class="edit-input-ef" id="a1-unknown-type" style="appearance:auto;-webkit-appearance:auto">
+                                <option value="">Select type</option>
+                                <option>Unknown Individual</option>
+                                <option>Unknown Entity</option>
+                                <option>Unknown Organisation</option>
+                                <option>Other</option>
+                            </select>
                         </div>
 
                         <div class="edit-field">
@@ -2368,6 +2452,7 @@
         </div><!-- /#accordion-view -->
 
     </div><!-- /.wizard-wrap -->
+    </div><!-- /#wizard-area -->
 
 </div><!-- /.page-body -->
 
@@ -2824,42 +2909,103 @@ function goToStep(n) {
     document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-/* ══════════════════════ Step 1 ══════════════════════ */
+/* ══════════════════════ Type Selection Screen ══════════════════════ */
 
-// Type card selection (stepper — scoped to #s1-type-cards)
-document.querySelectorAll('#s1-type-cards .type-card').forEach(card => {
+document.querySelectorAll('#sel-type-cards .type-card').forEach(card => {
     card.addEventListener('click', () => {
-        document.querySelectorAll('#s1-type-cards .type-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('#sel-type-cards .type-card').forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
-        selectedType = card.dataset.type;
-        document.getElementById('s1-type-cards').classList.remove('type-error');
-        document.getElementById('s1-person-notice').classList.toggle('visible', selectedType === 'person');
+        document.getElementById('sel-type-cards').classList.remove('type-error');
     });
     card.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
     });
 });
 
-// Step 1 → Continue (stepper)
+document.getElementById('btn-sel-continue').addEventListener('click', () => {
+    const picked = document.querySelector('#sel-type-cards .type-card.selected');
+    if (!picked) {
+        document.getElementById('sel-type-cards').classList.add('type-error');
+        return;
+    }
+    const type = picked.dataset.type;
+    selectedType   = type;
+    acSelectedType = type;
+    configureWizard(type);
+    document.getElementById('type-selection-screen').style.display = 'none';
+    document.getElementById('wizard-area').style.display = '';
+});
+
+function configureWizard(type) {
+    const is3step = (type === 'person' || type === 'unknown');
+
+    // Stepper: hide step-3 node and connector-2 for 3-step types
+    document.getElementById('stepper').classList.toggle('hide-step3', is3step);
+
+    // Accordion: hide ac-3 for 3-step types
+    document.getElementById('ac-3').style.display = is3step ? 'none' : '';
+
+    // Update step tags and badge numbers for 3-step mode
+    document.querySelector('#panel-4 .card-step-tag').textContent = is3step ? 'Step 3 of 3' : 'Step 4 of 4';
+    document.querySelector('#ac-4 .ac-badge .ac-num').textContent = is3step ? '3' : '4';
+
+    // Show appropriate name fields in both views
+    showNameFields(type, 's1');
+    showNameFields(type, 'a1');
+}
+
+function showNameFields(type, p) {
+    const show = (id, visible) => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = visible ? '' : 'none';
+    };
+    show(p + '-fg-name',         type === 'entity');
+    show(p + '-spacer-entity',   type === 'entity');
+    show(p + '-fg-firstname',    type === 'person');
+    show(p + '-fg-lastname',     type === 'person');
+    show(p + '-fg-yob',          type === 'person');
+    show(p + '-fg-country-res',  type === 'person');
+    show(p + '-fg-unknown-name', type === 'unknown');
+    show(p + '-fg-unknown-type', type === 'unknown');
+}
+
+function getDisplayName(p) {
+    if (selectedType === 'entity')  return document.getElementById(p + '-name')?.value.trim() || '';
+    if (selectedType === 'person') {
+        const fn = document.getElementById(p + '-firstname')?.value.trim() || '';
+        const ln = document.getElementById(p + '-lastname')?.value.trim() || '';
+        return (fn + ' ' + ln).trim();
+    }
+    return document.getElementById(p + '-unknown-name')?.value.trim() || 'Unknown Third Party';
+}
+
+/* ══════════════════════ Step 1 ══════════════════════ */
+
+// Step 1 → Continue (stepper) — type-aware validation
 document.getElementById('btn-step1-continue').addEventListener('click', () => {
     let valid = true;
-    if (!selectedType) {
-        document.getElementById('s1-type-cards').classList.add('type-error');
-        valid = false;
-    } else {
-        document.getElementById('s1-type-cards').classList.remove('type-error');
+
+    if (selectedType === 'entity') {
+        const name = document.getElementById('s1-name').value.trim();
+        const fg   = document.getElementById('s1-fg-name');
+        if (!name) { fg.classList.add('has-error'); valid = false; }
+        else fg.classList.remove('has-error');
+    } else if (selectedType === 'person') {
+        ['s1-fg-firstname', 's1-fg-lastname'].forEach(id => {
+            const fg = document.getElementById(id);
+            const inp = fg?.querySelector('.edit-input-ef');
+            if (inp && !inp.value.trim()) { fg.classList.add('has-error'); valid = false; }
+            else fg?.classList.remove('has-error');
+        });
     }
-    const name = document.getElementById('s1-name').value.trim();
-    const fgName = document.getElementById('s1-fg-name');
-    if (!name) { fgName.classList.add('has-error'); valid = false; }
-    else fgName.classList.remove('has-error');
+    // Unknown: name optional
 
     const buHasTag = document.getElementById('s1-bu-tags').children.length > 0;
     const fgBu = document.getElementById('s1-fg-bu');
     if (!buHasTag) { fgBu.classList.add('has-error'); valid = false; }
     else fgBu.classList.remove('has-error');
 
-    const ownerVal  = document.getElementById('s1-owner-input').value.trim();
+    const ownerVal   = document.getElementById('s1-owner-input').value.trim();
     const ownerChips = document.getElementById('s1-owner-tags').children.length;
     const fgOwner = document.getElementById('s1-fg-owner');
     if (!ownerVal && !ownerChips) { fgOwner.classList.add('has-error'); valid = false; }
@@ -2867,28 +3013,25 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
 
     if (!valid) return;
 
-    document.getElementById('ob-legal-name').value = name;
-    if (selectedType === 'person') {
-        skippedSteps.add(2);
-        skippedSteps.add(3);
-        goToStep(4);
-    } else {
-        document.getElementById('dup-name-display').textContent = '"' + name + '"';
-        goToStep(2);
-    }
+    const displayName = getDisplayName('s1');
+    document.getElementById('ob-legal-name').value = displayName;
+    document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
+    goToStep(2);
 });
-document.getElementById('s1-name').addEventListener('input', () =>
-    document.getElementById('s1-fg-name').classList.remove('has-error'));
 
 /* ══════════════════════ Step 2 ══════════════════════ */
 
 
 document.getElementById('btn-step2-back').addEventListener('click', () => goToStep(1));
 document.getElementById('btn-step2-continue').addEventListener('click', () => {
-    showEvModal(
-        () => { goToStep(3); },                          // Continue → entity verification
-        () => { skippedSteps.add(3); goToStep(4); }     // Skip → skip step 3
-    );
+    if (selectedType === 'entity') {
+        showEvModal(
+            () => { goToStep(3); },
+            () => { skippedSteps.add(3); goToStep(4); }
+        );
+    } else {
+        goToStep(4); // Person/Unknown: no entity verification
+    }
 });
 
 /* ══════════════════════ Step 3 ══════════════════════ */
@@ -2930,7 +3073,9 @@ document.getElementById('btn-step3-save').addEventListener('click', () => {
 
 /* ══════════════════════ Step 4 ══════════════════════ */
 
-document.getElementById('btn-step4-back').addEventListener('click', () => goToStep(3));
+document.getElementById('btn-step4-back').addEventListener('click', () => {
+    if (selectedType === 'entity') goToStep(3); else goToStep(2);
+});
 
 document.getElementById('ob-country').addEventListener('change', () => {
     document.getElementById('ob-block-country').classList.remove('has-error');
@@ -3002,33 +3147,23 @@ document.querySelectorAll('.ac-header-btn').forEach(btn => {
 });
 
 
-// ── Type cards in accordion ──
-document.querySelectorAll('#ac-type-cards .type-card').forEach(card => {
-    card.addEventListener('click', () => {
-        document.querySelectorAll('#ac-type-cards .type-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        acSelectedType = card.dataset.type;
-        document.getElementById('ac-type-cards').classList.remove('type-error');
-        document.getElementById('a1-person-notice').classList.toggle('visible', acSelectedType === 'person');
-    });
-    card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
-    });
-});
-
 // ── Step 1 Continue (accordion) ──
 document.getElementById('ac-btn-1').addEventListener('click', () => {
     let valid = true;
-    if (!acSelectedType) {
-        document.getElementById('ac-type-cards').classList.add('type-error');
-        valid = false;
-    } else {
-        document.getElementById('ac-type-cards').classList.remove('type-error');
+
+    if (acSelectedType === 'entity') {
+        const name = document.getElementById('a1-name').value.trim();
+        const fg   = document.getElementById('a1-fg-name');
+        if (!name) { fg.classList.add('has-error'); valid = false; }
+        else fg.classList.remove('has-error');
+    } else if (acSelectedType === 'person') {
+        ['a1-fg-firstname', 'a1-fg-lastname'].forEach(id => {
+            const fg  = document.getElementById(id);
+            const inp = fg?.querySelector('.edit-input-ef');
+            if (inp && !inp.value.trim()) { fg.classList.add('has-error'); valid = false; }
+            else fg?.classList.remove('has-error');
+        });
     }
-    const name = document.getElementById('a1-name').value.trim();
-    const fgName = document.getElementById('a1-fg-name');
-    if (!name) { fgName.classList.add('has-error'); valid = false; }
-    else fgName.classList.remove('has-error');
 
     const buHasTag = document.getElementById('a1-bu-tags').children.length > 0;
     const fgBu = document.getElementById('a1-fg-bu');
@@ -3043,29 +3178,27 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
 
     if (!valid) return;
 
+    const displayName = getDisplayName('a1');
     const typeLabel = acSelectedType === 'entity' ? 'Entity' : acSelectedType === 'person' ? 'Individual' : 'Unknown';
-    completeAc(1, `${typeLabel} · ${name}`);
-    document.getElementById('ac-ob-legal-name').value = name;
-    if (acSelectedType === 'person') {
-        skipAc(2);
-        skipAc(3);
-        openAc(4);
-    } else {
-        document.getElementById('dup-name-display').textContent = '"' + name + '"';
-        openAc(2);
-    }
+    completeAc(1, `${typeLabel} · ${displayName}`);
+    document.getElementById('ac-ob-legal-name').value = displayName;
+    document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
+    openAc(2);
 });
-document.getElementById('a1-name').addEventListener('input', () =>
-    document.getElementById('a1-fg-name').classList.remove('has-error'));
 
 // ── Step 2 ──
 document.getElementById('ac-btn-2-back').addEventListener('click', () => openAc(1));
 document.getElementById('ac-btn-2').addEventListener('click', () => {
     completeAc(2, 'Continued as new third party');
-    showEvModal(
-        () => { openAc(3); },               // Continue → entity verification
-        () => { skipAc(3); openAc(4); }     // Skip → skip step 3
-    );
+    if (acSelectedType === 'entity') {
+        showEvModal(
+            () => { openAc(3); },
+            () => { skipAc(3); openAc(4); }
+        );
+    } else {
+        skipAc(3); // unlock ac-4
+        openAc(4); // Person/Unknown: no entity verification
+    }
 });
 
 // ── Step 3 ──
@@ -3105,7 +3238,9 @@ document.getElementById('ac-btn-3').addEventListener('click', () => {
 document.getElementById('ac-ob-country').addEventListener('change', () => {
     document.getElementById('ac-ob-block-country').classList.remove('has-error');
 });
-document.getElementById('ac-btn-4-back').addEventListener('click', () => openAc(3));
+document.getElementById('ac-btn-4-back').addEventListener('click', () => {
+    if (acSelectedType === 'entity') openAc(3); else openAc(2);
+});
 /* ══════════════════════ Record Profile Side Panel ══════════════════════ */
 const REC_DATA = {
     'Initech Inc': {
