@@ -2778,137 +2778,9 @@
         </div>
     </div>
 
-    <!-- Name / country bar -->
-    <div class="rec-namebar">
-        <div class="rec-namebar-item">
-            <span class="rec-namebar-label">Name</span>
-            <span class="rec-namebar-val" id="rec-bar-name"></span>
-        </div>
-        <div class="rec-namebar-item">
-            <span class="rec-namebar-label">Country / Territory</span>
-            <span class="rec-namebar-val" id="rec-bar-country"></span>
-        </div>
-    </div>
+    <!-- Summary iframe -->
+    <iframe id="rec-summary-iframe" src="third-party-summary.html" style="flex:1;border:none;width:100%;display:block;"></iframe>
 
-    <!-- Tabs -->
-    <div class="rec-tabs">
-        <button class="rec-tab active" type="button">Summary</button>
-        <button class="rec-tab" type="button">Close Associated / Related Entities <span class="rec-tab-dot amber"></span></button>
-        <button class="rec-tab" type="button">Watchlist <span class="rec-tab-dot amber"></span></button>
-        <button class="rec-tab" type="button">AM <span class="rec-tab-dot amber"></span></button>
-        <button class="rec-tab" type="button">SOC <span class="rec-tab-dot red"></span></button>
-    </div>
-
-    <!-- Content -->
-    <div class="rec-content">
-
-        <!-- Primary Name + Profile ID -->
-        <div class="rec-meta-row">
-            <div class="rec-meta-item">
-                <span class="rec-meta-label">Primary Name</span>
-                <span class="rec-meta-val" id="rec-primary-name"></span>
-            </div>
-            <div class="rec-meta-item">
-                <span class="rec-meta-label">Profile ID</span>
-                <span class="rec-meta-val" id="rec-profile-id"></span>
-            </div>
-        </div>
-
-        <!-- Country/Territory Details + Dates -->
-        <div class="rec-two-col">
-            <div class="rec-section">
-                <div class="rec-section-title">Country / Territory details</div>
-                <div class="rec-table-wrap">
-                    <table class="rec-table">
-                        <thead><tr><th>Type</th><th>Country / Territory</th></tr></thead>
-                        <tbody id="rec-country-tbody">
-                            <tr><td>Affiliation</td><td>United States</td></tr>
-                            <tr><td>Ownership</td><td>United States</td></tr>
-                            <tr><td>Country of Registration</td><td>United States</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="rec-section">
-                <div class="rec-section-title">Dates</div>
-                <div class="rec-table-wrap">
-                    <table class="rec-table">
-                        <thead><tr><th>Type</th><th>Date</th></tr></thead>
-                        <tbody id="rec-dates-tbody">
-                            <tr><td>Date of Registration</td><td>12 Mar 2005</td></tr>
-                            <tr><td>Date business established</td><td>2005</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Names -->
-        <div class="rec-section">
-            <div class="rec-section-title">Names</div>
-            <span class="rec-sub-heading">Primary Name</span>
-            <div class="rec-table-wrap">
-                <table class="rec-table">
-                    <thead><tr><th>Prefix</th><th>Name</th><th>Suffix</th><th>Original Script Name</th><th>Language</th></tr></thead>
-                    <tbody>
-                        <tr><td>—</td><td id="rec-names-primary" style="font-weight:500;color:var(--text-normal)"></td><td>—</td><td>—</td><td>—</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <span class="rec-sub-heading">Also Known As</span>
-            <div class="rec-table-wrap">
-                <table class="rec-table">
-                    <thead><tr><th>Prefix</th><th>Name</th><th>Suffix</th><th>Original Script Name</th><th>Language</th></tr></thead>
-                    <tbody id="rec-aka-tbody">
-                        <tr><td>—</td><td>Inc.</td><td>—</td><td>—</td><td>—</td></tr>
-                        <tr><td>—</td><td id="rec-names-short"></td><td>—</td><td>—</td><td>—</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <span class="rec-sub-heading">Formerly Known As</span>
-            <div class="rec-table-wrap">
-                <table class="rec-table">
-                    <thead><tr><th>Prefix</th><th>Name</th><th>Suffix</th><th>Original Script Name</th><th>Language</th></tr></thead>
-                    <tbody>
-                        <tr><td colspan="5" style="color:var(--neutral-400);font-style:italic">No records found</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Addresses -->
-        <div class="rec-section">
-            <div class="rec-section-title">Addresses</div>
-            <div class="rec-table-wrap">
-                <table class="rec-table">
-                    <thead><tr><th>Address</th><th>City</th><th>Zip Code</th><th>Country / Territory</th><th>URL</th></tr></thead>
-                    <tbody id="rec-addr-tbody">
-                        <tr><td id="rec-addr-street"></td><td id="rec-addr-city"></td><td id="rec-addr-zip"></td><td id="rec-addr-country2"></td><td>—</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ID Numbers -->
-        <div class="rec-section">
-            <div class="rec-section-title">ID Numbers</div>
-            <div class="rec-table-wrap">
-                <table class="rec-table">
-                    <thead><tr><th>Type</th><th>Number</th><th>Notes</th></tr></thead>
-                    <tbody id="rec-ids-tbody">
-                        <tr><td>Company Identification No.</td><td id="rec-id-company"></td><td>—</td></tr>
-                        <tr><td>DUNS Number</td><td id="rec-id-duns"></td><td>—</td></tr>
-                        <tr><td>NACE (European Union Economic Activity Classification Code)</td><td>28.22</td><td>—</td></tr>
-                        <tr><td>National Tax No.</td><td id="rec-id-tax"></td><td>—</td></tr>
-                        <tr><td>North American Industry Classification System (NAICS)</td><td>3324</td><td>—</td></tr>
-                        <tr><td>Internal Reference or ID</td><td id="rec-id-internal"></td><td>—</td></tr>
-                        <tr><td>Trade Licence or Commercial Licence Number</td><td>—</td><td>—</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div><!-- /.rec-content -->
 </div><!-- /.rec-sheet -->
 
 <!-- ── Duplicate Check: Properties Side Panel ── -->
@@ -3638,32 +3510,9 @@ const REC_DATA = {
     const sheet   = document.getElementById('rec-sheet');
     const overlay = document.getElementById('rec-sheet-overlay');
 
-    function setEl(id, val) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val || '—';
-    }
-
     function openRecSheet(name) {
-        const d = REC_DATA[name] || {
-            country: '—', primaryName: name, profileId: '—',
-            nameShort: name, addr: { street: '—', city: '—', zip: '—', country: '—' },
-            ids: { company: '—', duns: '—', tax: '—', internal: '—' }
-        };
-        setEl('rec-title-name',    name);
-        setEl('rec-bar-name',      d.primaryName);
-        setEl('rec-bar-country',   d.country);
-        setEl('rec-primary-name',  d.primaryName);
-        setEl('rec-profile-id',    d.profileId);
-        setEl('rec-names-primary', d.primaryName);
-        setEl('rec-names-short',   d.nameShort);
-        setEl('rec-addr-street',   d.addr.street);
-        setEl('rec-addr-city',     d.addr.city);
-        setEl('rec-addr-zip',      d.addr.zip);
-        setEl('rec-addr-country2', d.addr.country);
-        setEl('rec-id-company',    d.ids.company);
-        setEl('rec-id-duns',       d.ids.duns);
-        setEl('rec-id-tax',        d.ids.tax);
-        setEl('rec-id-internal',   d.ids.internal);
+        const titleEl = document.getElementById('rec-title-name');
+        if (titleEl) titleEl.textContent = name;
 
         sheet.classList.add('open');
         overlay.classList.add('open');
@@ -3677,14 +3526,6 @@ const REC_DATA = {
 
     document.getElementById('rec-sheet-back').addEventListener('click', closeRecSheet);
     overlay.addEventListener('click', closeRecSheet);
-
-    // Tab switching (visual only)
-    document.querySelectorAll('.rec-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.rec-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-        });
-    });
 
     // Trigger: clicking a cell-link in the dup table
     document.addEventListener('click', e => {
