@@ -345,6 +345,16 @@
         }
         .page-label { font-size: 13px; color: var(--text-light); }
 
+        /* ── Breadcrumb ── */
+        .breadcrumb-row {
+            display: flex; align-items: center; gap: 15px;
+            padding: 8px 0; font-size: 13px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .breadcrumb-row .sep { color: var(--text-light); margin: 0; font-size: 14px; text-transform: none; letter-spacing: 0; }
+        .breadcrumb-row a { color: var(--primary-500); text-decoration: none; cursor: pointer; }
+        .breadcrumb-row .current { color: var(--text-light); cursor: default; }
+
         /* ── Footer ── */
         .page-footer {
             border-top: 1px solid var(--neutral-50);
@@ -397,6 +407,14 @@
 
 <!-- ══ Page Body ══ -->
 <div class="page-wrapper">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-row">
+        <a href="#">Dashboard</a>
+        <span class="sep">/</span>
+        <span class="current">Third Parties</span>
+    </div>
+
     <div class="tp-card">
 
         <!-- Title row -->

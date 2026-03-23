@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pied Piper Inc - Third Party Summary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary-500: #02A3D5;
+            --primary-600: #0289B3;
+            --primary-700: #016F91;
+            --primary-08: #E8F9FE;
+            --text-normal: #0C2A31;
+            --text-light: #516267;
+            --text-light-alt: #5A6E73;
+            --text-dark: #061619;
+            --neutral-00: #FFFFFF;
+            --neutral-25: #EFEFEF;
+            --neutral-50: #DFE3E7;
+            --neutral-100: #D6DBE0;
+            --neutral-200: #C4CCD2;
+            --neutral-300: #B1BCC5;
+            --neutral-900: #33383D;
+            --alert-500: #E34C53;
+            --alert-700: #9A3438;
+            --alert-50: #F7CDCF;
+            --success-500: #13DF81;
+            --success-700: #0D9858;
+            --success-900: #07502E;
+            --success-50: #BDF6DC;
+            --warning-500: #F0C043;
+            --warning-900: #564518;
+            --warning-50: #FBEDCA;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #EFEFEF;
+            color: var(--text-normal);
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* ── Top Header Bar ── */
+        .header-bar {
+            background-color: var(--text-normal);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            color: #fff;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-brand .dj-mark {
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+        .header-brand .product-name {
+            color: var(--primary-500);
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+        .header-actions span {
+            padding: 0 8px;
+            font-size: 12px;
+            cursor: pointer;
+            border-left: 1px solid var(--text-light);
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+        .header-actions span { transition: color 0.3s ease; }
+        .header-actions span:hover { color: var(--primary-500); }
+        .header-actions span:first-child { border-left: none; }
+
+        /* ── Main Navigation ── */
+        .main-nav {
+            background-color: var(--primary-500);
+            height: 32px;
+            display: flex;
+            align-items: stretch;
+        }
+        .main-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .main-nav a { transition: background 0.3s ease; }
+        .main-nav a:hover { background-color: var(--primary-600); }
+        .main-nav a.active { background-color: var(--primary-600); }
+
+        /* ── Breadcrumb + Back row ── */
+        .page-container {
+            max-width: 1680px;
+            margin: 0 auto;
+        }
+        .tp-top-strip {
+            max-width: 1680px;
+            margin: 8px 16px 16px;
+            padding: 0 16px;
+            background-color: var(--neutral-00);
+        }
+        @media (min-width: 1712px) {
+            .tp-top-strip { margin-left: auto; margin-right: auto; }
+        }
+        .breadcrumb-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px 0;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        .breadcrumb-row .material-icons-outlined { font-size: 18px; color: var(--text-light); cursor: pointer; }
+        .breadcrumb-row .sep { margin: 0 2px; }
+
+        /* ── Third-Party Page Header ── */
+        .tp-page-header {
+            padding: 0 0 12px;
+        }
+        .tp-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--primary-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            padding: 6px 0;
+        }
+        .tp-back { transition: color 0.3s ease; }
+        .tp-back:hover { color: var(--primary-600); }
+        .tp-back .material-icons-outlined { font-size: 18px; }
+        .tp-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tp-name-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tp-name-group h1 {
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+        .tp-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tp-verified .material-icons-outlined { font-size: 16px; color: var(--success-700); }
+        .tp-badges {
+            display: flex;
+            gap: 16px;
+        }
+        .tp-badge-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .tp-badge-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light-alt);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-pending { background: var(--neutral-50); color: var(--text-normal); }
+        .badge-high   { background: var(--alert-50);   color: var(--alert-700); }
+        .badge-medium { background: var(--warning-50);  color: var(--warning-900); }
+        .badge-low    { background: var(--success-50);  color: var(--success-900); }
+        .badge-btn {
+            cursor: pointer;
+            transition: filter 0.3s ease, box-shadow 0.3s ease;
+        }
+        .badge-btn:hover {
+            filter: brightness(0.92);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+        }
+
+        /* ── Page Body (sidebar + content) ── */
+        .page-body {
+            display: flex;
+            padding: 0 16px 16px;
+            gap: 24px;
+            max-width: 1680px;
+            margin: 0 auto;
+        }
+
+        /* ── Side Navigation Drawer ── */
+        .side-nav {
+            width: 256px;
+            flex-shrink: 0;
+            background: var(--neutral-25);
+            border-radius: 0;
+            padding: 0;
+        }
+        .side-nav .nav-item-active {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(74,68,89,0.12);
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-normal);
+            cursor: pointer;
+        }
+        .side-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-normal);
+            cursor: pointer;
+        }
+        .side-nav .nav-item { transition: background 0.3s ease; }
+        .side-nav .nav-item:hover { background: rgba(0,0,0,0.06); }
+        .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dot-red    { background: var(--alert-500); }
+        .dot-green  { background: var(--success-500); }
+        .dot-grey   { background: var(--text-light); }
+        .dot-amber  { background: var(--warning-500); }
+        .nav-divider { height: 1px; background: var(--neutral-50); margin: 8px 16px; }
+        .nav-section-label {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #49454F;
+        }
+        .nav-partner-icon {
+            position: relative;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            display: inline-flex;
+        }
+        .nav-partner-icon svg { position: absolute; inset: 0; }
+        .nav-partner-icon img {
+            position: absolute;
+            inset: 0;
+            width: 16px;
+            height: 16px;
+            mix-blend-mode: multiply;
+            object-fit: cover;
+        }
+
+        /* ── Main Content Area ── */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* ── Details Card ── */
+        .card {
+            background: var(--neutral-00);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+        .details-card { border-top: 3px solid var(--primary-600); padding: 16px; }
+        .details-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+        }
+        .card-title { font-size: 20px; font-weight: 500; }
+        .card-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .status-inline {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-inline .active-text { color: var(--success-700); }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-outline {
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-300);
+            color: var(--text-light);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: var(--neutral-25);
+            border-color: var(--neutral-200);
+            color: var(--text-normal);
+        }
+        .btn-filled {
+            background: var(--primary-500);
+            color: var(--neutral-25);
+            transition: background 0.3s ease;
+        }
+        .btn-filled:hover { background: var(--primary-600); }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 26px;
+            border-bottom: 1px solid var(--neutral-50);
+            margin-bottom: 0;
+            position: relative;
+        }
+        .tab {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+            color: var(--text-light);
+            padding-bottom: 8px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color 0.25s ease;
+            user-select: none;
+        }
+        .tab:hover { color: var(--text-normal); }
+        .tab.active {
+            color: var(--text-normal);
+            border-bottom-color: var(--primary-600);
+        }
+
+        /* Tab panels */
+        .tab-panels { position: relative; overflow: hidden; }
+        .tab-panel {
+            padding-top: 24px;
+            opacity: 0;
+            transform: translateY(12px);
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .tab-panel.active {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+            pointer-events: auto;
+        }
+
+        /* Connections table styles */
+        .conn-section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-normal);
+            margin-bottom: 12px;
+        }
+        .conn-table-wrap { margin-bottom: 24px; }
+        .conn-table-wrap table tbody td { font-size: 13px; }
+        .conn-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-bottom: 12px;
+        }
+        .btn-connect {
+            background: var(--primary-500);
+            color: #fff;
+            transition: background 0.3s ease, opacity 0.3s ease;
+        }
+        .btn-connect:hover:not(:disabled) { background: var(--primary-600); }
+        .btn-connect:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-discard {
+            background: var(--neutral-00);
+            border: 1px solid var(--neutral-300);
+            color: var(--text-light);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+        }
+        .btn-discard:hover:not(:disabled) {
+            background: var(--neutral-25);
+            border-color: var(--neutral-200);
+            color: var(--text-normal);
+        }
+        .btn-discard:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-search {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 16px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 4px;
+            background: var(--neutral-00);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-normal);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .btn-search:hover {
+            background: var(--neutral-25);
+            border-color: var(--neutral-300);
+        }
+        .field-link { color: var(--primary-500); text-decoration: none; }
+        .field-link:hover { text-decoration: underline; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid var(--neutral-300);
+            border-radius: 2px;
+            background: var(--neutral-00);
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            vertical-align: middle;
+        }
+        input[type="checkbox"]:checked {
+            background: var(--primary-500);
+            border-color: var(--primary-500);
+        }
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 4px;
+            height: 7px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg) translateX(0.5px) translateY(-0.5px);
+        }
+        input[type="checkbox"]:indeterminate {
+            background: var(--primary-500);
+            border-color: var(--primary-500);
+        }
+        input[type="checkbox"]:indeterminate::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 7px;
+            height: 0;
+            border-bottom: 2px solid white;
+        }
+        .more-menu {
+            width: 24px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* Detail fields grid */
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px 42px;
+        }
+        .field-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--primary-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .field-value {
+            font-size: 16px;
+            color: var(--text-normal);
+            line-height: 24px;
+        }
+
+        /* ── Risk Level Report ── */
+        .risk-report {
+            padding: 0 16px 16px 16px;
+            background: var(--neutral-00);
+            box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.08);
+        }
+        .risk-report .section-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 66px;
+            padding: 16px 16px 16px 0;
+        }
+        .link-text { color: var(--primary-600); font-size: 14px; font-weight: 500; cursor: pointer; text-transform: uppercase; transition: color 0.3s ease; }
+        .link-text:hover { color: var(--primary-700); }
+        .risk-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 19px;
+        }
+        .rcard { width: calc((100% - 57px) / 4); }
+        @media (max-width: 1440px) {
+            .rcard { width: calc((100% - 38px) / 3); }
+        }
+        .rcard {
+            position: relative;
+            height: 123px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .rcard { transition: background 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; }
+        .rcard-link {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .rcard.low    { background: #EFFDF6; }
+        .rcard.medium { background: #FEFBF1; }
+        .rcard.high   { background: #FCEBEC; }
+        .rcard.low:hover    { background: #dffaed; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .rcard.medium:hover { background: #fdf5de; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .rcard.high:hover   { background: #f9d9db; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .rcard-title {
+            position: absolute;
+            left: 16px;
+            top: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--primary-600);
+            line-height: 24px;
+            letter-spacing: 0.5px;
+        }
+        .rcard-lbl {
+            position: absolute;
+            left: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+            line-height: 16.5px;
+        }
+        .rcard-lbl.lbl-risk   { top: 46px; }
+        .rcard-lbl.lbl-flags  { top: 75px; }
+        .rcard-lbl.lbl-score  { top: 100px; }
+        .rcard-val {
+            position: absolute;
+            right: 16px;
+            font-size: 13px;
+            color: var(--text-normal);
+            text-align: right;
+            line-height: 16px;
+        }
+        .rcard-val.val-flags { top: 75px; }
+        .rcard-val.val-score { top: 100px; }
+        .rcard-badge {
+            position: absolute;
+            top: 43px;
+            right: 16px;
+        }
+
+        /* ── Tables (Open Tasks, Associations) ── */
+        .table-card {
+            background: var(--neutral-00);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+        .table-card .card-inner {
+            padding: 0 16px 16px;
+        }
+        .table-card .section-bar {
+            border-top: 1px solid var(--neutral-100);
+            padding: 13px 16px 0;
+        }
+        .table-card .section-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding-bottom: 16px;
+        }
+        .info-icon {
+            color: var(--neutral-300);
+            font-size: 20px;
+            cursor: help;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead th {
+            background: var(--neutral-25);
+            border: 1px solid var(--neutral-50);
+            padding: 8px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        tbody td {
+            border: 1px solid var(--neutral-50);
+            padding: 8px;
+            color: var(--text-light);
+            vertical-align: middle;
+        }
+        tbody tr:nth-child(odd) td { background: var(--primary-08); transition: background 0.3s ease; }
+        tbody tr:nth-child(even) td { background: var(--neutral-00); transition: background 0.3s ease; }
+        tbody tr:hover td { background: #d4f0fa !important; }
+        .cell-link { color: var(--primary-700); cursor: pointer; }
+        .cell-task-type {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+        }
+        .task-icon-circle {
+            width: 20px;
+            height: 20px;
+            background: var(--neutral-25);
+            border: 0.833px solid var(--neutral-200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 3.333px;
+        }
+        .task-icon-circle img {
+            width: 13.333px;
+            height: 13.333px;
+            display: block;
+        }
+        .match-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+        .mbadge {
+            min-width: 16px;
+            max-width: 34px;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 12px;
+        }
+        .cat-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 10px;
+            font-weight: 700;
+            gap: 2px;
+        }
+        .table-pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+            padding-top: 16px;
+            font-size: 13px;
+            color: var(--text-normal);
+        }
+        .table-pagination select {
+            height: 32px;
+            padding: 0 24px 0 8px;
+            border: 1px solid var(--neutral-200);
+            border-radius: 2px;
+            font-size: 14px;
+            color: var(--text-light-alt);
+            background: var(--neutral-00);
+        }
+
+        /* ── Footer ── */
+        .page-footer {
+            padding: 16px;
+            border-top: 1px solid var(--neutral-50);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 16px;
+        }
+        .page-footer a { color: var(--text-light); text-decoration: none; margin: 0 6px; }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--text-light-alt);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ Top Header ══ -->
+<header class="header-bar">
+    <div class="header-brand">
+        <span class="dj-mark">DOW JONES</span>
+        <span class="product-name">RISKCENTER &nbsp;|&nbsp; THIRD PARTY</span>
+    </div>
+    <div class="header-actions">
+        <span>Customer Support</span>
+        <span>Feedback</span>
+        <span class="material-icons-outlined" style="font-size:18px">notifications</span>
+        <span class="material-icons-outlined" style="font-size:18px">settings</span>
+    </div>
+</header>
+
+<!-- ══ Main Nav ══ -->
+<nav class="main-nav">
+    <a>Dashboard</a>
+    <a class="active">Third Parties</a>
+    <a>Employees</a>
+    <a>Risk Search</a>
+    <a>Company Admin</a>
+    <a>Settings</a>
+    <a>Reports</a>
+</nav>
+
+<!-- ══ Breadcrumbs ══ -->
+<div style="max-width:1680px;margin:0 auto;">
+    <div class="breadcrumb-row">
+        <span class="material-icons-outlined">home</span>
+        <span class="sep">/</span>
+        <span>THIRD PARTIES</span>
+        <span class="sep">/</span>
+        <span>PIED PIPER INC</span>
+    </div>
+</div>
+
+<!-- ══ Third-Party Page Header ══ -->
+<div class="tp-top-strip">
+<div class="tp-page-header">
+    <div class="tp-back">
+        <span class="material-icons-outlined">chevron_left</span> Back
+    </div>
+    <div class="tp-title-row">
+        <div class="tp-name-group">
+            <h1>Pied Piper Inc</h1>
+            <span class="tp-verified">
+                <span class="material-icons-outlined">verified</span>
+                Entity Verified
+            </span>
+        </div>
+        <div class="tp-badges">
+            <div class="tp-badge-group">
+                <div class="tp-badge-label">Current status:</div>
+                <div class="badge badge-pending badge-btn">
+                    Pending Approval
+                    <span class="material-icons-outlined" style="font-size:16px">pending</span>
+                </div>
+            </div>
+            <div class="tp-badge-group">
+                <div class="tp-badge-label">Risk level:</div>
+                <div class="badge badge-low badge-btn">
+                    Low
+                    <span class="material-icons-outlined" style="font-size:16px">check_circle_outline</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div><!-- /.tp-top-strip -->
+
+<!-- ══ Page Body ══ -->
+<div class="page-container">
+<div class="page-body">
+
+    <!-- ── Side Nav ── -->
+    <aside class="side-nav">
+        <div class="nav-item-active">Summary page</div>
+        <div class="nav-divider"></div>
+        <div class="nav-item"><span class="dot dot-amber"></span> Onboarding</div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Risk Assessment</div>
+        <div class="nav-item">
+            <span class="dot dot-grey"></span> Integrity Check
+            <span class="nav-partner-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                <img src="integrity-check-logo.png" alt="">
+            </span>
+        </div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Due Diligence</div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Enhanced Due Diligence Reports</div>
+        <div class="nav-item">
+            <span class="dot dot-green"></span> UBO
+            <span class="nav-partner-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                <img src="integrity-check-logo.png" alt="">
+            </span>
+        </div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Risk Mitigation</div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Approval</div>
+        <div class="nav-item"><span class="dot dot-grey"></span> Screening &amp; Monitoring</div>
+        <div class="nav-divider"></div>
+        <div class="nav-section-label">Properties</div>
+        <div class="nav-section-label">Documents</div>
+        <div class="nav-section-label">
+            Entity Verification
+            <span class="nav-partner-icon" style="vertical-align: middle; margin-left: 4px;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" fill="white" stroke="#B1BCC5"/></svg>
+                <img src="integrity-check-logo.png" alt="">
+            </span>
+        </div>
+        <div class="nav-section-label">Audit</div>
+        <div class="nav-divider"></div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <main class="main-content">
+
+        <!-- Details Card -->
+        <section class="card details-card">
+            <div class="card-header">
+                <h2 class="card-title">Pied Piper Inc Details</h2>
+                <div class="card-header-right">
+                    <div class="status-inline">
+                        Third party STATUS:
+                        <span class="active-text">Active</span>
+                        <span class="material-icons-outlined" style="font-size:16px; color:var(--success-700)">verified</span>
+                    </div>
+                    <button class="btn btn-outline">Notes</button>
+                    <button class="btn btn-filled">Edit</button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="overview">Overview</div>
+                <div class="tab" data-tab="additional">Additional Details</div>
+                <div class="tab" data-tab="connections">Connections</div>
+            </div>
+
+            <div class="tab-panels">
+
+                <!-- ── Overview Panel ── -->
+                <div class="tab-panel active" id="panel-overview">
+                    <div class="field-grid">
+                        <div><div class="field-label">Legal name</div><div class="field-value">Pied Piper Inc</div></div>
+                        <div><div class="field-label">Industry / Sector</div><div class="field-value">Technology</div></div>
+                        <div><div class="field-label">Third Party Owner</div><div class="field-value">Claudio Merino</div></div>
+                        <div><div class="field-label">Process Name</div><div class="field-value">Standard RCTP</div></div>
+                        <div><div class="field-label">Country of Registration</div><div class="field-value" style="display:flex;align-items:center;gap:6px"><span style="font-size:20px">&#127482;&#127480;</span> United States</div></div>
+                        <div><div class="field-label">Third Party Contact Email</div><div class="field-value">contact@piedpiper.com</div></div>
+                        <div><div class="field-label">Business Unit</div><div class="field-value">US</div></div>
+                        <div><div class="field-label">Screening &amp; Monitoring Policy</div><div class="field-value">Default Standard KYBP Policy</div></div>
+                        <div><div class="field-label">Entity Type</div><div class="field-value">Entity</div></div>
+                        <div><div class="field-label">Commercial Significance</div><div class="field-value">[Between 1 and 5%] / Significant / Not in top 10</div></div>
+                        <div><div class="field-label">Expiry date</div><div class="field-value">Unknown</div></div>
+                        <div><div class="field-label">Tags</div><div class="field-value">US</div></div>
+                    </div>
+                </div>
+
+                <!-- ── Additional Details Panel ── -->
+                <div class="tab-panel" id="panel-additional">
+                    <div class="field-grid">
+                        <div><div class="field-label">Also Known As</div><div class="field-value">PP Inc</div></div>
+                        <div><div class="field-label">Responsible Client Unit</div><div class="field-value">Procurement (Central, direct material)</div></div>
+                        <div><div class="field-label">Company Number</div><div class="field-value">US-12345678</div></div>
+                        <div><div class="field-label">Identification Type</div><div class="field-value">DUNS Number</div></div>
+                        <div><div class="field-label">Address Details</div><div class="field-value">1033 US Highway 46 Ste 201, Clifton, NJ 07013</div></div>
+                        <div><div class="field-label">All Relevant Client Units</div><div class="field-value">Business Unit 1, Business Unit 2</div></div>
+                        <div><div class="field-label">Internal Reference or ID</div><div class="field-value">INT-0001</div></div>
+                        <div><div class="field-label">Identification Value</div><div class="field-value">808241405</div></div>
+                        <div><div class="field-label">Company Website</div><div class="field-value"><a href="#" class="field-link">www.piedpiper.com</a></div></div>
+                    </div>
+                </div>
+
+                <!-- ── Connections Panel ── -->
+                <div class="tab-panel" id="panel-connections">
+
+                    <h3 class="conn-section-title">Connected Third Parties</h3>
+                    <div class="conn-table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Third Party Name</th>
+                                    <th>Connection Type</th>
+                                    <th>ID Type</th>
+                                    <th>ID Value</th>
+                                    <th>Internal Reference or ID</th>
+                                    <th>Country of Registration</th>
+                                    <th style="width:32px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="cell-link">Pied Piper Inc</span></td>
+                                    <td>Subsidiary</td>
+                                    <td>DUNS Number</td>
+                                    <td>808241405</td>
+                                    <td>INT-0001</td>
+                                    <td>United States</td>
+                                    <td class="more-menu"><span class="material-icons-outlined" style="font-size:18px">more_vert</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                        <h3 class="conn-section-title" style="margin-bottom:0">Suggested Third Parties</h3>
+                        <div class="conn-actions" style="margin-bottom:0">
+                            <button class="btn btn-discard" id="btn-discard" disabled>Discard</button>
+                            <button class="btn btn-connect" id="btn-connect" disabled>Connect</button>
+                        </div>
+                    </div>
+                    <div class="conn-table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:32px"><input type="checkbox" id="suggested-select-all"></th>
+                                    <th>Third Party Name</th>
+                                    <th>Connection Type</th>
+                                    <th>ID Type</th>
+                                    <th>ID Value</th>
+                                    <th>Internal Reference or ID</th>
+                                    <th>Country of Registration</th>
+                                </tr>
+                            </thead>
+                            <tbody id="suggested-tbody">
+                                <tr>
+                                    <td><input type="checkbox" class="suggested-check"></td>
+                                    <td><span class="cell-link">Pied Piper Inc</span></td>
+                                    <td>Subsidiary</td>
+                                    <td>DUNS Number</td>
+                                    <td>808241405</td>
+                                    <td>INT-0001</td>
+                                    <td>United States</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="suggested-check"></td>
+                                    <td><span class="cell-link">Initech Inc</span></td>
+                                    <td>Subsidiary</td>
+                                    <td>DUNS Number</td>
+                                    <td>808241405</td>
+                                    <td>INT-0002</td>
+                                    <td>United States</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="display:flex;justify-content:flex-end;padding-top:8px">
+                        <button class="btn-search">
+                            <span class="material-icons-outlined" style="font-size:18px">search</span>
+                            Look for more connections
+                        </button>
+                    </div>
+
+                </div>
+
+            </div><!-- /.tab-panels -->
+        </section>
+
+        <!-- Risk Level Report -->
+        <section class="risk-report">
+            <div class="section-row">
+                <h2 class="card-title">Risk Level Report</h2>
+                <a href="risk-level-report.html" class="link-text">VIEW FULL REPORT</a>
+            </div>
+            <div class="risk-row">
+                <div class="rcard low">
+                    <div class="rcard-title">Country</div><a href="risk-level-report.html#country" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+                <div class="rcard low">
+                    <div class="rcard-title">Bribery &amp; Corruption</div><a href="risk-level-report.html#bribery" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+                <div class="rcard low">
+                    <div class="rcard-title">Environmental</div><a href="risk-level-report.html#environmental" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+                <div class="rcard low">
+                    <div class="rcard-title">Human Rights</div><a href="risk-level-report.html#human-rights" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+                <div class="rcard low">
+                    <div class="rcard-title">General</div><a href="risk-level-report.html#general" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+                <div class="rcard low">
+                    <div class="rcard-title">Screening &amp; Monitoring</div><a href="risk-level-report.html#screening" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+                <div class="rcard low">
+                    <div class="rcard-title">Cyber</div><a href="risk-level-report.html#cyber" class="rcard-link"></a>
+                    <span class="rcard-lbl lbl-risk">Risk Level</span>
+                    <span class="rcard-lbl lbl-flags">Red flags</span>
+                    <span class="rcard-lbl lbl-score">Category score</span>
+                    <span class="rcard-val val-flags">0</span>
+                    <span class="rcard-val val-score">0</span>
+                    <span class="rcard-badge"><span class="badge badge-low" style="font-size:12px;padding:4px 8px">LOW <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">check_circle_outline</span></span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Open Tasks -->
+        <section class="table-card">
+            <div class="section-bar">
+                <div class="section-row">
+                    <h2 class="card-title">Open Tasks</h2>
+                    <span class="material-icons-outlined info-icon">info</span>
+                </div>
+            </div>
+            <div class="card-inner">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%">Task Type <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">arrow_drop_down</span></th>
+                            <th style="width:26%">Task Name <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">arrow_drop_down</span></th>
+                            <th style="width:12%">Task Status <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">arrow_drop_down</span></th>
+                            <th style="width:16%">Owner <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">arrow_drop_down</span></th>
+                            <th style="width:14%">Date Created <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">arrow_drop_down</span></th>
+                            <th style="width:12%">AGE <span class="material-icons-outlined" style="font-size:14px;vertical-align:middle">arrow_drop_up</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="cell-task-type"><span class="task-icon-circle"><img src="icon-inactive-order.svg" alt=""></span> Onboarding</div></td>
+                            <td><span class="cell-link">Onboarding</span></td>
+                            <td>Not Started</td>
+                            <td>Claudio Merino</td>
+                            <td>28 Nov 2024</td>
+                            <td>1 Year</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-pagination">
+                    <select><option>20</option></select>
+                    <span>Showing results 1 - 1 of 1</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screening and Monitoring Associations -->
+        <section class="table-card" style="box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.08);">
+            <div style="padding: 16px 16px 0;">
+                <div class="section-row">
+                    <h2 class="card-title">Screening and Monitoring Associations</h2>
+                    <span class="material-icons-outlined info-icon">info</span>
+                </div>
+            </div>
+            <div class="card-inner">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Match results</th>
+                            <th>Updated</th>
+                            <th>Type</th>
+                            <th>Assoc Status</th>
+                            <th>Category</th>
+                            <th>Entity/Person/Unknown</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cell-link">Pied Piper Inc</span></td>
+                            <td>
+                                <div class="match-badges">
+                                    <span class="mbadge" style="background:var(--success-500);color:var(--text-normal)">2</span>
+                                    <span class="mbadge" style="background:var(--success-500);color:var(--text-normal)">1</span>
+                                    <span class="mbadge" style="background:var(--text-light);color:#fff">0</span>
+                                    <span class="mbadge" style="background:var(--neutral-200);color:var(--text-normal)">0</span>
+                                    <span class="mbadge" style="background:var(--warning-500);color:var(--text-normal)">0</span>
+                                </div>
+                            </td>
+                            <td>15 Jan 2025</td>
+                            <td>Primary Entity</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:6px">
+                                    <span style="width:10px;height:10px;border-radius:50%;background:var(--success-500);display:inline-block"></span>
+                                    No Action Required
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:6px">
+                                    <span class="cat-tag" style="background:#edd500;color:var(--neutral-900)">AM</span>
+                                    <span class="material-icons-outlined" style="font-size:16px;color:var(--text-light)">check_circle_outline</span>
+                                </div>
+                            </td>
+                            <td>Entity</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-pagination">
+                    <select><option>20</option></select>
+                    <span>Showing results 1 - 1 of 1</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+</div><!-- /.page-body -->
+</div><!-- /.page-container -->
+
+<!-- ══ Footer ══ -->
+<footer class="page-footer" style="max-width:1680px;margin:0 auto;">
+    <div>
+        <a href="#">Privacy Notice</a> |
+        <a href="#">Cookie Policy</a> |
+        <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-brand">
+        <span class="dj-mark" style="font-weight:700;font-size:11px;color:var(--text-light)">DOW JONES</span>
+        &copy; 2025 Dow Jones &amp; Company, Inc. All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+// ── Suggested Third Parties checkbox logic ──
+(() => {
+    const selectAll = document.getElementById('suggested-select-all');
+    const tbody = document.getElementById('suggested-tbody');
+    const btnDiscard = document.getElementById('btn-discard');
+    const btnConnect = document.getElementById('btn-connect');
+
+    function updateButtons() {
+        const checks = tbody.querySelectorAll('.suggested-check');
+        const checkedCount = tbody.querySelectorAll('.suggested-check:checked').length;
+        const hasSelection = checkedCount > 0;
+
+        btnDiscard.disabled = !hasSelection;
+        btnConnect.disabled = !hasSelection;
+
+        if (checkedCount === 0) {
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+        } else if (checkedCount === checks.length) {
+            selectAll.checked = true;
+            selectAll.indeterminate = false;
+        } else {
+            selectAll.checked = false;
+            selectAll.indeterminate = true;
+        }
+    }
+
+    selectAll.addEventListener('change', () => {
+        const checks = tbody.querySelectorAll('.suggested-check');
+        checks.forEach(cb => cb.checked = selectAll.checked);
+        updateButtons();
+    });
+
+    tbody.addEventListener('change', (e) => {
+        if (e.target.classList.contains('suggested-check')) {
+            updateButtons();
+        }
+    });
+})();
+
+// ── Tab switching logic ──
+(() => {
+    const tabs = document.querySelectorAll('.tab[data-tab]');
+    const panels = document.querySelectorAll('.tab-panel');
+    const tabContainer = document.querySelector('.tab-panels');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+            const targetPanel = document.getElementById('panel-' + target);
+            const currentPanel = document.querySelector('.tab-panel.active');
+
+            if (targetPanel === currentPanel) return;
+
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            currentPanel.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            currentPanel.style.opacity = '0';
+            currentPanel.style.transform = 'translateY(-12px)';
+
+            setTimeout(() => {
+                const startHeight = tabContainer.offsetHeight;
+                currentPanel.classList.remove('active');
+
+                targetPanel.style.transition = 'none';
+                targetPanel.style.opacity = '0';
+                targetPanel.style.transform = 'translateY(12px)';
+                targetPanel.classList.add('active');
+
+                const endHeight = tabContainer.offsetHeight;
+
+                tabContainer.style.transition = 'height 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+                tabContainer.style.height = startHeight + 'px';
+                tabContainer.offsetHeight;
+                tabContainer.style.height = endHeight + 'px';
+
+                requestAnimationFrame(() => {
+                    targetPanel.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+                    targetPanel.style.opacity = '1';
+                    targetPanel.style.transform = 'translateY(0)';
+                });
+
+                setTimeout(() => {
+                    tabContainer.style.transition = '';
+                    tabContainer.style.height = '';
+                }, 380);
+            }, 250);
+        });
+    });
+})();
+</script>
+</body>
+</html>

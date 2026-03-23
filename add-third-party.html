@@ -96,6 +96,22 @@
         .breadcrumb-row > span:not(.sep), .breadcrumb-row a { color: var(--primary-500); text-decoration: none; cursor: pointer; }
         .breadcrumb-row > span:last-child, .breadcrumb-row .current { color: var(--text-light); cursor: default; }
 
+        /* ── Page title card ── */
+        .tp-card {
+            background: var(--neutral-00);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            margin-top: 16px;
+            overflow: hidden;
+        }
+        .tp-title-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 16px 16px;
+        }
+        .tp-title { font-size: 20px; font-weight: 500; color: var(--text-normal); }
+        .tp-divider { height: 1px; background: var(--neutral-50); margin: 0 16px; }
+        .tp-card { margin-bottom: 8px; }
+
         /* ── Wizard wrapper ── */
         .wizard-wrap {
         }
@@ -527,7 +543,7 @@
         }
         .verify-table .duns { font-family: monospace; font-size: 12px; }
         .verify-table .address-cell { font-size: 12px; line-height: 1.4; max-width: 240px; }
-        .verify-table .ubo-cell { text-align: center; vertical-align: middle; }
+        .ubo-cell { text-align: center; vertical-align: middle; }
         .ubo-ok   { color: var(--success-500); font-size: 22px; display: block; }
         .ubo-fail { color: var(--alert-500);   font-size: 22px; display: block; }
         .source-badge {
@@ -1088,9 +1104,35 @@
         .dup-props-table tbody tr:hover td { background: #d5f2fb !important; }
         .dup-props-table .prop-name { color: var(--text-normal); font-weight: 500; }
         .dup-props-table .prop-val { color: var(--text-light); }
-        .prop-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-        .prop-dot.filled { background: var(--primary-500); }
-        .prop-dot.empty  { background: var(--neutral-200); }
+        .prop-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; background: var(--neutral-200); }
+        .prop-warning-wrap { position: relative; display: inline-flex; align-items: center; }
+        .prop-warning-icon { font-size: 16px !important; color: var(--warning-500); cursor: default; display: block; }
+        .prop-warning-tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-normal);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+            padding: 4px 8px;
+            border-radius: 3px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .prop-warning-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid transparent;
+            border-top-color: var(--text-normal);
+        }
+        .prop-warning-wrap:hover .prop-warning-tooltip { display: block; }
 
         /* ── Person type notice ── */
         .person-notice {
@@ -1140,11 +1182,7 @@
 
         /* ── View toggle bar ── */
         .view-toggle-bar {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 10px;
-            padding: 10px 0 14px;
+            display: none;
         }
         .view-toggle-label {
             font-size: 11px;
@@ -1420,6 +1458,21 @@
 
 <!-- ══ Page Body ══ -->
 <div class="page-body">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-row">
+        <a href="third-parties.html">Third Parties</a>
+        <span class="sep">/</span>
+        <span class="current">Create a Third Party</span>
+    </div>
+
+    <!-- Page title card -->
+    <div class="tp-card">
+        <div class="tp-title-row">
+            <h1 class="tp-title">Create a Third Party</h1>
+        </div>
+        <div class="tp-divider"></div>
+    </div>
 
     <div id="wizard-area">
 
@@ -1718,34 +1771,92 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Owner</th>
-                                    <th>Business Unit</th>
-                                    <th>Process</th>
-                                    <th>Current Status</th>
-                                    <th>Internal Reference</th>
-                                    <th>Active/Inactive</th>
+                                    <th>DUNS Number</th>
+                                    <th>Address</th>
+                                    <th>Country / Territory</th>
+                                    <th style="text-align:center">UBO Status</th>
                                     <th style="width:40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span class="cell-link">Initech Inc</span></td>
-                                    <td>Emily Forbes</td>
-                                    <td>Europe</td>
-                                    <td>Standard RCTP</td>
-                                    <td><span class="status-badge status-pending">Pending Approval</span></td>
-                                    <td>INT-0001</td>
-                                    <td>Active</td>
+                                    <td><span class="cell-link">THE PIED PIPER EXTERMINATORS INC</span></td>
+                                    <td>029302064</td>
+                                    <td>100 Enterprise Way, Scotts Valley, 95066-3248, California</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
                                     <td><button class="more-btn">View properties</button></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="cell-link">INITECH Ltd</span></td>
-                                    <td>Claudio Merino</td>
-                                    <td>Americas</td>
-                                    <td>Standard RCTP</td>
-                                    <td><span class="status-badge status-pending">Pending Approval</span></td>
-                                    <td>INT-0002</td>
-                                    <td>Inactive</td>
+                                    <td><span class="cell-link">Pied Piper Mills, Inc.</span></td>
+                                    <td>057420044</td>
+                                    <td>423 E Lake Dr, Hamlin, 79520-4204, Texas</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">Pied Piper Exterminating Company, Inc.</span></td>
+                                    <td>027050962</td>
+                                    <td>3507 N Sunbelt Dr, San Antonio, 78218-3334, Texas</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">PIED PIPER PRESCHOOL CHILD CARE INC</span></td>
+                                    <td>876571803</td>
+                                    <td>1108 S Main St, Traer, 50675-1437, Iowa</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">PIED PIPER PEST CONTROL, INC.</span></td>
+                                    <td>150146004</td>
+                                    <td>1041 Derbigny St, Gretna, 70053-6329, Louisiana</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">PIED PIPER PRE-SCHOOL OF TRAER, INC.</span></td>
+                                    <td>803332878</td>
+                                    <td>1108 S Main St, Traer, 50675-1437, Iowa</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">PIED PIPER PRE SCHOOL ASSN (WALLERAWANG) INC</span></td>
+                                    <td>744662352</td>
+                                    <td>18 Pindari Pl, Wallerawang, 2845, NEW SOUTH WALES</td>
+                                    <td>Australia</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">Pied Piper Pest Control, Inc.</span></td>
+                                    <td>103201968</td>
+                                    <td>12026 Gardengate Dr, Saint Louis, 63146-4809, Missouri</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">Pied Piper Farms Inc</span></td>
+                                    <td>064212574</td>
+                                    <td>423 E Lake Dr, Hamlin, 79520-4204, Texas</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cell-link">Pied Piper International, Inc.</span></td>
+                                    <td>801595307</td>
+                                    <td>163 Little Harbor Rd, New Castle, 03854-9702, New Hampshire</td>
+                                    <td>United States</td>
+                                    <td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td>
                                     <td><button class="more-btn">View properties</button></td>
                                 </tr>
                             </tbody>
@@ -2549,15 +2660,23 @@
                     <div class="duplicate-banner" style="margin-top:20px">
                         <span class="material-icons-outlined">warning_amber</span>
                         <div class="duplicate-banner-text">
-                            <strong>2 potential matches found.</strong> These records have a similar name and may already exist in the system. If one of the matches above is the same third party, use an existing record instead of creating a new one.
+                            <strong>10 potential matches found.</strong> These records have a similar name and may already exist in the system. If one of the matches above is the same third party, use an existing record instead of creating a new one.
                         </div>
                     </div>
                     <div class="dup-table-wrap">
                         <table class="dup-table">
-                            <thead><tr><th>Name</th><th>Owner</th><th>Business Unit</th><th>Process</th><th>Current Status</th><th>Internal Reference</th><th>Active/Inactive</th><th style="width:40px"></th></tr></thead>
+                            <thead><tr><th>Name</th><th>DUNS Number</th><th>Address</th><th>Country / Territory</th><th style="text-align:center">UBO Status</th><th style="width:40px"></th></tr></thead>
                             <tbody>
-                                <tr><td><span class="cell-link">Initech Inc</span></td><td>Emily Forbes</td><td>Europe</td><td>Standard RCTP</td><td><span class="status-badge status-pending">Pending Approval</span></td><td>INT-0001</td><td>Active</td><td><button class="more-btn">View properties</button></td></tr>
-                                <tr><td><span class="cell-link">INITECH Ltd</span></td><td>Claudio Merino</td><td>Americas</td><td>Standard RCTP</td><td><span class="status-badge status-pending">Pending Approval</span></td><td>INT-0002</td><td>Inactive</td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">THE PIED PIPER EXTERMINATORS INC</span></td><td>029302064</td><td>100 Enterprise Way, Scotts Valley, 95066-3248, California</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">Pied Piper Mills, Inc.</span></td><td>057420044</td><td>423 E Lake Dr, Hamlin, 79520-4204, Texas</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">Pied Piper Exterminating Company, Inc.</span></td><td>027050962</td><td>3507 N Sunbelt Dr, San Antonio, 78218-3334, Texas</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">PIED PIPER PRESCHOOL CHILD CARE INC</span></td><td>876571803</td><td>1108 S Main St, Traer, 50675-1437, Iowa</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">PIED PIPER PEST CONTROL, INC.</span></td><td>150146004</td><td>1041 Derbigny St, Gretna, 70053-6329, Louisiana</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">PIED PIPER PRE-SCHOOL OF TRAER, INC.</span></td><td>803332878</td><td>1108 S Main St, Traer, 50675-1437, Iowa</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">PIED PIPER PRE SCHOOL ASSN (WALLERAWANG) INC</span></td><td>744662352</td><td>18 Pindari Pl, Wallerawang, 2845, NEW SOUTH WALES</td><td>Australia</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">Pied Piper Pest Control, Inc.</span></td><td>103201968</td><td>12026 Gardengate Dr, Saint Louis, 63146-4809, Missouri</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">Pied Piper Farms Inc</span></td><td>064212574</td><td>423 E Lake Dr, Hamlin, 79520-4204, Texas</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-fail">cancel</span></td><td><button class="more-btn">View properties</button></td></tr>
+                                <tr><td><span class="cell-link">Pied Piper International, Inc.</span></td><td>801595307</td><td>163 Little Harbor Rd, New Castle, 03854-9702, New Hampshire</td><td>United States</td><td class="ubo-cell"><span class="material-icons-outlined ubo-ok">check_circle</span></td><td><button class="more-btn">View properties</button></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -2765,21 +2884,13 @@
         </button>
         <div class="rec-topbar-title-area">
             <div class="rec-topbar-title">
-                Profile Details for <span id="rec-title-name" style="font-weight:600"></span>
-                <span class="rec-match-badge">Confirmed Match</span>
+                <span id="rec-title-name" style="font-weight:600"></span>
             </div>
-            <div class="rec-topbar-sub">Snapshot created on 03/17/2026</div>
-        </div>
-        <div class="rec-topbar-actions">
-            <button class="rec-act-btn" type="button">Profile Audit</button>
-            <button class="rec-act-btn" type="button">Download</button>
-            <button class="rec-act-btn" type="button">Alert Bell</button>
-            <button class="rec-act-btn primary-btn" type="button">Navigate</button>
         </div>
     </div>
 
     <!-- Summary iframe -->
-    <iframe id="rec-summary-iframe" src="third-party-summary.html" style="flex:1;border:none;width:100%;display:block;"></iframe>
+    <iframe id="rec-summary-iframe" src="tp-profile.html" style="flex:1;border:none;width:100%;display:block;"></iframe>
 
 </div><!-- /.rec-sheet -->
 
@@ -3610,10 +3721,16 @@ const DUP_PROPERTIES = [
             const tr = document.createElement('tr');
             tr.dataset.cat = p.cat;
             const filled = !!p.value;
+            const indicator = filled
+                ? `<span class="prop-warning-wrap">
+                       <span class="material-icons-outlined prop-warning-icon">warning</span>
+                       <span class="prop-warning-tooltip">High Risk Factors</span>
+                   </span>`
+                : `<span class="prop-dot"></span>`;
             tr.innerHTML = `
                 <td class="prop-name">${p.name}</td>
                 <td class="prop-val">${p.value || '—'}</td>
-                <td style="text-align:center"><span class="prop-dot ${filled ? 'filled' : 'empty'}"></span></td>
+                <td style="text-align:center">${indicator}</td>
             `;
             tbody.appendChild(tr);
         });
