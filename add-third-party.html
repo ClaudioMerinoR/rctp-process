@@ -1920,6 +1920,8 @@
                         </div>
                     </div>
 
+                    <!-- Entity duplicate table -->
+                    <div id="dup-entity-block">
                     <div class="dup-table-wrap">
                         <table class="dup-table">
                             <thead>
@@ -2016,6 +2018,39 @@
                             </tbody>
                         </table>
                     </div>
+                    </div><!-- /#dup-entity-block -->
+
+                    <!-- Person duplicate table -->
+                    <div id="dup-person-block" style="display:none">
+                    <div class="dup-table-wrap">
+                        <table class="dup-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Owner</th>
+                                    <th>Business Unit</th>
+                                    <th>Process</th>
+                                    <th>Current Status</th>
+                                    <th>Internal Reference</th>
+                                    <th>Active/Inactive</th>
+                                    <th style="width:40px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="cell-link">Bruce Wayne Batman</span></td>
+                                    <td>Claudio Merino</td>
+                                    <td>test</td>
+                                    <td>Standard RCTP</td>
+                                    <td><span class="status-badge status-pending">Pending Approval</span></td>
+                                    <td></td>
+                                    <td>Active</td>
+                                    <td><button class="more-btn">View properties</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div><!-- /#dup-person-block -->
 
 
                 </div>
@@ -2839,6 +2874,8 @@
                             <strong>10 potential matches found.</strong> These records have a similar name and may already exist in the system. If one of the matches above is the same third party, use an existing record instead of creating a new one.
                         </div>
                     </div>
+                    <!-- Entity duplicate table -->
+                    <div id="ac-dup-entity-block">
                     <div class="dup-table-wrap">
                         <table class="dup-table">
                             <thead><tr><th>Name</th><th>DUNS Number</th><th>Address</th><th>Country / Territory</th><th style="text-align:center">UBO Status</th><th style="width:40px"></th></tr></thead>
@@ -2856,6 +2893,20 @@
                             </tbody>
                         </table>
                     </div>
+                    </div><!-- /#ac-dup-entity-block -->
+
+                    <!-- Person duplicate table -->
+                    <div id="ac-dup-person-block" style="display:none">
+                    <div class="dup-table-wrap">
+                        <table class="dup-table">
+                            <thead><tr><th>Name</th><th>Owner</th><th>Business Unit</th><th>Process</th><th>Current Status</th><th>Internal Reference</th><th>Active/Inactive</th><th style="width:40px"></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="cell-link">Bruce Wayne Batman</span></td><td>Claudio Merino</td><td>test</td><td>Standard RCTP</td><td><span class="status-badge status-pending">Pending Approval</span></td><td></td><td>Active</td><td><button class="more-btn">View properties</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div><!-- /#ac-dup-person-block -->
+
                     <div class="ac-footer">
                         <button class="btn btn-outline" id="ac-btn-2-back">
                             <span class="material-icons-outlined">arrow_back</span>Back
@@ -3441,6 +3492,21 @@ function configureWizard(type) {
     const acNum = document.querySelector('#ac-4 .ac-badge .ac-num');
     if (acNum) acNum.textContent = is3step ? '3' : '4';
 
+    // Switch duplicate check table per type
+    const isPerson = (type === 'person');
+    ['dup-entity-block','ac-dup-entity-block'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = isPerson ? 'none' : '';
+    });
+    ['dup-person-block','ac-dup-person-block'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = isPerson ? '' : 'none';
+    });
+    // Update banner counts
+    document.querySelectorAll('.duplicate-banner-text strong').forEach(el => {
+        el.textContent = isPerson ? '1 potential match found.' : '10 potential matches found.';
+    });
+
     // Switch onboarding details form per type
     const formMap = {
         entity:  ['p4-entity-form','ac4-entity-form'],
@@ -3490,13 +3556,8 @@ function showNameFields(type, p) {
 }
 
 function getDisplayName(p) {
-    if (selectedType === 'entity')  return document.getElementById(p + '-name')?.value.trim() || '';
-    if (selectedType === 'person') {
-        const fn = document.getElementById(p + '-firstname')?.value.trim() || '';
-        const ln = document.getElementById(p + '-lastname')?.value.trim() || '';
-        return (fn + ' ' + ln).trim();
-    }
-    return document.getElementById(p + '-unknown-name')?.value.trim() || 'Unknown Third Party';
+    // All types now use the unified name field (s1-name / a1-name)
+    return document.getElementById(p + '-name')?.value.trim() || '';
 }
 
 /* ══════════════════════ Step 1 ══════════════════════ */
@@ -3533,7 +3594,13 @@ document.getElementById('btn-step1-continue').addEventListener('click', () => {
     document.getElementById('ob-p-legal-name').value = displayName;
     document.getElementById('ob-u-legal-name').value = displayName;
     document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
-    goToStep(2);
+    if (selectedType === 'unknown') {
+        skippedSteps.add(2);
+        skippedSteps.add(3);
+        goToStep(4);
+    } else {
+        goToStep(2);
+    }
 });
 
 /* ══════════════════════ Step 2 ══════════════════════ */
@@ -3600,7 +3667,9 @@ document.getElementById('btn-step3-save').addEventListener('click', () => {
 /* ══════════════════════ Step 4 ══════════════════════ */
 
 document.getElementById('btn-step4-back').addEventListener('click', () => {
-    if (selectedType === 'entity') goToStep(3); else goToStep(2);
+    if (selectedType === 'entity') goToStep(3);
+    else if (selectedType === 'unknown') goToStep(1);
+    else goToStep(2);
 });
 
 document.getElementById('ob-country').addEventListener('change', () => {
@@ -3719,7 +3788,14 @@ document.getElementById('ac-btn-1').addEventListener('click', () => {
     document.getElementById('ac-ob-p-legal-name').value = displayName;
     document.getElementById('ac-ob-u-legal-name').value = displayName;
     document.getElementById('dup-name-display').textContent = '"' + displayName + '"';
-    openAc(2);
+    if (acSelectedType === 'unknown') {
+        skipAc(2);
+        document.getElementById('ac-summary-2').textContent = 'No duplicates were found';
+        skipAc(3);
+        openAc(4);
+    } else {
+        openAc(2);
+    }
 });
 
 // ── Step 2 ──
@@ -3783,7 +3859,9 @@ document.getElementById('ac-ob-country').addEventListener('change', () => {
     document.getElementById('ac-ob-block-country').classList.remove('has-error');
 });
 document.getElementById('ac-btn-4-back').addEventListener('click', () => {
-    if (acSelectedType === 'entity') openAc(3); else openAc(2);
+    if (acSelectedType === 'entity') openAc(3);
+    else if (acSelectedType === 'unknown') openAc(1);
+    else openAc(2);
 });
 /* ══════════════════════ Record Profile Side Panel ══════════════════════ */
 const REC_DATA = {
@@ -3808,6 +3886,14 @@ const REC_DATA = {
     function openRecSheet(name) {
         const titleEl = document.getElementById('rec-title-name');
         if (titleEl) titleEl.textContent = name;
+
+        // Load the correct profile page based on the name
+        const iframe = document.getElementById('rec-summary-iframe');
+        if (iframe) {
+            iframe.src = (name === 'Bruce Wayne Batman')
+                ? 'bruce-wayne-profile.html'
+                : 'tp-profile.html';
+        }
 
         sheet.classList.add('open');
         overlay.classList.add('open');
